@@ -1,0 +1,26 @@
+<app-warning class="types row-padding">
+    All changes will be saved after any editing
+</app-warning>
+<div class="types row-padding">
+    <div class="header-text">Number display type</div>
+    <mat-radio-group class="container-group" [value] ="selectedDisplayType$ | async" (change)="onChangeType($event.value)">
+        <mat-radio-button color="primary" class="tree-radio-button" *ngFor="let type of displayTypes" [value] ="type.id">{{type.desc}}</mat-radio-button>
+    </mat-radio-group>
+</div>
+<div class="analysis row-padding">
+    <div class="header-text">
+        Show or hide the analysis buttons in the component tree
+    </div>
+    <div class="container-group">
+        <mat-checkbox color="primary" [checked]="displayAnalyzeButtons$ | async" (change)="onChangeAnalyzeButtonsVisibility($event.checked)">Show</mat-checkbox>
+    </div>
+</div>
+<div class="row-padding">
+    <div class="header-text">
+        Timeout of warning displaying of analyze feature
+    </div>
+    <div class="analyze-warning-container">
+        <input type="number" class="duration-textarea" [value]="timeoutDuration$ | async" (change)="onChangeTimeout($event.currentTarget.value)">
+        <p>Sec.</p>
+    </div>
+</div>

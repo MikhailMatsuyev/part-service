@@ -1,0 +1,76 @@
+<div class="header-modal">
+    <div class="title">
+        <div class="title-header">Causes that Limits Component</div>
+        <div class="title-content">{{data?.headerName}}</div>
+    </div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+
+<div class="container-components">
+    <mat-tab-group color="primary" dynamicHeight [disableRipple]="false">
+        <mat-tab label="Not Possible">
+            <div class="tab-content-header">
+                Not Possible due to the next User Factor marked with
+                <mat-icon class="icon-report">report_problem</mat-icon>
+            </div>
+            <ng-container *ngTemplateOutlet="templateUserFactor; context: {$implicit: data?.analyzeData?.userFactors, isPosibleMode: true}"></ng-container>
+        </mat-tab>
+        <mat-tab label="Not Recommended">
+            <div class="tab-content-header">
+                Not Recommended due to the next User Factors marked with
+                <mat-icon class="icon-report">report_problem</mat-icon>
+            </div>
+            <ng-container *ngTemplateOutlet="templateUserFactor; context: {$implicit: data?.analyzeData?.userFactors, isPosibleMode: false}"></ng-container>
+        </mat-tab>
+        <mat-tab label="Blocking Interfaces">
+            <div *ngIf="blockers && blockers?.data; else elseBlock" class="tab-container-content tab-container-content-interfaces">
+                <app-scrollbar>
+                    <div class="mt-20">{{blockers?.message}}</div>
+                    <div *ngFor="let blocker of blockers?.data" class="mt-10">
+                        <mat-accordion>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        {{blocker?.serie || blocker?.step}}
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <div *ngFor="let interface of blocker?.elements">
+                                    {{getText(interface)}}
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </app-scrollbar>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            (click)="onNoClick(false)">
+        Ok
+    </button>
+</mat-dialog-actions>
+
+<ng-template #elseBlock>
+    <div class="mt-20">There are no blocking Interfaces.</div>
+</ng-template>
+
+<ng-template #templateUserFactor let-data let-isPosibleMode="isPosibleMode">
+    <div class="tab-container-content">
+        <app-scrollbar>
+            <div class="tab-content-row" *ngFor="let userFactor of data">
+                <div *ngIf="isPosibleMode ? userFactor?.isPosLimit : userFactor?.isRecLimit" class="tab-content-icon">
+                    <mat-icon class="icon-report">report_problem</mat-icon>
+                </div>
+                <div class="tab-content-name">{{userFactor?.userFactor}}</div>
+                <div class="tab-content-selected">{{userFactor?.selectedValue}}</div>
+            </div>
+        </app-scrollbar>
+    </div>
+</ng-template>

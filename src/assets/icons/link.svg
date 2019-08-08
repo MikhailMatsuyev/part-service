@@ -1,0 +1,10 @@
+<svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 7H5C6.65674 7 8 5.65674 8 4V3C8 1.34326 6.65674 0 5 0H0V2H5C5.55225 2 6 2.44775 6 3V4C6 4.55225 5.55225 5 5 5H0V7Z" transform="translate(11 5)" fill="#BCBCBC"/>
+    <path d="M0 7H5C6.65674 7 8 5.65674 8 4V3C8 1.34326 6.65674 0 5 0H0V2H5C5.55225 2 6 2.44775 6 3V4C6 4.55225 5.55225 5 5 5H0V7Z" transform="translate(8 5) scale(-1 1)" fill="#BCBCBC"/>
+    <line y1="-0.5" x2="4.47214" y2="-0.5" transform="translate(9 5) rotate(-116.565)" stroke="#BCBCBC"/>
+    <line y1="-0.5" x2="4.47214" y2="-0.5" transform="translate(10 5) scale(1 -1) rotate(63.4349)" stroke="#BCBCBC"/>
+    <line y1="-0.5" x2="5" y2="-0.5" transform="translate(10 5) rotate(-90)" stroke="#BCBCBC"/>
+    <line y1="-0.5" x2="4.47214" y2="-0.5" transform="translate(9 12) scale(-1 1) rotate(63.4349)" stroke="#BCBCBC"/>
+    <line y1="-0.5" x2="4.47214" y2="-0.5" transform="translate(10 12) rotate(63.4349)" stroke="#BCBCBC"/>
+    <line y1="-0.5" x2="5" y2="-0.5" transform="translate(10 12) scale(1 -1) rotate(-90)" stroke="#BCBCBC"/>
+</svg>

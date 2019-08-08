@@ -1,0 +1,120 @@
+@import '../../../styles/variable.sass'
+
+.container-elements
+    display: flex
+    margin-top: 15px
+    padding-bottom: 10px
+
+.container-group
+    display: flex
+    flex-direction: column
+    color: black
+    padding: 15px 16px 0 50px !important
+::ng-deep .element-values
+    width: 350px
+    display: flex
+    flex-direction: column
+    margin-bottom: 20px
+    ::ng-deep
+        .mat-toolbar
+            padding: 0
+            height: 40px
+            min-height: 40px
+            border-top-left-radius: 5px
+            border-top-right-radius: 5px
+            background-color: $primary-color !important
+        .mat-toolbar-row
+            padding: 14px 20px 11px 20px
+            color: $main-color
+            box-sizing: border-box
+            height: 100%
+        .toolbar-header
+            font-size: 13px
+            font-family: 'Roboto'
+            text-transform: uppercase
+        .left-filter,
+        .right-filter
+            fill: $main-color
+
+.tree-radio-button
+    margin-bottom: 10px
+    text-overflow: ellipsis
+    ::ng-deep .mat-radio-label
+        width: 100%
+        ::ng-deep .mat-radio-label-content
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+
+.filter-icon-left
+    /deep/.left-filter
+        fill: $main-color
+    /deep/.right-filter
+        fill: #ADADAD
+.filter-icon-right
+    /deep/.left-filter
+        fill: #ADADAD
+    /deep/.right-filter
+        fill: $main-color
+.resize-block
+    align-self: center
+    padding: 0 5px
+
+.component-container
+    border-bottom: 1px solid $white
+    color: $main-font-color
+    font-size: 12px
+    line-height: 14px
+    padding-top: 10px
+.steps-container
+    border-top: 1px solid $white
+
+.header-container
+    display: flex
+    align-items: center
+    padding-right: 16px
+    padding-left: 20px
+    padding-bottom: 10px
+    &:hover
+        .action-connect
+            opacity: 1
+
+.containter-group
+    height: 76vh
+    max-height: 760px
+app-two-headers-table
+    overflow: auto
+    max-height: 800px
+
+.action-container
+    display: flex
+    justify-content: center
+    align-items: center
+
+.action-connect
+    opacity: 0
+    transition: opacity .35s ease
+    margin-right: 5px
+
+.text-container
+    flex-grow: 1
+    min-width: calc(100% - 81px)
+    max-width: calc(100% - 81px)
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+
+.download-button-text
+    margin-right: 10px
+
+\:host ::ng-deep .dark-theme .mat-menu-panel
+    background-color: $main-color
+    color: $main-font-color
+
+.not-found-steps
+    display: flex
+    justify-content: center
+    padding-bottom: 10px
+
+.container-table
+    flex-grow: 1

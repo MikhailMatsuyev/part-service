@@ -1,0 +1,118 @@
+$main-font-color: #343434;
+$resize-color: #BCBCBC;
+
+@mixin add-font($font-weight, $font-size, $font-color, $line-height) {
+    font-family: Roboto;
+    font-weight: #{$font-weight};
+    font-size: #{$font-size};
+    color: #{$font-color};
+    line-height: #{$line-height};
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .dialog-buttons {
+        margin: 0 !important;
+        padding-left: 30px;
+        border-top: 1px solid #E2E2E2;
+        padding-top: 20px;
+        padding-bottom: 30px;
+        height: 90px;
+        box-sizing: border-box;
+    }
+}
+
+.title-name {
+    @include add-font(600, 20px, $main-font-color, 23px);
+}
+
+.resize-handle {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    cursor: s-resize;
+    font-weight: 600;
+    font-size: 14px;
+    color: $resize-color;
+}
+
+.ng-scrollbar {
+    border-radius: 5px;
+    background-color: #EFEFEF;
+    &.-vertical {
+        width: 10px;
+    }
+    .ng-scrollbar-thumb {
+        background-color: #1E395D;
+    }
+}
+
+ng-scrollbar {
+    width: 100%;
+}
+
+.col-lg3 ng-scrollbar .ng-scrollbar-container .ng-scrollbar-view {
+    overflow: auto;
+    word-wrap: break-word;
+}
+
+.attachment {
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.textarea {
+    height: 160px;
+}
+
+.image {
+    width: 72px;
+    height: 72px;
+}
+
+.col-lg3 {
+    position: relative;
+}
+
+.image-block {
+    width: auto;
+}
+
+.img-container {
+    position: relative;
+}
+
+form {
+    flex: 1;
+    padding-bottom: 15px;
+}
+
+.close-button {
+    position: absolute;
+    top: -6px;
+    right: -5px;
+}
+
+.hint-grey {
+    color: #9A9A9A;
+    font-size: 13px;
+    margin: 0 10px;
+}
+
+.img-text {
+    font-size: 13px;
+    color: $main-font-color;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 72px;
+    padding-top: 10px;
+}
+
+.hint-red {
+    font-size: 12px;
+    color: red;
+    padding-top: 10px;
+}

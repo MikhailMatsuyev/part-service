@@ -1,0 +1,78 @@
+<div class="title">
+    <div class=title-block>
+        <div>
+            <span class="title-name">{{data.name}}</span>
+        </div>
+        <div>
+            <span *ngIf="data.description" class="hint-name">{{data.description}}</span>
+        </div>
+    </div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick()">close</i>
+    </div>
+</div>
+<form>
+    <div class="row">
+        <div class="sub-row">
+            <div class="hint-title">
+                <span>Enter text</span>
+                <span class="hint-grey">No more than {{maxLength}} characters are allowed.</span>
+                <span>{{ textLength }} / {{maxLength}}</span>
+            </div>
+            <div class="col-lg3"
+                 [ngStyle]="style"
+                 mwlResizable
+                 [validateResize]="validate"
+                 (resizing)="onResizeEnd($event)">
+                <textarea
+                     [(ngModel)]="textArea"
+                     (ngModelChange)="onChange($event)"
+                     [ngModelOptions]="{standalone: true}"
+                     #textarea
+                     (paste)="onPaste($event)"
+                     class="textarea"
+                     [ngStyle]="style"
+                     [validateResize]="validate"
+                     mwlResizable>
+                </textarea>
+                <i class="material-icons resize-handle"
+                    mwlResizeHandle
+                    [resizeEdges]="{bottom: true}">
+                    dehaze
+                </i>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="sub-row image-block">
+            <div class="hint-title">
+                <span>Attach images or pdf files:</span>
+            </div>
+            <button mat-button class="discard" (click)="handleClick(imgFile)">
+                Browse
+                <input type="file"
+                       #imgFile
+                       hidden
+                       accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"
+                       class="imgFile"
+                       (change)="handleOnFileSelected($event.target.files, $event.target)" />
+            </button>
+            <div *ngIf="fileFailed" class="hint-red">
+                Maximum size of the file is 2Mb
+            </div>
+        </div>
+        <div class="attachment" *ngFor="let fileName of fileNames">
+            <div class="img-container">
+                <img [src]="getIcon(fileName?.url)" class="image">
+                <div class="close-button pointer"
+                     (click)="removeFile(fileName?.id)"
+                     inlineSVG="../../../../../assets/icons/close.svg"></div>
+                <div class="img-text" [title]="fileName?.fileName">{{fileName?.fileName}}</div>
+            </div>
+        </div>
+      </div>
+</form>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button class="confirm" (click)="handleSave()">Save</button>
+    <button mat-button class="discard" [mat-dialog-close]="true" (click)="onNoClick()">Cancel</button>
+</mat-dialog-actions>

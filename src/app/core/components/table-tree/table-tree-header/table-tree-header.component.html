@@ -1,0 +1,24 @@
+<div class="header-container">
+    <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center">
+        <mat-checkbox [formControl]="checked" color="warn"></mat-checkbox>
+        <div class="toolbar-header">{{headerName}}</div>
+    </div>
+    <div class="pointer filter-icon user-select-none"
+        title="A-Z"
+        [ngClass]="setFilterClass('serie')"
+        (click)="filterChange(['serie', 'order'])"
+        inlineSVG="../../../../../assets/icons/filter.svg">
+    </div>
+</div>
+<div *ngIf="pageType !== pageTypes.Interfaces" 
+        class="priority-container">
+    <div class="toolbar-header">
+        {{orderName}}
+    </div>
+    <div class="pointer filter-icon user-select-none"
+         title="Priority"
+         [ngClass]="setFilterClass('order')"
+         (click)="filterChange(['order', 'serie'])"
+         inlineSVG="../../../../../assets/icons/filter.svg">
+    </div>
+</div>

@@ -1,0 +1,113 @@
+<mat-toolbar color="primary" class="app-toolbar">
+    <mat-toolbar-row>
+        <span class="toolbar-logo">
+            <img src="../../../../assets/img/logo.png" alt="logo">
+        </span>
+        <span class="toolbar-spacer"></span>
+        <div class="toolbar-menu" (mouseleave)="leaveItem()">
+            <button mat-button
+                    #sliders
+                    [attr.slid-link]="'user-factors'"
+                    (mouseenter)="hoverItem($event)"
+                    [matMenuTriggerFor]="userFactors">
+                User Factor
+            </button>
+            <button mat-button
+                    #sliders
+                    [attr.slid-link]="'element'"
+                    [matMenuTriggerFor]="elements"
+                    (mouseenter)="hoverItem($event)">
+                Components
+            </button>
+            <button mat-button
+                    #sliders
+                    [attr.slid-link]="'interface'"
+                    [matMenuTriggerFor]="components"
+                    (mouseenter)="hoverItem($event)">
+                Interfaces
+            </button>
+            <button mat-button
+                    #sliders
+                    [attr.slid-link]="'formulas calculations recommendations'"
+                    [matMenuTriggerFor]="recomendations"
+                    (mouseenter)="hoverItem($event)">
+                Recommendations
+            </button>
+            <button mat-button
+                    #sliders
+                    [attr.slid-link]="'analyze'"
+                    routerLink ="analyze"
+                    (mouseenter)="hoverItem($event)">
+                Analysis
+            </button>
+            <button mat-button
+                    #sliders
+                    [attr.slid-link]="'advanced exchange'"
+                    [matMenuTriggerFor]="advanced"
+                    (mouseenter)="hoverItem($event)">
+                Advanced
+            </button>
+            <button mat-button
+                    #sliders
+                    [attr.slid-link]="'settings'"
+                    [matMenuTriggerFor]="settings"
+                    (mouseenter)="hoverItem($event)">
+                Settings
+            </button>
+            <button mat-button
+                    #sliders
+                    [attr.slid-link]="'home'"
+                    [routerLink] ="['./']"
+                    (mouseenter)="hoverItem($event)">
+                Selection
+            </button>
+            <app-menu-slider [hoverElemWidth]="hoverElemWidth" [navElemLeft]="navElemLeft"></app-menu-slider>
+        </div>
+        <span class="toolbar-spacer"></span>
+        <div fxLayoutGap="8px" fxLayout="row">
+            <mat-icon class="toolbar-icon pointer"
+                      [matBadge]="countNotifications$ | async"
+                      matBadgePosition="before"
+                      (click)="handleNotification()"
+                      matBadgeColor="warn">notifications_none</mat-icon>
+            <mat-icon class="toolbar-icon pointer" (click)="clickPersonMenu()">person</mat-icon>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-menu #userFactors="matMenu" overlapTrigger="false">
+    <a mat-menu-item [routerLink]="['user-factors']">User Factor</a>
+    <a mat-menu-item [routerLink]="['user-factors-connection']">Connections</a>
+    <a mat-menu-item [routerLink]="['user-factors-values']">Values</a>
+</mat-menu>
+
+<mat-menu #components="matMenu" overlapTrigger="false">
+    <a mat-menu-item [routerLink]="['interfaces']">Interfaces</a>
+    <a mat-menu-item [routerLink]="['interfaces-connections']">Connections</a>
+    <a mat-menu-item [routerLink]="['interfaces-steps']">Steps' connections</a>
+</mat-menu>
+
+<mat-menu #recomendations="matMenu" overlapTrigger="false">
+    <a mat-menu-item [routerLink]="['recommendations']">Recommendations</a>
+    <a mat-menu-item [routerLink]="['calculations']">Calculations</a>
+    <a mat-menu-item [routerLink]="['formulas']">Formulas</a>
+</mat-menu>
+
+<mat-menu #settings="matMenu" overlapTrigger="false">
+    <a mat-menu-item [routerLink]="['app-settings']">App Settings</a>
+    <a mat-menu-item [routerLink]="['user-settings']">User Settings</a>
+    <a mat-menu-item [routerLink]="['type-key-settings']">Type Key Settings</a>
+</mat-menu>
+
+<mat-menu #elements="matMenu" overlapTrigger="false">
+    <a mat-menu-item routerLink="element">Components</a>
+    <a mat-menu-item routerLink="element-connections">Connections</a>
+    <a mat-menu-item routerLink="element-values">Values</a>
+    <a mat-menu-item routerLink="element-steps-scopes">Steps Scopes</a>
+    <a mat-menu-item routerLink="element-performance">Performance</a>
+</mat-menu>
+
+<mat-menu #advanced="matMenu" overlapTrigger="false">
+    <a mat-menu-item [routerLink]="['advanced-editor']">Advanced</a>
+    <a mat-menu-item [routerLink]="['users-data-exchange']">Users Import/Export</a>
+</mat-menu>

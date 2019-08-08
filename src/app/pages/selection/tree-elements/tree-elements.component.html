@@ -1,0 +1,112 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="components-tree">
+    <mat-tree-node *matTreeNodeDef="let node"
+                   matTreeNodeToggle
+                   matTreeNodePadding>
+        <div class="node-container">
+            <span class="pointer node-step mr-20"
+                [ngClass]="{'node-step-bold': node?.rec, 'node-step-top-level': isFirstLevelNode(node, 1)}"
+                (contextmenu)="handleContextMenu($event, node)">
+              <mat-checkbox color="primary"
+                            *ngIf="!isWarningMode(node) && !isBlockedHideNode(node) && !isBlockedDisabledNode(node)"
+                            [checked]="node?.selected"
+                            class="short-text"
+                            [title]="node?.name"
+                            (change)="handleSelectChange($event, node)">
+                  {{node?.name}}
+              </mat-checkbox>
+              <div class="blocked-container" *ngIf="isBlockedDisabledNode(node) && !isWarningMode(node)">
+                  <div class="blocked-icon pointer"
+                       inlineSVG="../../../../assets/icons/blocked.svg">
+                  </div>
+                  <div class="short-text" [title]="node?.name">{{node?.name}}</div>
+              </div>
+              <div class="blocked-container" *ngIf="isWarningMode(node)">
+                    <div class="blocked-icon pointer"
+                       inlineSVG="../../../../assets/icons/warning-step.svg">
+                    </div>
+                    <div class="short-text" [title]="node?.name">{{node?.name}}</div>
+              </div>
+              <span class="info-icon pointer"
+                      *ngIf="node?.info"
+                      (click)="handleClickInfo(node)">
+                  <div inlineSVG="../../../../assets/icons/info-steps.svg"></div>
+              </span>
+          </span>
+          <div class="node-table" *ngIf="node?.perfValues">
+              <div class="node-table-cell" [ngStyle]="setStyle(values)" *ngFor="let values of node?.perfValues">
+                  <span>{{values?.val}}</span>
+                  <span>{{values?.unit}}</span>
+                  <span>{{values?.text ? '; ' + values?.text : ''}}</span>
+              </div>
+          </div>
+        </div>
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild"
+                   matTreeNodePadding
+                   [class.first-level]="isFirstLevelNode(node)">
+        <div class="node-category">
+            <div class="node-category-content mr-20" [class.category-table]="(node?.level === 1 || node?.level === 0) && node?.perfTitles && node?.perfTitles.length > 0">
+                <button mat-icon-button matTreeNodeToggle
+                    [attr.aria-label]="'toggle ' + node.name"
+                    class="tree-toggle pointer"
+                    [style.opacity]="isActiveChildAnalyze(node)">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'arrow_drop_up' : 'arrow_drop_down'}}
+                    </mat-icon>
+                </button>
+                <div *ngIf="isActiveAnalyze(node) && !node.loading"
+                     [matMenuTriggerFor]="menu"
+                     class="analyze-icon pointer"
+                     (click)="handleClickActiveNode(node)"
+                     inlineSVG="../../../../assets/icons/analyze.svg">
+                </div>
+                <div *ngIf="isActiveAnalyze(node) && node.loading">
+                    <mat-progress-spinner mode="indeterminate"
+                                          class="analyze-tree-spinner"
+                                          [diameter]="18"
+                                          [strokeWidth]="3"
+                                          color="primary">
+                    </mat-progress-spinner>
+                </div>
+                <span matTreeNodeToggle class="category-text pointer">{{node.name}}</span>
+                <span class="info-icon pointer"
+                      *ngIf="node?.info"
+                      (click)="handleClickInfo(node)">
+                    <div inlineSVG="../../../../assets/icons/info-steps.svg"></div>
+                </span>
+            </div>
+            <div class="node-table" *ngIf="node?.perfTitles && node?.perfValues">
+                <div class="node-table-cell node-table-cell-title pointer"
+                     *ngFor="let values of node?.perfTitles"
+                     (click)="sortingPerfTable(values, node)">
+                    <span>{{values?.name}}</span>
+                </div>
+            </div>
+        </div>
+    </mat-tree-node>
+</mat-tree>
+
+<mat-menu #menu="matMenu" (closed)="clearData()">
+    <button mat-menu-item (click)="handleAnalyzeComponent()">Analyze components</button>
+    <button mat-menu-item
+            *ngIf="activeNode && activeNode?.hasInterface"
+            (click)="handleAnalyzeInterface()">
+        Analyze interface links
+    </button>
+    <button mat-menu-item
+            *ngIf="userModel && userModel?.role === 'Admin'"
+            (click)="handleTroubleShooting()">
+        Trouble shooting
+    </button>
+</mat-menu>
+
+<span #contextMenuTrigger
+    [matMenuTriggerFor]="contextMenu"
+    class="context-menu-trigger"
+    [style.left.px]="contextMenuLeft"
+    [style.top.px]="contextMenuTop">
+</span>
+<mat-menu #contextMenu="matMenu" (closed)="contextClearData()">
+    <button mat-menu-item (click)="handleAnalyzeState()">Analyze state</button>
+</mat-menu>

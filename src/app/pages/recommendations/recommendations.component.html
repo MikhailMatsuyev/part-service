@@ -1,0 +1,207 @@
+<app-calculations-header [textChanges]="textChanges$ | async"
+                         [valuesWithStatusUF]="valuesWithStatusUF$ | async"
+                         [valuesWithStatusCS]="valuesWithStatusCS$ | async"
+                         [userFactor]="userFactor$ | async"
+                         [componentSeries]="componentSeries$ | async"
+                         [defaulItemSeries]="defaulItemSeries$ | async"
+                         [defaultItemUserFactor]="defaultItemUserFactor$ | async"
+                         [isDisabledUpdateButton]="isDisabledUpdateButton"
+                         [withFormulasIcon]="true"
+                         [withCustomSelect]="true"
+                         [canBlankXDisabled]="true"
+                         updateBtnText="Update Manual Recommendations"
+                         (changeUserFactorStep)="handleChangeUserFactorStep($event)"
+                         (changeComponentStep)="handleChangeComponentStep($event)"
+                         (changeUserFactor)="handleChangeUserFactor($event)"
+                         (changeHeaders)="swapHeader($event)"
+                         (clickBlankX)="handleBlankX($event)"
+                         (syncCalculation)="syncCalculations($event)"
+                         (changeComponent)="handleChangeComponent($event)"
+                         (clickError)="handleError($event)"
+                         (autoGenerate)="updateManual()"
+                         (cancelGenerate)="cancelUpdating()"
+                         (clickHelp)="handleHelp()"
+                         (selectedItemDropdown)="handleSelectedItemDropdown($event)"
+                         (selectedAllDropdown)="handleSelectedAllDropdown($event)">
+    <ng-container icon-recommendations>
+        <div class="icon-calculation icon-recomendation pointer user-select-none"
+            inlineSVG="../../../assets/icons/recomendations.svg"
+            (click)="handleDownloadRecommendations()">
+        </div>
+    </ng-container>
+    <ng-container icon-headers>
+        <div class="icon-calculation event-none user-select-none"
+             inlineSVG="../../../assets/icons/copy-file.svg"
+             [class.active-icons]="isDisableCopy$ | async"
+             (click)="handleCopy()">
+        </div>
+        <div class="icon-calculation pointer user-select-none"
+             inlineSVG="../../../assets/icons/table.svg"
+             [class.active-icons]="dataSource?.data.length > 0"
+             (click)="allSelect()">
+        </div>
+    </ng-container>
+    <ng-container calculate-button>
+        <button mat-raised-button
+                color="primary"
+                (click)="switchMode()">
+            Switch mode
+        </button>
+        <button mat-raised-button
+                color="primary"
+                (click)="setDefaultMode()">
+            Set default
+        </button>
+    </ng-container>
+    <div class="table-containers" [style.height]="tableHeight" [class.table-containers-switch-mode]="isActiveSwitchMode" table-recommendation>
+        <div *ngIf="isActiveSwitchMode" class="toolbar-hint">
+            <div>{{firstTableCellHeader}}</div>
+            <div class="container-hint">
+                <div class="hint-text"><span class="hint-status">P</span> - Possible</div>
+                <div class="hint-text"><span class="hint-status">NP</span> - Not possible</div>
+                <div class="hint-text"><span class="hint-status">R</span> - Recommneded</div>
+                <div class="hint-icon-close">
+                    <i class="material-icons pointer" (click)="closeSwitchMode()">close</i>
+                </div>
+            </div>
+        </div>
+        <app-scrollbar [trackX]="true" [trackY]="true" *ngIf="dataSource.data && dataSource.data.length > 0">
+            <table mat-table [dataSource]="dataSource" #tableRef>
+                <ng-container matColumnDef="ufvRows" sticky>
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        class="sticky-column shadow-cell pl-20">
+                        <div class="header-transform">
+                            <div>{{firstTableCellHeader}}</div>
+                            <div class="transform-arrows pointer"
+                                 inlineSVG="../../../assets/icons/arrows.svg"
+                                 (click)="switchHeadersTable()">
+                            </div>
+                            <div>{{firstCellHeader}}</div>
+                        </div>
+                    </th>
+                    <td mat-cell
+                        *matCellDef="let element"
+                        #tdRef
+                        class="sticky-column shadow-cell light-cell pl-20 pointer"
+                        [class.table-cells-active]="element?.isActiveRow"
+                        (mousedown)="handleFirstCellClick(element)"
+                        (closed)="handleCloseContext()"
+                        [mdePopoverTriggerFor]="menuPopover"
+                        [mdePopoverEnterDelay]="200"
+                        mdePopoverArrowColor="transparent"
+                        mdePopoverPositionY="above"
+                        [mdePopoverTriggerOn]="firstCellContext(element?.isActiveRow)"
+                        (contextmenu)="handleContextMenuFirstCell($event, tdRef, element)">
+                        {{element?.isSwapHeaders ? element?.csvRows : element?.ufvRows}}
+                    </td>
+                </ng-container>
+
+                <ng-container *ngFor="let column of colums; trackBy: trackByFn" [matColumnDef]="column?.name">
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        class="pl-20 pointer second-header-cells"
+                        [ngClass]="activeHeaderCell(column)"
+                        (click)="handleClickHeader(column)">
+                        <div [title]="column?.header">
+                            {{column?.header}}
+                        </div>
+                    </th>
+                    <td mat-cell
+                        *matCellDef="let element"
+                        #cellTarget="mdePopoverTrigger"
+                        class="table-cells pointer pl-20"
+                        [ngClass]="setRecommendationsStatus(element[column?.name])"
+                        [class.table-cells-active]="element[column?.name]?.isActiveCell"
+                        (click)="handleClickCell(element, column)"
+                        (mouseenter)="handleMouseEnter(element[column?.name], cellTarget)"
+                        (mouseleave)="handleMouseLeave()"
+                        [mdePopoverTriggerFor]="appPopover"
+                        mdePopoverArrowColor="transparent"
+                        mdePopoverTriggerOn="none"
+                        (contextmenu)="handleContextMenu($event, element[column?.name], cellTarget)">
+                        <span>{{setRecommendationsText(element[column?.name])}}</span>
+                        <span *ngIf="(element[column?.name]?.hasChanges || element[column?.name]?.hasComment) && !isActiveSwitchMode" class="icon-comment">i</span>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </app-scrollbar>
+    </div>
+</app-calculations-header>
+
+<mde-popover #appPopover="mdePopover"
+             [mdePopoverOverlapTrigger]="false"
+             [mdePopoverCloseOnClick]="false"
+             [mdeFocusTrapEnabled]="false"
+             mdePopoverPositionY="above"
+             mdePopoverPositionX="after">
+    <mat-card class="tooltip-container" *ngIf="activePopover">
+        <mat-card-content>
+            <ng-container *ngIf="activeContextComment; else elseBlock">
+                <div>
+                    <div class="tooltip-title-header">
+                        <div class="title-comment">Comment</div>
+                        <i class="material-icons close-icon pointer" (click)="onNoClick()">close</i>
+                    </div>
+                    <div class="toltip-status" *ngIf="activeComment?.prevState">
+                        <div>Recommendation is changed:</div>
+                        <div class="toltip-header-status">
+                            <span>{{activeComment?.prevState}}</span>
+                            <mat-icon>arrow_right_alt</mat-icon>
+                            <span>{{activeComment?.currState}}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <textarea [formControl]="comment"></textarea>
+                    </div>
+                    <button mat-raised-button
+                            color="primary"
+                            (click)="saveComment()">
+                        Ok
+                    </button>
+                </div>
+            </ng-container>
+        </mat-card-content>
+    </mat-card>
+</mde-popover>
+
+<ng-template #elseBlock>
+    <div *ngIf="activeComment">
+        <div>
+            {{activeComment?.comment}}
+        </div>
+        <div class="toltip-header-status" *ngIf="activeComment?.prevState; else elseNoChanges">
+            <span class="mr5">Last changes:</span>
+            <span>{{activeComment?.prevState}}</span>
+            <mat-icon>arrow_right_alt</mat-icon>
+            <span>{{activeComment?.currState}}</span>
+        </div>
+        <div>By {{activeComment?.userName}} at {{activeComment?.added | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+    </div>
+</ng-template>
+
+<ng-template #elseNoChanges>No changes.</ng-template>
+
+<mde-popover #menuPopover="mdePopover"
+             [mdePopoverOverlapTrigger]="false">
+    <mat-card class="menu-container">
+        <mat-card-content>
+            <div>
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="pointer">
+                        <span (click)="handleSetStatusRow(2)">Set all not possible</span>
+                    </mat-list-item>
+                    <mat-list-item role="listitem" class="pointer">
+                        <span (click)="handleSetStatusRow(1)">Set all possible</span>
+                    </mat-list-item>
+                    <mat-list-item role="listitem" class="pointer">
+                        <span (click)="handleSetStatusRow(0)">Set all recommended</span>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</mde-popover>

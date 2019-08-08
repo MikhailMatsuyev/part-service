@@ -1,0 +1,11 @@
+@mixin add-font($font-weight, $font-size, $font-color, $line-height)
+    font-family: 'Roboto'
+    font-weight: #{$font-weight}
+    font-size: #{$font-size}
+    color: #{$font-color}
+    line-height: #{$line-height}
+
+@mixin calc($property, $expression)
+    #{$property}: -webkit-calc(#{$expression})
+    #{$property}: -moz-calc(#{$expression})
+    #{$property}: calc(#{$expression})

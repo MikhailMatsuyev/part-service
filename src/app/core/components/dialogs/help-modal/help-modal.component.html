@@ -1,0 +1,54 @@
+<div class="header-modal">
+    <div class="title">Recommendations</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+<div class="container-modal">
+    <div class="hints">
+        <div class="icon-status icon-status-disable"></div>
+        <div class="hint-column">
+            <div class="hint-row">
+                <div class="hint-text-bold">Component:</div>
+                <div>There is no possible Component Step for at least one User Factor Step, for one or more User Factors coupled to the Component</div>
+            </div>
+            <div class="hint-row">
+                <div class="hint-text-bold">User Factor:</div>
+                <div>At least one User Factor Step is not possible to any Component Step, for one or more Components coupled to the User Factor</div>
+            </div>
+        </div>
+    </div>
+    <div class="hints">
+        <div class="icon-status icon-status-not-active"></div>
+        <div class="hint-column">
+            <div class="hint-row">
+                <div class="hint-text-bold">Component:</div>
+                <div>There is no recommended Component Step for at least one User Factor Step, for one or more User Factors coupled to the Component</div>
+            </div>
+            <div class="hint-row">
+                <div class="hint-text-bold">User Factor:</div>
+                <div>At least one User Factor Step is not recommended to any Component Step, for one or more Components coupled to the User Factor</div>
+            </div>
+        </div>
+    </div>
+    <div class="hints">
+        <div class="icon-status icon-status-active"></div>
+        <div class="hint-column">
+            <div class="hint-row">
+                <div class="hint-text-bold">Component:</div>
+                <div>There is a recommended Component Step for all User Factor Steps, for each User Factor coupled to the Component</div>
+            </div>
+            <div class="hint-row">
+                <div class="hint-text-bold">User Factor:</div>
+                <div>All User Factor Steps have at least one recommended Component Step, for each Component coupled to the User Factor</div>
+            </div>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            (click)="onNoClick(false)">
+        Ok
+    </button>
+</mat-dialog-actions>

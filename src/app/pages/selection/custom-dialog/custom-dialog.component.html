@@ -1,0 +1,7 @@
+<i class="material-icons close-icon pointer" (click)="closeDialog()">close</i>
+<div class="dialog-contents">
+    <div class="dialog-header">{{data?.text}}</div>
+    <div *ngFor="let file of data?.files; trackBy: trackByFn">
+        <img [src]="getIcon(file?.url)" class="image">
+    </div>
+</div>

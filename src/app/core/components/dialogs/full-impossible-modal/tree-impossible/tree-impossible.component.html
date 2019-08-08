@@ -1,0 +1,25 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="userfactor-tree">
+    <mat-tree-node *matTreeNodeDef="let node"
+                    matTreeNodeToggle
+                    matTreeNodePadding>
+        <span class="pointer node-step">
+            UF: {{node?.name}}
+        </span>
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild"
+                    matTreeNodePadding>
+        <div class="node-category">
+            <div class="node-category-content">
+                <button mat-icon-button matTreeNodeToggle
+                    [attr.aria-label]="'toggle ' + node.name"
+                    class="tree-toggle pointer">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'arrow_drop_up' : 'arrow_drop_down'}}
+                    </mat-icon>
+                </button>
+                <span matTreeNodeToggle class="category-text pointer">{{node.name}}</span>
+            </div>
+        </div>
+    </mat-tree-node>
+</mat-tree>

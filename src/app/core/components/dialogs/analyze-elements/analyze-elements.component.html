@@ -1,0 +1,25 @@
+<div class="header-modal">
+    <div class="title">Component step of {{activeName}}</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+
+<div class="container-components">
+    <app-scrollbar>
+        <app-tree-analyze-elements
+            [data]="dataTree"
+            (changeStatusNode)="handleStatusChange($event)"
+            (changeStatusNodeUF)="handleChangeStatusNodeUF($event)">
+        </app-tree-analyze-elements>
+    </app-scrollbar>
+</div>
+
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            (click)="confirm()">
+        Ok
+    </button>
+    <button mat-button class="discard" [mat-dialog-close]="true" (click)="onNoClick(false)">Cancel</button>
+</mat-dialog-actions>

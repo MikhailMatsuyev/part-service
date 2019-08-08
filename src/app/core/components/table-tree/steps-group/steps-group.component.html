@@ -1,0 +1,55 @@
+<div class="groups-container"
+     appDropTarget
+     dropZone="steps"
+     (dropEvent)="handleDrop($event)"
+     [ngStyle]="style"
+     mwlResizable
+     [validateResize]="validate"
+     (resizing)="onResizeEnd($event)">
+    <app-steps *ngFor="let steps of groups | sortBy:'order'; let index = index; trackBy: trackByFn; let last = last; let first = first"
+            [text]="steps?.step"
+            [pageType]="pageType"
+            [stepName]="'STEP ' + (steps?.order + 1)"
+            [isFocused]="checkStepFocus(isStepFocused, index)"
+            [stepsInfo]="steps?.info"
+            [stepId]="steps?.stepId"
+            [isBlocked]="isBlocked"
+            (addNewStep)="handleNewStep()"
+            (changeStepText)="changeStepText($event, steps)"
+            (removeStep)="handleRemoveStep(steps)"
+            (swapLeft)="handleSwapLeft(steps)"
+            (swapRight)="handleSwapRight(steps)"
+            (selectStep)="handleSelectStep(steps)"
+            (insertStep)="handleInsertStep(steps)"
+            (infoClick)="handleInfoClick(steps)"
+            (removeGroupStep)="handleRemoveGroupStep(steps?.stepId)"
+            (dragStart)="handleSelectStep(steps)"
+            [class.selected-step]="isSelected(steps)"
+            [activeKeyCode]="activeKeyCode"
+            [isCanSwapRight]="last"
+            [isCanSwapLeft]="first"
+            [appDraggable]="steps"
+            [multiplyDraggable]="isSelectedStep"
+            [validateDraggable]="isBlocked"
+            draggableZone="steps">
+    </app-steps>
+    <div appDraggablePlaceholder class="drag-placeholder"></div>
+    <div class="steps-add pointer" (click)="addSteps()">
+        <mat-icon>add</mat-icon>
+    </div>
+    <i class="material-icons resize-handle"
+        mwlResizeHandle
+        [resizeEdges]="{bottom: true}">
+        dehaze
+    </i>
+</div>
+
+<button mat-button
+        #menuTrigger="matMenuTrigger"
+        [matMenuTriggerFor]="menu"
+        [ngStyle]="menuStyle"
+        class="menu-drag">Menu</button>
+<mat-menu #menu="matMenu" (closed)="clearData()">
+  <button mat-menu-item (click)="handleMove($event, false)">Copy</button>
+  <button mat-menu-item (click)="handleMove($event, true)">Move</button>
+</mat-menu>

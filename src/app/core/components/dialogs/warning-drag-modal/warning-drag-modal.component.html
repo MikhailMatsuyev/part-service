@@ -1,0 +1,17 @@
+<div class="title title-header">
+    <div class="title-block">Warning!</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick($event, false)">close</i>
+    </div>
+</div>
+<div class="title title-main-content">
+    This operation may lead to the resetting of many recommendations! Are you really sure you want to proceed? After these changes are made it is recommended to run "Update Manual Recommendations".
+</div>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="discard"
+            (click)="onNoClick($event, false)">
+        Dismiss
+    </button>
+    <button mat-button class="confirm" (click)="onNoClick($event, true)">Continue</button>
+</mat-dialog-actions>

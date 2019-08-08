@@ -1,0 +1,82 @@
+<div class="header-container">
+    <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center">
+        <mat-checkbox [formControl]="checked" color="warn"></mat-checkbox>
+        <div *ngIf="pageType === pageTypes.ComponentSeries"
+            fxLayoutAlign="center center"
+             class="pointer vision-icon"
+             title="Display"
+             (click)="handleDisplayChange()"
+             [inlineSVG]="getDisplayIcon()">
+        </div>
+        <div class="toolbar-header">
+            <input type="text"
+                  [formControl]="form.get('headerName')"
+                  (focus)="focusHeaderName()"
+                  (blur)="blurHeaderName('headerName')">
+        </div>
+    </div>
+</div>
+<div class="interface-acts"
+    *ngIf="pageType === pageTypes.ComponentSeries"
+    fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start center">
+        Status: 
+        <span class="interface-act"
+            (click)="handleActivationChange()"> 
+            {{ serieActive ? 'Activated' : 'Deactivated' }}
+        </span>
+</div>
+<div class="interface-acts"
+    *ngIf="pageType === pageTypes.Interfaces"
+    fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start center">
+        Action with component's steps: 
+        <span class="interface-act"
+            (click)="handleIntAct()"> 
+            {{ interfaceAct ? interfaceStepsActs.Hide : interfaceStepsActs.Disable }}
+        </span>
+</div>
+<div class="actions-container" [formGroup]="form">
+    <div inlineSVG="../../../../../assets/icons/help.svg"
+        class="desctiption-button pointer"
+        title="Add description"
+        (click)="editHeader(description)">
+    </div>
+    <div class="description-container">
+        <input type="text"
+               formControlName="description"
+               #description
+               maxlength="100"
+               (focus)="focusHeaderName()"
+               (blur)="blurHeaderName('description')">
+    </div>
+    <div *ngIf="isActiveCategories"
+         class="pointer"
+         (click)="addGroup()"
+         inlineSVG="../../../../../assets/icons/add-folder.svg">
+    </div>
+    <div *ngIf="pageType !== pageTypes.Interfaces"
+        class="pointer info-button"
+        (click)="handleInfo()"
+        title="Additional information"
+        inlineSVG="../../../../../assets/icons/info.svg">
+    </div>
+    <div class="pointer"
+         (mousedown)="handleSubDrag(false)"
+         (mouseup)="handleSubDrag(true)"
+         title="Drag and Drop"
+         inlineSVG="../../../../../assets/icons/drag.svg">
+    </div>
+    <div *ngIf="pageType !== pageTypes.Interfaces" 
+            class="order-container">
+        <input type="text"
+               formControlName="orderName"
+               maxlength="10"
+               appPatternControl
+               (focus)="focusHeaderName()"
+               (blur)="blurHeaderName('orderName')">
+    </div>
+    <mat-icon class="combine-container pointer user-select-none" (click)="showGroup()" *ngIf="!isCombined; else elseBlock">{{isActiveGroup ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</mat-icon>
+</div>
+
+<ng-template #elseBlock>
+    <div class="combine-container">Combined</div>
+</ng-template>

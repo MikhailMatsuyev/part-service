@@ -1,0 +1,73 @@
+<div class="container-button">
+    <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+        <span class="download-button-text">Download as Excel</span>
+        <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+    <button mat-raised-button color="primary" [disabled]="!componentGroup" (click)="connectPerformances()">Connect Component to Performances</button>
+</div>
+
+<div class="container-elements">
+    <app-cards-tree headerName="component" [ngStyle]="styleLeftSide" class="element-values">
+        <div action-header
+                class="collapse pointer user-select-none"
+                [ngClass]="sortingClass$ | async"
+                inlineSVG="../../../../../assets/icons/filter.svg"
+                (click)="colapseTree()">
+        </div>
+        <ng-container>
+            <div class="containter-group">
+                <app-scrollbar>
+                    <div class="component-container pointer" *ngFor="let values of componentValues; trackBy: trackByFn" (click)="collapse(values)">
+                        <div class="header-container">
+                            <div>
+                                <mat-radio-group name="components" [(ngModel)]="componentGroup">
+                                    <mat-radio-button color="primary"
+                                                      [value]="values?.id">
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <div class="text-container" [title]="values.name">{{values.name}}</div>
+                            <div class="action-container">
+                                <div class="action-connect pointer"
+                                     (click)="handleConnect($event, values?.id)"
+                                     inlineSVG="../../../assets/icons/connect.svg"></div>
+                                <mat-icon class="pointer" (click)="handleCollapse($event, values)">{{values.isCollapse ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
+                            </div>
+                        </div>
+                        <div class="steps-container" *ngIf="values?.steps && values.isCollapse" (click)="handleClickSteps($event)">
+                            <mat-radio-group name="steps" class="container-group" [(ngModel)]="componentStep" (ngModelChange)="changeValues($event)">
+                                <mat-radio-button color="primary"
+                                                  class="tree-radio-button"
+                                                  *ngFor="let step of values.steps; trackBy: trackByFn"
+                                                  [value]="step?.id">
+                                    {{step?.name}}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <div class="not-found-steps" *ngIf="values?.steps.length === 0 && values.isCollapse">No component's steps are created for this component</div>
+                        </div>
+                    </div>
+                </app-scrollbar>
+            </div>
+        </ng-container>
+    </app-cards-tree>
+    <div class="resize-block">
+        <div mwlResizable
+             [resizeEdges]="{left: true, right: true}"
+             (resizing)="onResizeEnd($event)">
+            <div inlineSVG="../../../assets/icons/resize.svg"></div>
+        </div>
+    </div>
+    <app-two-headers-table
+        [ngStyle]="styleTable"
+        class="container-table"
+        [infoText]="infoText"
+        [data]="componentValuesTable$ | async"
+        (changeElement)="handleChangeElement($event)">
+    </app-two-headers-table>
+</div>
+
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="downloadExcel(null)">Download all</button>
+  <button mat-menu-item (click)="downloadExcel(componentGroup)">Download selected</button>
+</mat-menu>

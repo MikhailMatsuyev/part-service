@@ -1,0 +1,41 @@
+$backdrop-color: #000000;
+
+.notifications-backdrop
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    background-color: $backdrop-color
+    opacity: 0
+    z-index: 9998
+    transition: opacity .3s
+
+.system-notifications
+    display: block
+    position: fixed
+    z-index: 9999
+    box-sizing: border-box
+    pointer-events: none
+    *
+        box-sizing: border-box
+
+.notifications-leftTop,
+.notifications-leftCenter,
+.notifications-leftBottom
+    left: 10px
+
+.notifications-leftBottom,
+.notifications-rightBottom,
+.notifications-centerBottom
+    bottom: 30px
+
+.notifications-leftTop,
+.notifications-centerTop,
+.notifications-rightTop
+    top: 50px
+
+.notifications-rightTop,
+.notifications-rightCenter,
+.notifications-rightBottom
+    right: 10px

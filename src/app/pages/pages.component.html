@@ -1,0 +1,60 @@
+<mat-sidenav-container class="account-container">
+    <mat-sidenav class="account-container-sidenav"
+                 position="end"
+                 mode="over"
+                 [(opened)]="activePersonMenu"
+                 [fixedInViewport]="true">
+        <div class="acount-title">Actions</div>
+        <mat-list role="list">
+            <mat-list-item class="pointer" role="listitem" (click)="handleProject()">Project Info</mat-list-item>
+            <mat-list-item class="pointer" role="navigation" routerLink="app-settings">App settings</mat-list-item>
+            <mat-list-item class="pointer" role="listitem" (click)="handleOnline()">Online ({{onlineStatus$ | async}})</mat-list-item>
+        </mat-list>
+        <div class="acount-title">Helps</div>
+        <mat-list role="list">
+            <mat-list-item class="pointer" role="listitem">Wiki</mat-list-item>
+            <mat-list-item class="pointer" role="listitem">Documentation</mat-list-item>
+        </mat-list>
+        <div class="acount-title">Profile</div>
+        <mat-list role="list">
+            <mat-list-item class="pointer" role="listitem" (click)="handleChangePassword()">Change password</mat-list-item>
+            <mat-list-item class="pointer" role="listitem" (click)="handleLogout()">Logout</mat-list-item>
+        </mat-list>
+        <div class="version-project">
+            <div>Version {{(projectVersion$ | async)?.code}}</div>
+            <div class="project-db">DB {{(projectVersion$ | async)?.sql}}</div>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <app-toolbar
+            (openPersonMenu)="handlePersonMenu()"
+            (openedNotifications)="opened = $event">
+        </app-toolbar>
+        <mat-drawer-container class="page-container">
+            <mat-drawer mode="over" [(opened)]="opened" position="end">
+                <app-notification *ngFor="let notification of notification$ | async; trackBy: trackByFn"
+                                  [notification]="notification"
+                                  (changeStatus)="changeStatusNotification($event)"
+                                  (closeNotification)="closeNotification($event)">
+                    <app-notification-file *ngIf="notification?.isFile" [notification]="notification"></app-notification-file>
+                    <app-notification-info *ngIf="!notification?.isFile" [notification]="notification"></app-notification-info>
+                </app-notification>
+            </mat-drawer>
+            <mat-drawer-content>
+                <router-outlet></router-outlet>
+                <footer class="footer">
+                    <div>© COPYRIGHT UNITER AB 2018. ALL RIGHTS RESERVED.</div>
+                    <div class="project-name">{{projectInfo?.projectName}}</div>
+                </footer>
+            </mat-drawer-content>
+        </mat-drawer-container>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+<app-system-notifications [notifications]="systemNotifications$ | async"
+                          (closeNotification)="handleCloseNotification($event)">
+</app-system-notifications>
+<app-custom-dialog *ngIf="isActiveNodeInfo$ | async"
+                   [@dialogInOut]="'in'"
+                   [data]="isActiveNodeInfo$ | async"
+                   (closeDialogWindow)="handleCloseDialog()">
+</app-custom-dialog>

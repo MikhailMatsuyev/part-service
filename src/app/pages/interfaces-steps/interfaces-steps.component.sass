@@ -1,0 +1,155 @@
+@import '../../../styles/variable.sass'
+
+.marginright10
+	margin-right: 10px
+
+.tree-radio-button
+	font-size: 13px;
+	margin-bottom: 10px;
+	
+.width450
+	min-width: 450px	
+
+.width400
+	min-width: 400px
+
+.width250
+	width: 250px
+
+.width325
+	width: 325px
+
+.width350
+	min-width: 350px
+
+.width100p
+	width: 100%
+
+.width24p
+    ::ng-deep
+        width: 24%
+
+.container-group
+	display: flex
+	flex-direction: column
+	color: black
+	width: inherit
+	padding: 10px 10px 5px 20px
+
+.app-cards-tree-custom
+    ::ng-deep
+        display: flex
+        flex-direction: column
+        ::ng-deep .mat-toolbar
+            padding: 0
+            height: 40px
+            min-height: 40px
+            border-top-left-radius: 5px
+            border-top-right-radius: 5px
+            background-color: $white !important
+        ::ng-deep .card-container
+            overflow: auto;
+        ::ng-deep .mat-toolbar-row
+            padding: 14px 20px 11px 20px
+            color: #343434
+            box-sizing: border-box
+            height: 100%
+        ::ng-deep .toolbar-header
+            font-size: 12px
+            font-family: 'Roboto'
+            text-transform: uppercase
+        ::ng-deep .overflow-radio
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 250px
+            display: block
+        ::ng-deep .ng-scrollbar-view
+            overflow-x: hidden
+            height: 100% !important
+        ::ng-deep
+            padding: 0 5px 5px 5px
+            ::ng-deep .toolbar-header
+                font-weight: bold
+        .combined-text
+            color: $dark-font-color
+            font-size: 12px
+            font-weight: normal
+            padding: 10px 0 10px 20px
+            border-bottom: 1px solid $white
+        .last-combined
+            margin-bottom: -1px
+        .not-found-text
+            display: flex
+            justify-content: center
+            padding: 10px 0px
+            color: #343434
+            font-size: 12px
+        ::ng-deep .mat-radio-label
+            width: 100%
+            ::ng-deep .mat-radio-label-content
+                white-space: nowrap
+                overflow: hidden
+                text-overflow: ellipsis
+                padding-right: 8px
+        ::ng-deep .mat-checkbox
+            width: 100%
+            ::ng-deep .mat-checkbox-layout
+                display: flex
+                ::ng-deep .mat-checkbox-inner-container
+                    margin-left: 0
+                ::ng-deep .mat-checkbox-label
+                    white-space: nowrap
+                    overflow: hidden
+                    text-overflow: ellipsis
+        .padding-top-0
+            padding-top: 0px
+        .disabled
+            cursor: not-allowed
+            pointer-events: none
+            ::ng-deep .svg-connect-element
+                fill: $grey-color
+
+.scrollbar-view-height-custom
+    ::ng-deep   
+        height: 74vh
+        ::ng-deep .ng-scrollbar-view 
+            display: flex
+            flex-direction: column
+
+.interface-step-padding
+    ::ng-deep   
+        padding-top: 6px
+        padding-bottom: 9px
+
+.user-container
+    display: flex;
+
+.section-toolbar
+    display: flex;
+    padding-bottom: 15px;
+    align-items: center;
+
+.wrapper 
+    height: 100%
+
+.filter-icon-left
+    /deep/.left-filter
+        fill: #343434
+    /deep/.right-filter
+        fill: #ADADAD
+.filter-icon-right
+    /deep/.left-filter
+        fill: #ADADAD
+    /deep/.right-filter
+        fill: #343434
+.resize-block
+    align-self: center
+    padding: 0 5px
+
+.not-found
+    display: flex
+    justify-content: center
+    color: #343434
+    margin: 10px 10px 5px 10px
+    font-size: 13px

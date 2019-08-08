@@ -1,0 +1,36 @@
+<div class="header-modal">
+    <div class="title">Components interfaces links</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+
+<div class="container-components">
+    <div *ngIf="activeInterface && activeInterface.length > 0">
+        <app-warning>
+            <div class="warning-container">
+                <div class="activate-header">Activated Interfaces</div>
+                <div class="interace-content">
+                    <div class="mr-20" *ngFor="let interface of activeInterface">{{interface}}</div>
+                </div>
+            </div>
+        </app-warning>
+    </div>
+    <div class="components-content" [class.components-content-interfaces]="activeInterface && activeInterface.length === 0">
+        <app-scrollbar>
+            <div class="container-tree">
+                <app-tree-interface-link [data]="data?.components"
+                                         (activeLinks)="handleActiveLinks($event)">
+                </app-tree-interface-link>
+            </div>
+        </app-scrollbar>
+    </div>
+</div>
+
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            (click)="onNoClick(false)">
+        Ok
+    </button>
+</mat-dialog-actions>

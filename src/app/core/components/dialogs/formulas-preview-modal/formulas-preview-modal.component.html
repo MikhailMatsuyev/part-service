@@ -1,0 +1,59 @@
+<div class="header-modal">
+    <div class="title">Connected Formulas</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+
+<div class="container-components">
+    <app-scrollbar>
+        <!-- TODO CREATE COMPONENT! -->
+        <div class="container-formulas" *ngFor="let list of data?.listFormuls" [class.formulas-enabled]="list?.enabled">
+            <div class="formulst-row">
+                <div class="formulas">
+                    <div class="formulas-title">Component Series</div>
+                    <div class="formulas-values" [title]="list?.csName">{{list?.csName || 'No data'}}</div>
+                </div>
+                <div class="formulas">
+                    <div class="formulas-title">Component Formula</div>
+                    <div class="formulas-values" [title]="list?.csFormula">{{list?.csFormula || 'No data'}}</div>
+                </div>
+                <div class="formulas">
+                    <div class="formulas-title">Component Span</div>
+                    <div class="formulas-values">{{list?.csSpan ? 'Yes' : 'No'}}</div>
+                </div>
+            </div>
+            <div class="formulas-operand">
+                <div>{{list?.operand}}</div>
+            </div>
+            <div class="formulst-row">
+                <div class="formulas">
+                    <div class="formulas-title">User Factor Formula</div>
+                    <div class="formulas-values" [title]="list?.ufName">{{list?.ufName || 'No data'}}</div>
+                </div>
+                <div class="formulas">
+                    <div class="formulas-title">User Factor</div>
+                    <div class="formulas-values" [title]="list?.ufFormula">{{list?.ufFormula || 'No data'}}</div>
+                </div>
+                <div class="formulas">
+                    <div class="formulas-title">User Factor Span</div>
+                    <div class="formulas-values" [title]="list?.ufSpan">{{list?.ufSpan || 'No data'}}</div>
+                </div>
+            </div>
+            <div class="formulst-row formulas-format">
+                <div class="formulas">
+                    <div class="formulas-title">Value</div>
+                    <div class="formulas-values" [title]="list?.valFormat">{{list?.valFormat || 'No data'}}</div>
+                </div>
+            </div>
+        </div>
+    </app-scrollbar>
+</div>
+
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            [mat-dialog-close]="true" (click)="onNoClick(false)">
+        Ok
+    </button>
+</mat-dialog-actions>

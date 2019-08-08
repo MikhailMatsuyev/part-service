@@ -1,0 +1,103 @@
+$resize-color: #BCBCBC
+$border-color: #E2E2E2
+$warn-color: #F2994A
+
+.header-title
+    padding: 20px 0
+    font-family: Roboto
+    font-style: normal
+    font-weight: 500
+    line-height: normal
+    font-size: 16px
+
+.textarea-block-container
+    padding-bottom: 10px
+
+.close-icon
+    width: 24px
+    height: 24px
+
+.checkbox-container
+    display: flex
+    flex-direction: column
+    
+.content-container
+    display: flex
+    padding: 20px 0
+    border-bottom: 1px solid $border-color
+    height: 72vh
+    overflow-y: auto
+.row
+    display: flex
+    padding: 0 15px 10px
+
+    &-item
+        width: 300px
+        padding: 0 5px
+
+    &-checkbox
+        display: flex
+        align-items: stretch
+        padding: 15px 0
+
+        &-description
+            padding-left: 10px
+            font-family: Roboto
+            font-style: normal
+            font-weight: normal
+            line-height: normal
+            font-size: 12px
+
+        &-item
+            display: flex
+            flex-direction: column
+            justify-content: center
+
+    &-checkbox:not(:first-child)
+        padding-top: 0
+
+.title
+    padding-bottom: 10px
+    font-family: Roboto
+    font-style: normal
+    font-weight: normal
+    line-height: normal
+    font-size: 13px
+    color: #343434
+
+.input
+    font-family: Roboto
+    font-size: 13px
+    color: #343434
+    background-color: #FFFFFF
+    width: calc(100% - 15px)
+    height: 36px
+    border-radius: 4px
+    border: 1px solid #E2E2E2
+    padding-left: 15px
+
+.create
+    .input.ng-invalid:not(.ng-untouched)
+        border-color: $warn-color
+
+.edit
+    .input.ng-invalid
+        border-color: $warn-color
+
+::ng-deep.ng-select.ng-select-single .ng-select-container
+    height: 40px
+    border-color: $border-color
+
+.textarea-container
+    width: 100%
+    position: relative
+    padding-bottom: 10px
+
+.column-direction
+    flex-direction: column
+
+.additional-padding
+    padding: 0 20px
+
+::ng-deep.mat-dialog-actions
+    margin-bottom: 0

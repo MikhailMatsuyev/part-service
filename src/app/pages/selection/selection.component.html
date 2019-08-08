@@ -1,0 +1,214 @@
+<mat-drawer-container class="selection-container">
+    <mat-drawer mode="over" [(opened)]="opened" (closedStart)="handleCloseStart()">
+        <div class="specifications-container">
+            <div class="specifications-header">Specifications</div>
+            <i class="material-icons close-selection pointer" (click)="opened = false">close</i>
+            <div class="specifications-content">
+                <app-scrollbar>
+                    <div *ngFor="let specification of specifications$ | async">
+                        <div class="specifications-content-header">
+                            <span>{{specification?.user}}</span>
+                            <mat-icon class="pointer icon-menu"
+                                      [matMenuTriggerFor]="menuSpecHeader"
+                                      [class.icon-menu-active]="(user$ | async).userId === specification.userId">
+                                more_vert
+                            </mat-icon>
+                        </div>
+                        <div class="specifications-tree">
+                            <app-tree-specification
+                                [data]="specification"
+                                [isActiveSpecification]="activeSpecifications$ | async"
+                                [userModel]="user$ | async"
+                                [downloadMode]="specificationDownloadMode"
+                                (changeDownloadStatus)="handleDownloadStatus($event)"
+                                (addSpecification)="handleAddSpecification($event)"
+                                (addCategory)="handleCategory()"
+                                (selecteNode)="handleSelected($event)"
+                                (changeSetDefault)="handleSetDefault($event)"
+                                (clickInfo)="handleInfoClick($event)"
+                                (deleteSpecification)="handleDelete($event)"
+                                (renameSpecification)="handleRenameSpecification($event)"
+                                (dublicateSpecification)="handleDublicateSpecification($event)">
+                            </app-tree-specification>
+                        </div>
+                    </div>
+                </app-scrollbar>
+            </div>
+            <div class="specifications-footer">
+                <ng-container *ngIf="!specificationDownloadMode; else elseBlock">
+                    <button mat-raised-button
+                        color="primary"
+                        (click)="createSpecifications()">
+                        Create new specification
+                    </button>
+                </ng-container>
+            </div>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="section-toolbar">
+            <div class="specification-button pointer" (click)="opened = true">
+                <span class="file-icon" inlineSVG="../../../assets/icons/file.svg"></span>
+                <span>{{(activeSpecifications$ | async)?.spec || 'Select specification'}}</span>
+            </div>
+            <button mat-raised-button color="primary" (click)="handleSave()">Save</button>
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+                <span class="download-button-text">Download Spec</span>
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="copyMenu">
+                <span class="download-button-text">Copy to clipboard</span>
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+            <button mat-raised-button color="primary" class="revert-primary" [matMenuTriggerFor]="menuPerformance">
+                <div fxLayout="row">
+                    <span class="filter-icon"
+                          inlineSVG="../../../assets/icons/filter.svg" alt="filter">
+                    </span>
+                    <span>Perfomance Sort</span>
+                </div>
+            </button>
+            <mat-slide-toggle
+                color="primary"
+                [checked]="autoReload$ | async"
+                (change)="handleChangeAutoReload($event)">
+                Auto-reload
+            </mat-slide-toggle>
+            <mat-slide-toggle
+                color="primary"
+                [checked]="showAll$ | async"
+                (change)="handleChangeShow($event)">
+                Show all
+            </mat-slide-toggle>
+        </div>
+        <div class="section-container">
+            <div [ngStyle]="styleLeftSide" class="userfactor-tree" [class.tree-loading]="ufTreeSpinner$ | async">
+                <app-cards-tree headerName="User Factors">
+                    <div action-header class="collapse pointer" (click)="colapseUFTree()">Collapse all</div>
+                    <div class="container-tree">
+                        <app-scrollbar>
+                            <app-tree-userfactor [data]="userFactorTree$ | async"
+                                                 (clickInfo)="handleClickInfo($event)"
+                                                 (saveValue)="handleSaveValue($event)"
+                                                 #userFactorTree>
+                            </app-tree-userfactor>
+                        </app-scrollbar>
+                    </div>
+                </app-cards-tree>
+                <mat-progress-spinner mode="indeterminate"
+                                      class="component-tree-spinner"
+                                      color="primary"
+                                      *ngIf="ufTreeSpinner$ | async">
+                </mat-progress-spinner>
+            </div>
+            <div class="section-resize">
+                <div mwlResizable
+                     [resizeEdges]="{left: true, right: true}"
+                     (resizing)="onResizeEnd($event)">
+                    <div inlineSVG="../../../assets/icons/resize.svg"></div>
+                </div>
+            </div>
+            <div [ngStyle]="styleTable" class="component-tree" [class.tree-loading]="csTreeSpinner$ | async">
+                <app-cards-tree headerName="Components">
+                    <div action-header
+                         class="ordering-keys"
+                         *ngIf="isActiveOrderingKey$ | async">
+                        <span>Ordering key</span>
+                        <span class="info-icon pointer" [title]="(orderKeyModel$ | async)?.error">
+                            <div inlineSVG="../../../assets/icons/info-steps.svg"></div>
+                        </span>
+                        <span class="ordering-key-input pointer" (click)="copyTypeKey()">{{orderingKey}}</span>
+                    </div>
+                    <ng-container>
+                        <div class="ordering-key" *ngIf="activeFormula$ | async">
+                            {{activeFormula$ | async}}
+                        </div>
+                        <div class="container-tree">
+                            <app-scrollbar>
+                                <div class="tree-content">
+                                    <app-tree-elements
+                                        [data]="componentsTree$ | async"
+                                        [userModel]="user$ | async"
+                                        [isShowAllMode]="showAll$ | async"
+                                        [performanceSorting]="performanceSelectors$ | async"
+                                        (changeStatusNode)="handleChangeStatusNode($event)"
+                                        (clickAnalyzeState)="handleAnalyzeState($event)"
+                                        (clickInfoNode)="handleClickInfo($event)"
+                                        (clickAnalyzeElements)="handleAnalyzeElements($event)"
+                                        (clickAnalyzeInterfaces)="handleAnalyzeInterfaces($event)"
+                                        (clickTroubleShooting)="handleTroubleShooting($event)">
+                                    </app-tree-elements>
+                                </div>
+                            </app-scrollbar>
+                        </div>
+                    </ng-container>
+                </app-cards-tree>
+                <mat-progress-spinner mode="indeterminate"
+                                      class="component-tree-spinner"
+                                      color="primary"
+                                      *ngIf="csTreeSpinner$ | async">
+                </mat-progress-spinner>
+                <div class="auto-reload-block" (click)="changeActiveReloaded()" *ngIf="isActiveReloadedBlock$ | async">
+                    <div inlineSVG="../../../assets/icons/loader.svg"></div>
+                </div>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="downloadExcel()">XLSX</button>
+    <button mat-menu-item (click)="downloadPDF()">PDF</button>
+    <button mat-menu-item (click)="downloadExpandedExcel()">Expanded XLSX</button>
+    <button mat-menu-item (click)="downloadBackgroundInfo()">Background info</button>
+</mat-menu>
+
+<mat-menu #copyMenu="matMenu">
+        <button mat-menu-item (click)="copySelectedComponents()">Selected components</button>
+        <button mat-menu-item (click)="copyTypeKey()">Type key</button>
+</mat-menu>
+
+<mat-menu #menuPerformance="matMenu" class="selection-list" [overlapTrigger]="false">
+    <div mat-menu-item
+         (click)="handleClickList($event)"
+         class="selection-item"
+         *ngFor="let perfom of performanceSelectors$ | async; trackBy: trackByFn; let index = index">
+        <app-performance-selection
+            [listPerformance]="performance$ | async"
+            [isDisabledRemove]="(performanceSelectors$ | async)?.length === minPerformance"
+            (changeFilter)="handleChangeFilter($event, index, perfom)"
+            (removeListPerformace)="handleRemovePerformance(perfom)">
+        </app-performance-selection>
+    </div>
+    <div mat-menu-item
+         class="add-menu-item"
+         (click)="handleClickAdd($event)"
+         [class.menu-disabled]="isActivePerformanceFilter">
+        <div class="add-container">
+            <div class="add-button">
+                <mat-icon>add</mat-icon>
+            </div>
+            <span class="add-content">Add Select Performance</span>
+        </div>
+    </div>
+</mat-menu>
+
+<ng-template #elseBlock>
+    <button mat-raised-button
+            color="primary"
+            [disabled]="activeDownloadSpec.length === 0"
+            (click)="downloadSpecifications()">
+            Download
+    </button>
+    <button mat-raised-button
+            color="primary"
+            class="discard"
+            (click)="cancelDownload()">
+            Cancel
+    </button>
+</ng-template>
+
+<mat-menu #menuSpecHeader="matMenu" class="menu-specification">
+    <button mat-menu-item (click)="handleAddSpec()">Add spec</button>
+    <button mat-menu-item (click)="handleAddFolder()">Add folder</button>
+</mat-menu>

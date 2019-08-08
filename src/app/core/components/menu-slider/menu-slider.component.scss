@@ -1,0 +1,11 @@
+:host {
+  width: 0px;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  transition: all 0.5s ease;
+  transition-property: width, left;
+  height: 4px;
+  display: block;
+  background-color: #436DA4;
+}

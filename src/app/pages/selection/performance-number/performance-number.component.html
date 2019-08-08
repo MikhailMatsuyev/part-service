@@ -1,0 +1,14 @@
+<div class="number-container">
+    <div class="icon-remove" [class.icon-disabled]="isDisabledRemove" (click)="deleteNumber()">
+        <mat-icon>remove</mat-icon>
+    </div>
+    <div class="input-container">
+        <input placeholder="Top"
+               class="input-number"
+               type="number"
+               [formControl]="control">
+    </div>
+    <div class="icon-add" (click)="addNumber()">
+        <mat-icon>add</mat-icon>
+    </div>
+</div>

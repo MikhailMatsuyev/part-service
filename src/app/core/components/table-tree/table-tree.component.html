@@ -1,0 +1,58 @@
+<div appDropTarget
+     dropZone="groups"
+     class="groups-container"
+     [needGhostNode]="false"
+     (dropEvent)="handleDrop($event)">
+    <app-table-tree-header
+        [pageType]="pageType"
+        [headerSorts]="headerSorts"
+        [headerName]= "serieHeaderName"
+        [isActiveHeader]="checkStatusUserFactor()"
+        (headerChecked)="handleCheckHeader()"
+        (changeHeaderSort)="handleSort($event)">
+    </app-table-tree-header>
+    <div *ngFor="let data of tableData; trackBy: trackByFn">
+        <app-sub-group-header
+                            [pageType]="pageType"
+                            [headerName]="data?.serie"
+                            [description]="data?.description"
+                            [serieDisplay]="data?.display"
+                            [serieActive]="data?.active"
+                            [interfaceAct]="data?.hide"
+                            [orderName]="data?.order"
+                            [isActiveGroup]="data?.isActiveGroup"
+                            [isActiveCategories]="data?.subCategories"
+                            [isCheckedGroup]="checkedGroup(data)"
+                            [appDraggable]="data"
+                            [isCombined]="data?.combined"
+                            [validateDepend]="validateSeriesDepend"
+                            draggableZone="groups"
+                            [validateDraggable]="validateDraggable"
+                            (changeValidateStatus)="handleChangeValidateStatus($event)"
+                            (dragStart)="handleDragStartGroup($event)"
+                            (activeDraggable)="handleDraggable($event)"
+                            (changeSeriaInfo)="handleSeriaInfo(data)"
+                            (headerChecked)="handleHeaderSubGroup(data)"
+                            (changeActiveGroup)="handleActiveGroup(data)"
+                            (changeGroupsInfo)="handleGroupsInfo($event, data)">
+        </app-sub-group-header>
+        <div class="tree-container" *ngIf="!data?.isActiveGroup && !data.combined">
+            <app-steps-group [groups]="data?.steps"
+                            [pageType]="pageType"
+                            [isSelectedStep]="isSelectedSteps(data)"
+                            [activeKeyCode]="activeKeyCode"
+                            [isBlocked]="data?.blocked"
+                            (addStep)="handleAddStep(data)"
+                            (saveStep)="handleSaveStep($event, data)"
+                            (removeStep)="handleRemoveStep($event, data)"
+                            (swapLeft)="handleSwapLeft($event, data)"
+                            (swapRight)="handleSwapRight($event, data)"
+                            (selectStep)="handleSelectStep($event, data)"
+                            (insertStep)="handleInsertStep($event, data)"
+                            (dropSteps)="handleDropStep($event, data)"
+                            (infoClick)="handleInfoClick($event)"
+                            (removeGroupStep)="handleRemoveGroupStep($event, data)">
+            </app-steps-group>
+        </div>
+    </div>
+</div>

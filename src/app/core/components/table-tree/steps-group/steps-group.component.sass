@@ -1,0 +1,61 @@
+@import '../../../../../styles/variable.sass'
+
+$resize-color: #BCBCBC
+
+.groups-container
+    border-radius: 5px
+    border: 1px solid $white
+    padding: 11px 0 42px 11px
+    min-height: 68px
+    max-height: 155px
+    display: flex
+    flex-wrap: wrap
+    box-sizing: border-box
+    overflow: auto
+    justify-content: flex-start
+
+app-steps
+    display: block
+    margin-left: 5px
+    margin-bottom: 5px
+    border: 1px solid transparent
+    border-radius: 5px
+
+.steps-add
+    width: 40px
+    height: 40px
+    color: $primary-button
+    background-color: #F6F6F6
+    display: flex
+    justify-content: center
+    align-items: center
+    border-radius: 5px
+    margin-left: 5px
+
+.selected-step
+    border: 1px solid #F2994A
+
+.dropzone
+    border: 1px dashed #F2994A
+    background-color: #cccccc
+.drag-placeholder
+    background-color: white
+    border-radius: 5px
+
+.resize-handle
+    position: absolute
+    right: 36px
+    bottom: 20px
+    cursor: s-resize
+    font-weight: 600
+    font-size: 14px
+    color: $resize-color
+
+/deep/ mwlResizable
+    box-sizing: border-box
+
+.menu-drag
+    position: absolute
+    top: 0
+    left: 0
+    visibility: hidden

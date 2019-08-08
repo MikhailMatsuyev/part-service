@@ -1,0 +1,133 @@
+<div class="title">
+  <div class="title-block">
+    <div>
+      <span class="title-name">{{data.name}}</span>
+    </div>
+    <div>
+      <span class="hint-name">{{data.description}}</span>
+    </div>
+  </div>
+  <div class="close">
+    <i class="material-icons close-icon pointer" (click)="onNoClick()">close</i>
+  </div>
+</div>
+<div class="hint"></div>
+<form [formGroup]="dialogForms">
+    <div class="sub-title">
+      <span>Group</span>
+    </div>
+    <div class="row">
+      <div class="sub-row">
+        <div class="hint-title">
+          <span>Group name</span>
+        </div>
+        <div class="col-lg2 complete-hint">
+          <div class="wrapper-autocomplete">
+              <input type="text"
+                     #inputComplete
+                     class="autocomplete"
+                     matInput
+                     maxlength="50"
+                     formControlName="Group"
+                     (focus)="isActiveGroup = true"
+                     (blur)="isActiveGroup = false"
+                     [matAutocomplete]="auto">
+              <i class="material-icons expand_more_icon pointer" (click)="handleExpand(inputComplete)">
+                  expand_more
+              </i>
+              <mat-autocomplete autoActiveFirstOption
+                                #auto="matAutocomplete"
+                                (optionSelected)="handleSelected($event, inputComplete)"
+                                [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{ option?.group }}
+                  </mat-option>
+              </mat-autocomplete>
+          </div>
+        </div>
+        <div class="hint-red"
+             *ngIf="isActiveMessage">
+          Enter the User Factor for the selected Group
+        </div>
+      </div>
+      <div class="sub-row">
+        <div class="hint-title">
+          <span>Order priority</span>
+        </div>
+        <div class="col-lg1">
+          <input matInput
+                 formControlName="GroupOrderPriority"
+                 type="text"
+                 (blur)="blurPriority('GroupOrderPriority')"
+                 autocomplete="off"
+                 appPatternControl
+                 maxlength="5">
+        </div>
+      </div>
+    </div>
+    <div class="sub-title">
+      <span>User factor</span>
+    </div>
+    <div class="row">
+      <div class="sub-row">
+        <div class="hint-title">
+          <span>User factor name</span>
+        </div>
+        <div class="col-lg2">
+          <div class="wrapper">
+            <input type="text"
+                   matInput
+                   maxlength="50"
+                   autocomplete="off"
+                   formControlName="Serie">
+          </div>
+        </div>
+        <div class="hint-red"
+             *ngIf="isActiveUserFactorMessage">
+          The User Factor with the same name already exists
+        </div>
+      </div>
+      <div class="sub-row">
+        <div class="hint-title">
+          <span>Order priority</span>
+        </div>
+        <div class="col-lg1">
+          <input matInput
+                 formControlName="OrderPriority"
+                 type="text"
+                 (blur)="blurPriority('OrderPriority')"
+                 appPatternControl
+                 autocomplete="off"
+                 maxlength="5">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="sub-row">
+        <div class="hint-title">
+          <span>Description</span>
+          <span class="hint-grey">No more than {{maxLength}} characters are allowed.</span>
+          <span>{{ dialogForms.get('Description')?.value?.length || 0 }} / {{maxLength}}</span>
+        </div>
+        <div class="col-lg3">
+            <textarea class="textarea"
+                      matInput
+                      rows="2"
+                      cols="45"
+                      placeholder="text"
+                      [maxlength]="maxLength"
+                      formControlName="Description">
+            </textarea>
+        </div>
+      </div>
+    </div>
+</form>
+<mat-dialog-actions class="dialog-buttons">
+  <button mat-button
+          class="confirm"
+          [disabled]="isDisableConfirmButton"
+          (click)="handleConfirm()">
+    Confirm
+  </button>
+  <button mat-button class="discard" [mat-dialog-close]="true" (click)="onNoClick()">Cancel</button>
+</mat-dialog-actions>

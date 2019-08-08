@@ -1,0 +1,4 @@
+<svg width="15" height="14" viewBox="0 0 15 14" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 0L0 7.46411H4V13.4643H6V0Z" class="left-filter"/>
+    <path d="M0 13.4643L6 6.00018H2V0H0V13.4643Z" transform="translate(9)" class="right-filter"/>
+</svg>

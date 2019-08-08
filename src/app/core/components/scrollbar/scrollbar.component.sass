@@ -1,0 +1,12 @@
+@import '../../../../styles/variable.sass'
+
+::ng-deep
+    .custom-scrollbars
+        background-color: $primary-blue-color !important
+
+        &:hover, &:active
+            background-color: darken($primary-blue-color, 10%) !important
+    .ng-scrollbar-thumb
+        background-color: $primary-blue-color !important
+    .-vertical
+        width: 5px

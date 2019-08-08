@@ -1,0 +1,139 @@
+\:host
+    display: flex
+
+.container-button
+    display: flex
+    justify-content: space-between
+
+.buttons-group
+    display: flex
+    align-items: center
+
+.table-container
+    position: relative
+    overflow: auto
+    max-height: 520px
+    flex-grow: 1
+    margin-top: 15px
+    
+.col-left, .col-right
+    display: flex
+
+.col-left
+    width: 60%
+    flex-direction: column
+
+.col-right
+    width: 40%
+    flex-direction: column
+    padding-left: 20px
+
+.dropdown
+    color: #343433
+    align-items: center
+    display: flex
+
+.app-dropdown
+    margin: 0 10px
+    width: 200px
+    max-width: 200px
+    background: #FFFFFF
+    border: 1px solid #E2E2E2
+    box-sizing: border-box
+    border-radius: 4px
+
+
+::ng-deep .dark-theme .mat-table
+    width: 100%
+    background: #FFFFFF
+    border: 1px solid #EFEFEF
+    box-sizing: border-box
+    border-radius: 5px
+
+
+::ng-deep .dark-theme .mat-header-row
+    background-color: #EFEFEF
+    border-radius: 5px 5px 0px 0px
+
+
+::ng-deep .dark-theme .mat-header-cell
+    color: #343434
+    font-size: 12px
+    font-weight: 500
+    font-family: Roboto
+    text-transform: uppercase
+    ::ng-deep .mat-sort-header-button
+        text-transform: uppercase
+
+::ng-deep .dark-theme .mat-cell
+    color: #343434
+    font-size: 12px
+    font-weight: normal
+    font-family: Roboto
+
+::ng-deep .dark-theme td.mat-cell
+    border-bottom-color: #EFEFEF
+
+
+.mat-column-isChecked
+    min-width: 30px
+
+.mat-column-userName, .mat-column-roleName
+    min-width: 300px
+
+::ng-deep.search
+    input
+        width: 360px
+
+.dropdown-description
+    font-family: Roboto
+    font-style: normal
+    font-weight: normal
+    line-height: normal
+    font-size: 12px
+    color: #343434
+
+::ng-deep.accordion-container
+    margin-top: 15px
+
+    .mat-expansion-panel
+        background: #EFEFEF
+        border-radius: 5px
+        margin-bottom: 5px
+
+    .mat-expansion-panel-header-title
+        color: #343434
+
+    .pointer
+        color: #343434
+
+    .mat-expansion-panel-content
+        background: #FFFFFF
+        border: 1px solid #EFEFEF
+        box-sizing: border-box
+        border-radius: 5px
+
+    .mat-expansion-panel-header-description
+        flex-direction: row-reverse
+        margin: 0
+        height: 100%
+        align-items: center
+
+    .mat-content
+        align-items: center
+        height: 100%
+
+    .icon-wrapper
+        display: flex
+        height: 100%
+        width: 40px
+        border-left: 1px solid #FFFFFF
+        align-items: center
+        justify-content: center
+
+    .mat-expansion-panel-header
+        // height: 40px !important
+        padding: 0 0 0 24px
+
+.more-vert
+    color: #343434

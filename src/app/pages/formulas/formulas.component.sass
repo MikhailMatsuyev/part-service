@@ -1,0 +1,172 @@
+@import '../../../styles/variable.sass'
+
+\:host
+    width: 100%
+    display: flex
+    min-width: 100%
+    flex-direction: column
+
+.button-container
+    display: flex
+    button
+        margin-right: 10px
+
+.table-container
+    position: relative
+    overflow: auto
+    flex-grow: 1
+    margin-top: 15px
+
+.table
+    min-width: 2100px
+
+::ng-deep .mat-header-cell .mat-sort-header-arrow
+    display: none
+::ng-deep .dark-theme .mat-form-field-appearance-legacy .mat-form-field-label
+    color: rgba(0,0,0,.54)
+
+::ng-deep .dark-theme .mat-form-field-appearance-legacy .mat-form-field-underline
+    background-color: rgba(0,0,0,.42)
+
+::ng-deep .mat-button-focus-overlay
+    background-color: transparent !important
+
+::ng-deep .dark-theme .mat-table
+    width: 100%
+    background-color: #fff
+
+::ng-deep .dark-theme .mat-header-row
+    background-color: #EFEFEF
+
+::ng-deep .dark-theme .mat-header-cell
+    color: #343434
+    font-size: 12px
+    font-weight: 500
+    font-family: Roboto
+    text-transform: uppercase
+    padding: 0 10px
+    ::ng-deep .mat-sort-header-button
+        text-transform: uppercase
+
+::ng-deep .dark-theme .mat-cell
+    color: #343434
+    font-size: 12px
+    font-weight: normal
+    font-family: Roboto
+    padding: 0 10px
+
+::ng-deep .dark-theme td.mat-cell
+    border-bottom-color: #EFEFEF
+
+::ng-deep .dark-theme .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background, .dark-theme .mat-checkbox-checked.mat-primary .mat-checkbox-background
+    background-color: transparent
+
+.filter-icon
+    margin-left: 10px
+
+.filter-icon-left
+    /deep/.left-filter
+        fill: #343434
+    /deep/.right-filter
+        fill: #ADADAD
+.filter-icon-right
+    /deep/.left-filter
+        fill: #ADADAD
+    /deep/.right-filter
+        fill: #343434
+
+.mat-header-row
+    height: 40px
+
+.header-th,
+    padding: 0 10px
+
+.header-checkbox
+    padding-right: 30px
+
+.pr-20
+    padding-right: 20px
+
+.page-table-container
+    display: flex
+    height: 82vh
+
+.header-th,
+app-performance-input
+    padding: 0 10px
+
+.header-order
+    width: 80px
+
+.filter-icon
+    margin-left: 10px
+
+.filter-icon-left
+    /deep/.left-filter
+        fill: #343434
+    /deep/.right-filter
+        fill: #ADADAD
+.filter-icon-right
+    /deep/.left-filter
+        fill: #ADADAD
+    /deep/.right-filter
+        fill: #343434
+
+.header-with-checkbox
+    display: flex
+    justify-content: center
+    align-items: center
+
+    .mat-checkbox
+        margin-right: 10px
+
+::ng-deep.disabled-cell 
+    input, .ng-value-label
+        color: rgba(52, 52, 52, 0.4)
+
+::ng-deep.hide-dropdown
+    .ng-select-container:hover
+        box-shadow: none
+    .ng-select-container
+        border-color: white !important
+
+        .ng-arrow-wrapper
+            visibility: hidden
+
+    .ng-select-container:focus-within
+        border-color: #ccc !important
+
+        .ng-arrow-wrapper
+            visibility: visible
+
+::ng-deep.hide-input
+    border: none
+    width: 100%
+    font-family: Roboto
+    font-size: 13px
+    color: #333
+
+.mat-column-csFormula
+    min-width: 200px
+
+.mat-column-csSpan
+    min-width: 150px
+
+.mat-column-ufFormula
+    min-width: 350px
+
+.mat-column-generalFormula, .mat-column-visible, .mat-column-generalized
+    min-width: 200px
+
+
+.mat-column-valFormat, .mat-column-order, .mat-column-unit
+    min-width: 100px
+
+.textarea
+    box-sizing: border-box
+    width: 100%
+    resize: none
+
+.scroll-bar
+    display: flex
+    height: calc(100vh - 160px)

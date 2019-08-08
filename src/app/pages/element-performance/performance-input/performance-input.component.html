@@ -1,0 +1,10 @@
+<input
+    #refInput
+    class="table-input"
+    [maxlength]="maxLength"
+    [formControl]="control"
+    [max]="maxValue"
+    [min]="minValue"
+    (blur)="handleFocusOut()"
+    (keydown)="handleKeyDown($event, refInput)"
+    [type]="inputType">

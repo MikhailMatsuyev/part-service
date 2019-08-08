@@ -1,0 +1,86 @@
+<div class="header-modal">
+    <div class="title">Which connections will be downloaded?</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+<div class="container-modal">
+    <mat-slide-toggle
+        class="slide-steps"
+        color="primary"
+        [(ngModel)]="includeSteps">
+        Including steps
+    </mat-slide-toggle>
+    <div class="container-actions">
+        <div class="container-sort">Components Sort</div>
+        <div class="container-buttons">
+            <div *ngFor="let dataSort of dataSorting; let first = first; let last = last; let index = index" class="sorting-container">
+                <div [class.disabled]="last" class="icon-sorting">
+                    <mat-icon (click)="handleSortingDown(dataSort, index, 'dataSorting')">arrow_drop_down</mat-icon>
+                </div>
+                <div [class.disabled]="first" class="icon-sorting mr15">
+                    <mat-icon (click)="handleSortingUp(dataSort, index, 'dataSorting')">arrow_drop_up</mat-icon>
+                </div>
+                <div class="sort-name">{{dataSort?.name}}</div>
+                <mat-radio-group [name]="dataSort?.name" class="container-group">
+                    <mat-radio-button color="primary"
+                                        class="tree-radio-button mr15"
+                                        (change)="handleChangeValue($event, dataSort, 'dataSorting')"
+                                        [checked]="setValue(dataSort, 'name')"
+                                        value="name">
+                        {{dataSort?.labelName}}
+                    </mat-radio-button>
+                    <mat-radio-button color="primary"
+                                        class="tree-radio-button"
+                                        (change)="handleChangeValue($event, dataSort, 'dataSorting')"
+                                        [checked]="setValue(dataSort, 'priority')"
+                                        value="priority">
+                        {{dataSort?.labelPriority}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+    </div>
+    <div class="container-actions">
+        <div class="container-sort">User factor sort</div>
+        <div class="container-buttons">
+            <div *ngFor="let dataSort of userFactorDataSorting; let first = first; let last = last; let index = index" class="sorting-container">
+                <div [class.disabled]="last || index === 1" class="icon-sorting" *ngIf="dataSort?.name !== 'userFactorSteps'">
+                    <mat-icon (click)="handleSortingDown(dataSort, index, 'userFactorDataSorting')">arrow_drop_down</mat-icon>
+                </div>
+                <div [class.disabled]="first" class="icon-sorting mr15" *ngIf="dataSort?.name !== 'userFactorSteps'">
+                    <mat-icon (click)="handleSortingUp(dataSort, index, 'userFactorDataSorting')">arrow_drop_up</mat-icon>
+                </div>
+                <div *ngIf="dataSort?.name === 'userFactorSteps'" class="mr15 ml24">
+                    <mat-icon>lock</mat-icon>
+                </div>
+                <div class="sort-name">{{dataSort?.text}}</div>
+                <mat-radio-group [name]="dataSort?.name" class="container-group">
+                    <mat-radio-button color="primary"
+                                        class="tree-radio-button mr15"
+                                        (change)="handleChangeValue($event, dataSort, 'userFactorDataSorting')"
+                                        [checked]="setValue(dataSort, 'name')"
+                                        value="name">
+                        {{dataSort?.labelName}}
+                    </mat-radio-button>
+                    <mat-radio-button color="primary"
+                                        class="tree-radio-button"
+                                        (change)="handleChangeValue($event, dataSort, 'userFactorDataSorting')"
+                                        [checked]="setValue(dataSort, 'priority')"
+                                        value="priority">
+                        {{dataSort?.labelPriority}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button class="confirm" (click)="handleAll()">All</button>
+    <button mat-button class="confirm" (click)="handleSelected()" [disabled]="!data?.isNotSelected">Selected</button>
+    <button mat-button
+            class="discard"
+            (click)="onNoClick(false)">
+        Cancel
+    </button>
+</mat-dialog-actions>

@@ -1,0 +1,34 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="userfactor-tree">
+    <mat-tree-node *matTreeNodeDef="let node"
+                    matTreeNodeToggle
+                    matTreeNodePadding>
+        <mat-checkbox color="primary"
+                      [checked]="node?.selected"
+                      (change)="handleSelectChange($event, node)">
+            {{node?.name}}
+        </mat-checkbox>
+        <div class="icon-box" *ngIf="node?.rec !== undefined && isAllActive">{{node?.rec ? 'R' : 'P'}}</div>
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild"
+                    matTreeNodePadding>
+        <div class="node-category">
+            <div class="node-category-content">
+                <button mat-icon-button matTreeNodeToggle
+                    [attr.aria-label]="'toggle ' + node.name"
+                    class="tree-toggle pointer">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'arrow_drop_up' : 'arrow_drop_down'}}
+                    </mat-icon>
+                </button>
+                <span matTreeNodeToggle class="category-text pointer">{{node.name}}</span>
+                <span matTreeNodeToggle
+                      class="step-text pointer"
+                      *ngIf="node?.selectedChild"
+                      [title]="node?.selectedChild?.name">
+                    {{node?.selectedChild?.name}}
+                </span>
+            </div>
+        </div>
+    </mat-tree-node>
+</mat-tree>

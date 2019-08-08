@@ -1,0 +1,18 @@
+<div class="selection-container-list" [formGroup]="form">
+    <app-dropdown [list]="listPerformance"
+                  [isObjectMode]="true"
+                  objectFieldParseName="id"
+                  objectFieldText="name"
+                  class="container-dropdown"
+                  formControlName="performance">
+    </app-dropdown>
+    <app-performance-number formControlName="position"></app-performance-number>
+    <div class="slider-container">
+        <span>Asc</span>
+        <mat-slide-toggle formControlName="direction" color="primary"></mat-slide-toggle>
+        <span>Desc</span>
+    </div>
+    <div class="close-button" [class.close-button-disabled]="isDisabledRemove" title="remove" (click)="removePerformance($event)">
+        <mat-icon>close</mat-icon>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="notifications-backdrop" *ngIf="backdrop >= 0" [style.opacity]="backdrop"></div>
+<div class="system-notifications notifications-{{position}}">
+  <app-local-notification *ngFor="let notification of notifications; trackBy: trackByFn"
+                          [@notificationsInOut]="'in'"
+                          [notification]="notification"
+                          [configNotification]="configNotification"
+                          (closeNotification)="handleCloseNotificaions(notification)">
+  </app-local-notification>
+</div>

@@ -1,0 +1,26 @@
+@import '../../../../../styles/variable'
+@import '../../../../../styles/mixins'
+
+.input
+    border-radius: 4px
+    border: 1px solid $border-color
+    @include add-font(normal, 13px, $main-font-color, 15px)
+    height: 16px
+    transition: width 0.2s ease-out
+    width: calc(277px - 40px)
+    padding-bottom: 15px
+
+.input:focus, textarea:focus
+    outline: 1px solid $outline-color
+
+.input.mat-input-element
+    padding: 11px 20px 11px 14px
+
+.mat-dialog-actions
+    margin-bottom: 0
+
+.container-modal
+    padding: 20px
+
+.input-title
+    padding-bottom: 10px

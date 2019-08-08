@@ -1,0 +1,180 @@
+<div class="action-container">
+    <button mat-raised-button color="primary" (click)="createNew()">New</button>
+    <button mat-raised-button color="primary" [disabled]="!checkedSteps" (click)="delete()">Delete</button>
+    <button mat-raised-button color="primary" [disabled]="!checkedSteps" (click)="downloadExcel()">Download as Excel</button>
+</div>
+
+<div class="page-table-container">
+    <div class="table-container">
+        <table mat-table [dataSource]="performances" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef class="pr-20"></th>
+                <td mat-cell *matCellDef="let element" class="pr-20">
+                    <mat-radio-group name="group"
+                                        class="container-group"
+                                        [(ngModel)]="componentGroup"
+                                        (ngModelChange)="changeValues($event, element)">
+                        <mat-radio-button color="primary"
+                                            class="tree-radio-button"
+                                            [value]="element?.id">
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="isChecked">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox color="primary"
+                                    [checked]="checkedAllSteps"
+                                    (change)="handleSelectAllChange($event)">
+                    </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox color="primary"
+                                    [checked]="element?.isChecked"
+                                    (change)="handleCheck($event, element)">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="name" class="header-th">
+                    Performance
+                    <div class="filter-icon pointer"
+                            title="Performance"
+                            [ngClass]="setFilterClass('name')"
+                            (click)="filterChange(true, ['name'])"
+                            inlineSVG="../../../assets/icons/filter.svg">
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <app-performance-input
+                        [data]="element.name"
+                        [maxLength]="255"
+                        [isRequired]="true"
+                        [validateDepend]="validateName"
+                        (changeControlStatus)="handleControlPerformance($event)"
+                        (changeValue)="handleChangeValue($event, element, 'name')">
+                    </app-performance-input>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="unit">
+                <th mat-header-cell *matHeaderCellDef class="header-th">Unit</th>
+                <td mat-cell *matCellDef="let element">
+                    <app-performance-input
+                        [data]="element.unit"
+                        [maxLength]="20"
+                        (changeValue)="handleChangeValue($event, element, 'unit')">
+                    </app-performance-input>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef class="header-th">Description</th>
+                <td mat-cell *matCellDef="let element">
+                    <app-performance-input
+                        [data]="element.description"
+                        [maxLength]="1000"
+                        (changeValue)="handleChangeValue($event, element, 'description')">
+                    </app-performance-input>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="calculate">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div title="Calculate"
+                            class="header-checkbox"
+                            inlineSVG="../../../assets/icons/calculate.svg">
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox color="primary"
+                                    class="header-checkbox"
+                                    [checked]="element.calculate"
+                                    (change)="handleCheckTable($event, element, 'calculate')">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="display">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div title="Display performance"
+                            class="header-checkbox"
+                            inlineSVG="../../../assets/icons/v-visible.svg">
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox color="primary"
+                                    class="header-checkbox"
+                                    [checked]="element.display"
+                                    (change)="handleCheckTable($event, element, 'display')">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="displayText">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div title="Display text"
+                            class="header-checkbox"
+                            inlineSVG="../../../assets/icons/t-visible.svg">
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox color="primary"
+                                    class="header-checkbox"
+                                    [checked]="element.displayText"
+                                    (change)="handleCheckTable($event, element, 'displayText')">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="highlight">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div title="Highlight performance value"
+                            class="header-checkbox"
+                            inlineSVG="../../../assets/icons/h-visible.svg">
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox color="primary"
+                                    class="header-checkbox"
+                                    [checked]="element.highlight"
+                                    (change)="handleCheckTable($event, element, 'highlight')">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="order">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="order" class="header-th header-order">
+                    Priority
+                    <div class="filter-icon pointer"
+                            title="Priority"
+                            [ngClass]="setFilterClass('order')"
+                            (click)="filterChange(true, ['order', 'name'])"
+                            inlineSVG="../../../assets/icons/filter.svg">
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="header-order">
+                    <app-performance-input
+                        [data]="element.order"
+                        [maxLength]="6"
+                        [maxValue]="999999"
+                        [minValue]="0"
+                        inputType="number"
+                        (changeValue)="handleChangeValue($event, element, 'order')">
+                    </app-performance-input>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+    <app-unit-pricing [settings]="functionsSettings$ | async"
+                      (saveForm)="handleSaveForm($event)"
+                      (displayChange)="handleDisplayChange($event)"
+                      (chooseComponent)="handleChooseComponent($event)">
+    </app-unit-pricing>
+</div>

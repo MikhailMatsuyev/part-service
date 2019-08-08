@@ -1,0 +1,65 @@
+::ng-deep .page-container
+    padding: 20px 5px 0 30px
+    width: 100%;
+    height: calc(100vh - 80px);
+    box-sizing: border-box
+    background-color: white !important
+    .mat-drawer
+        width: 270px
+        background-color: white
+        color: black
+\:host
+    display: flex
+    flex-direction: column
+    min-width: 100vw
+    min-height: calc(99vh - 25px)
+    height: calc(99vh - 25px)
+
+.account-container
+    .account-container-sidenav
+        width: 200px
+        height: 375px
+        background-color: #ffffff
+        padding: 15px 35px 10px 20px
+        color: #343434
+        display: flex
+        flex-direction: column
+    .acount-title
+        font-weight: 500
+        font-size: 14px
+        line-height: 25px
+    ::ng-deep
+        .mat-list-item
+            color: #343434
+            font-size: 13px
+            height: 26px
+            line-height: 26px
+            .mat-list-item-content
+                padding: 0
+    .version-project
+        color: #BCBCBC
+        font-size: 13px
+        line-height: 26px
+        margin-top: 16px
+        .project-db
+            font-size: 11px
+::ng-deep
+    .mat-list-item-focus
+        outline: none !important
+
+.footer
+    position: fixed
+    left: 0
+    bottom: 0
+    width: 100%
+    background-color: #EFEFEF
+    color: #343434
+    font-size: 11px
+    height: 25px
+    padding: 7px 0 5px 30px
+    box-sizing: border-box
+    display: flex
+    align-items: center
+    justify-content: center
+    .project-name
+        margin-left: 10px

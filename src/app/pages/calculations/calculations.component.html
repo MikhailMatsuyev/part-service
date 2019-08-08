@@ -1,0 +1,117 @@
+<app-calculations-header [textChanges]="textChanges$ | async"
+                         [valuesWithStatusUF]="valuesWithStatusUF$ | async"
+                         [valuesWithStatusCS]="valuesWithStatusCS$ | async"
+                         [userFactor]="userFactor$ | async"
+                         [componentSeries]="componentSeries$ | async"
+                         [defaulItemSeries]="defaulItemSeries$ | async"
+                         [defaultItemUserFactor]="defaultItemUserFactor$ | async"
+                         [isDisabledUpdateButton]="isDisabledUpdateButton"
+                         (changeUserFactorStep)="handleChangeUserFactorStep($event)"
+                         (changeComponentStep)="handleChangeComponentStep($event)"
+                         (changeUserFactor)="handleChangeUserFactor($event)"
+                         (changeHeaders)="swapHeader($event)"
+                         (clickBlankX)="handleBlankX($event)"
+                         (syncCalculation)="syncCalculations($event)"
+                         (changeComponent)="handleChangeComponent($event)"
+                         (clickError)="handleError($event)"
+                         (autoGenerate)="updateManual()"
+                         (cancelGenerate)="cancelUpdating()"
+                         (clickHelp)="handleHelp()">
+    <div class="table-containers" table-recommendation>
+        <app-scrollbar [trackX]="true" [trackY]="true">
+            <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="csv" sticky>
+                    <th mat-header-cell *matHeaderCellDef class="sticky-column">{{componentName || 'Component name'}}</th>
+                    <td mat-cell *matCellDef="let element" class="sticky-column">{{element?.csv}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="ufv" sticky>
+                    <th mat-header-cell *matHeaderCellDef class="sticky-column shadow-cell">{{userFactorName || 'User factor name'}}</th>
+                    <td mat-cell *matCellDef="let element" class="sticky-column shadow-cell">{{element?.ufv}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="rec">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells">Recommendation</th>
+                    <td mat-cell *matCellDef="let element" class="table-cells" [ngClass]="setRecommendationsStatus(element)">
+                        {{setRecommendationsText(element)}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="csvVal">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells">Value</th>
+                    <td mat-cell *matCellDef="let element" class="table-cells">{{element?.csvVal}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="csvMinPos">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells">Min Possible</th>
+                    <td mat-cell *matCellDef="let element" class="table-cells">{{element?.csvMinPos}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="csvMaxPos">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells">Max Possible</th>
+                    <td mat-cell *matCellDef="let element" class="table-cells">{{element?.csvMaxPos}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="csvMinRec">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells">Min Recommended</th>
+                    <td mat-cell *matCellDef="let element" class="table-cells">{{element?.csvMinRec}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="csvMaxRec">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells">Max Recommended</th>
+                    <td mat-cell *matCellDef="let element" class="table-cells">{{element?.csvMaxRec}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="ufvVal">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells">Value</th>
+                    <td mat-cell *matCellDef="let element" class="table-cells">{{element?.ufvVal}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="ufvMinPos">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells">Min Possible</th>
+                    <td mat-cell *matCellDef="let element" class="table-cells">{{element?.ufvMinPos}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="ufvMaxPos">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells">Max Possible</th>
+                    <td mat-cell *matCellDef="let element" class="table-cells">{{element?.ufvMaxPos}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="ufvMinRec">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells">Min Recommended</th>
+                    <td mat-cell *matCellDef="let element" class="table-cells">{{element?.ufvMinRec}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="ufvMaxRec">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells">Max Recommended</th>
+                    <td mat-cell *matCellDef="let element" class="table-cells">{{element?.ufvMaxRec}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Component" sticky>
+                    <th mat-header-cell *matHeaderCellDef class="sticky-column">Component</th>
+                </ng-container>
+
+                <ng-container matColumnDef="UserFactor" sticky>
+                    <th mat-header-cell *matHeaderCellDef class="sticky-column shadow-cell">User Factor</th>
+                </ng-container>
+
+                <ng-container matColumnDef="recomend">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells"></th>
+                </ng-container>
+
+                <ng-container matColumnDef="ComponentSpan">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells text-center" colspan="5">Component Span</th>
+                </ng-container>
+
+                <ng-container matColumnDef="UserFactorSpan">
+                    <th mat-header-cell *matHeaderCellDef class="table-cells text-center" colspan="5">User Factor Span</th>
+                </ng-container>
+
+                <tr class="first-header" mat-header-row *matHeaderRowDef="['Component', 'UserFactor', 'recomend', 'ComponentSpan', 'UserFactorSpan']; sticky: true"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </app-scrollbar>
+    </div>
+</app-calculations-header>

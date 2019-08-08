@@ -1,0 +1,107 @@
+<div class="container-button">
+    <button mat-raised-button color="primary" (click)="handleDownload()">
+        Download as Excel
+    </button>
+    <button mat-raised-button color="primary" (click)="connectPerformances()" [disabled]="!(countFormulas$ | async)">
+        <span>Connected Formulas&nbsp;</span>
+        <span>({{countFormulas$ | async}})</span>
+    </button>
+    <div class="dropdown">
+        <div>Display:</div>
+        <app-dropdown [list]="displayComponents"
+                      [defaultItem]="defaultItem"
+                      (changeItem)="handleChangeDisplay($event)">
+        </app-dropdown>
+    </div>
+</div>
+
+<div class="component-containers">
+    <app-cards-tree class="component-cards" headerName="Component">
+        <ng-container action-header>
+            <mat-checkbox [checked]="allCheckbox$ | async" (change)="changeHeader($event)" color="warn"></mat-checkbox>
+        </ng-container>
+        <ng-container>
+            <div class="containter-group">
+                <app-scrollbar>
+                    <div class="component-container pointer"
+                         *ngFor="let values of componentSeries$ | async; trackBy: trackByFn">
+                        <div class="header-container">
+                            <div>
+                                <mat-radio-group name="components"
+                                                 [(ngModel)]="componentGroup"
+                                                 (ngModelChange)="changeComponentsSeries($event)">
+                                    <mat-radio-button color="primary"
+                                                      [value]="values?.id">
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <div class="text-container" [title]="values.name">{{values.name}}</div>
+                            <mat-checkbox [checked]="values?.checked" (change)="handleChange($event, values?.id)" color="primary"></mat-checkbox>
+                        </div>
+                    </div>
+                    <div class="not-found-text" *ngIf="!(componentSeries$ | async)">No Component is created</div>
+                </app-scrollbar>
+            </div>
+        </ng-container>
+    </app-cards-tree>
+    <div class="combined-container">
+        <app-cards-tree class="combine-cards" headerName="Combine Components">
+            <ng-container action-header>
+                <div class="action-connect pointer"
+                     inlineSVG="../../../assets/icons/connect.svg"
+                     title="Connect"
+                     [class.disabled]="!componentGroup"
+                     (click)="handleCombine()">
+                </div>
+            </ng-container>
+            <ng-container>
+                <app-scrollbar>
+                    <div class="combined-text" [class.last-combined]="last" *ngFor="let combinedComponent of combinedComponent$ | async; let last = last">
+                        {{combinedComponent?.name}}
+                    </div>
+                    <div class="not-found-text" *ngIf="(combinedComponent$ | async)?.length === 0">
+                        {{componentGroup ? 'No matching records found' : 'No component is selected'}}
+                    </div>
+                </app-scrollbar>
+            </ng-container>
+        </app-cards-tree>
+        <app-cards-tree class="combine-cards combine-cards-factor" headerName="Connect Component to User Factors">
+            <ng-container action-header>
+                <div class="action-connect pointer"
+                     [class.disabled]="!componentGroup"
+                     (click)="handleCombineUserFactor()"
+                     title="Connect"
+                     inlineSVG="../../../assets/icons/connect.svg">
+                </div>
+            </ng-container>
+            <ng-container>
+                <app-scrollbar>
+                    <div class="combined-text" [class.last-combined]="last" *ngFor="let connectedFactor of connectedUserFactor$ | async; let last = last">
+                        {{connectedFactor?.name}}
+                    </div>
+                    <div class="not-found-text" *ngIf="(connectedUserFactor$ | async)?.length === 0">
+                        {{componentGroup ? 'No matching records found' : 'No component is selected'}}
+                    </div>
+                </app-scrollbar>
+                <div class="combined-footer" *ngIf="componentGroup">
+                    <mat-checkbox color="primary"
+                                    [checked]="hasFactive$ | async"
+                                    (change)="handleFictive($event)">
+                        Fictive
+                    </mat-checkbox>
+                </div>
+            </ng-container>
+        </app-cards-tree>
+    </div>
+    <app-cards-connections
+        class="cards-connections"
+        [class.cards-fullscreen]="isFullscreenMode"
+        [disabledFullscreen]="!componentGroup"
+        headerName="Components connections"
+        [visNetworkData]="visNetworkData"
+        (changeDepth)="handleChangeDepth($event)"
+        (changeFullScreen)="handleFullScreen($event)"
+        (netWorkClick)="handleNetWorkClick($event)"
+        (netWorkDoubleClick)="handleDoubleClick($event)">
+    </app-cards-connections>
+</div>

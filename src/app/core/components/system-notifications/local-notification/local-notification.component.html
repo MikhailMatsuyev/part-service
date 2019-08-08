@@ -1,0 +1,4 @@
+<div class="notification__container" (click)="onClick()">
+    <mat-icon class="notification__icon" [ngClass]="notification?.type">warning</mat-icon>
+    <div class="notification__text" [title]="notification?.text">{{notification?.text}}</div>
+</div>

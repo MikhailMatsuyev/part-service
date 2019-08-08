@@ -1,0 +1,27 @@
+<div class="header-modal">
+    <div class="title">Push to recommendations</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+
+<div class="container-modal">
+    <mat-radio-group name="group" class="container-group">
+        <mat-radio-button color="primary"
+                          class="tree-radio-button"
+                          *ngFor="let recomendation of recomendationTypes$ | async; trackBy: trackByFn"
+                          (change)="changeType(recomendation)"
+                          [checked]="recomendation?.isActive"
+                          [value]="recomendation?.type">
+            {{recomendation?.name}}
+        </mat-radio-button>
+    </mat-radio-group>
+</div>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            (click)="confirm()">
+        Ok
+    </button>
+    <button mat-button class="discard" [mat-dialog-close]="true" (click)="onNoClick(false)">Cancel</button>
+</mat-dialog-actions>

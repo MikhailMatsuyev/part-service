@@ -1,0 +1,49 @@
+<div class="title">
+    <div class="title-block">
+        <span class="title-name">Connect Component to Performances</span>
+    </div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+<div class="container-connection">
+    <app-scrollbar>
+        <div class="component-container">
+            <mat-radio-group name="group" class="container-group" [(ngModel)]="componentGroup" (ngModelChange)="changeValues($event)">
+                <mat-radio-button color="primary"
+                                  class="tree-radio-button"
+                                  *ngFor="let step of componentValues$ | async; trackBy: trackByFn"
+                                  [value]="step?.id">
+                    {{step?.name}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </app-scrollbar>
+    <app-scrollbar>
+        <div class="performance-container">
+            <ng-container *ngIf="performance && performance.length > 0; else elseBlock">
+                <div class="performance-select">
+                    <mat-checkbox color="primary"
+                                  [checked]="checkedAllSteps"
+                                  (change)="handleSelectAllChange($event)">
+                        Select All
+                    </mat-checkbox>
+                </div>
+                <div class="checkbox-container" *ngFor="let step of performance; trackBy: trackByFn">
+                    <mat-checkbox color="primary" [checked]="checkedSteps(step?.id, step?.isChecked)" (change)="handleStepChange($event, step?.id)">{{step?.name}}</mat-checkbox>
+                </div>
+            </ng-container>
+            <ng-template #elseBlock>
+                No performances are created for selection
+            </ng-template >
+        </div>
+    </app-scrollbar>
+</div>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            (click)="confirm()">
+        Save
+    </button>
+    <button mat-button class="discard" [mat-dialog-close]="true" (click)="onNoClick(false)">Cancel</button>
+</mat-dialog-actions>

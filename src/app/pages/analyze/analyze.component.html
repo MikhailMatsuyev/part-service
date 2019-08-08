@@ -1,0 +1,113 @@
+<div class="analyze-buttons">
+    <div class="buttons-header">Component</div>
+    <div class="dropdown-container">
+        <app-dropdown [list]="componentSeries$ | async"
+                      [isObjectMode]="true"
+                      [defaultItem]="defaulItemSeries$ | async"
+                      objectFieldParseName="Id"
+                      objectFieldText="Name"
+                      (changeItem)="handleChangeSeries($event)">
+        </app-dropdown>
+    </div>
+    <div class="dropdown-container">
+        <app-dropdown [list]="componentModes"
+                      defaultItem="Deselect Mode"
+                      (changeItem)="handleChangeMode($event)">
+        </app-dropdown>
+    </div>
+    <div class="dropdown-container">
+        <app-dropdown [list]="combinedUser"
+                      [defaultItem]="defaultDependMode$ | async"
+                      [isObjectMode]="true"
+                      objectFieldParseName="value"
+                      objectFieldText="name"
+                      (changeItem)="handleChangeDependent($event)">
+        </app-dropdown>
+    </div>
+</div>
+
+<div class="groups-container"
+     [ngStyle]="style"
+     mwlResizable
+     [validateResize]="validate"
+     (resizing)="onResizeEnd($event)">
+    <div class="mat-checkboxes"
+         *ngFor="let values of listSeries$ | async; trackBy: trackByFn"
+         color="primary">
+        <div class="name-checkboxes-group">{{values?.serie}}</div>
+        <mat-checkbox *ngFor="let val of values.steps; trackBy: trackByFn"
+                      [value]="val?.compId"
+                      [title]="val?.comp"
+                      [checked]="val?.checked"
+                      (change)="handleClickComponentStepChB( $event, val?.compId)">
+            {{val.comp}}
+        </mat-checkbox>
+    </div>
+    <i class="material-icons resize-handle"
+       mwlResizeHandle
+       [resizeEdges]="{bottom: true}">
+        dehaze
+    </i>
+</div>
+
+<div class="spinner-container" *ngIf="(dataSource$ | async).length === 0">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="table-containers" table-recommendation>
+    <app-scrollbar *ngIf="(dataSource$ | async).length > 0" [trackX]="true" [trackY]="true">
+        <table mat-table [dataSource]="dataSource$ | async">
+           <ng-container matColumnDef="USER FACTOR">
+                <th mat-header-cell *matHeaderCellDef class="table-cells sticky-column-top" >
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="STEPCIRCLES">
+                <th mat-header-cell
+                    *matHeaderCellDef
+                    class="table-cells text-center sticky-column-top"
+                    [attr.colspan]="(displayedColumns$ | async).length-1"
+                >
+                    <div class="sticky-row">
+                        STEP
+                        <div class="icon-status step-circle-1"></div><span>1-3</span>
+                        <div class="icon-status step-circle-2"></div><span>4</span>
+                        <div class="icon-status step-circle-3"></div><span>5</span>
+                        <div class="icon-status step-circle-4"></div><span>>5</span>
+                    </div>
+                </th>
+            </ng-container>
+
+            <ng-container *ngFor="let column of columnsName$|async ; trackBy: trackByFn" [matColumnDef]="column.key">
+                <th mat-header-cell
+                    *matHeaderCellDef
+                    class="sticky-column pl-20 bottom-row-header">
+                    <div *ngIf="column.header===''" class="header-transform">
+                        <div class="userFactorStep">{{(userFactorStep$|async)[0].key}}</div>
+                        <div class="userFactorStep">{{(userFactorStep$|async)[1].key}}</div>
+                        <div class="transform-arrows pointer"
+                             inlineSVG="../../../assets/icons/arrows.svg"
+                             (click)="switchHeadersTable()">
+                        </div>
+                    </div>
+                    {{ column.header }}
+                </th>
+                <td mat-cell
+                    *matCellDef="let row"
+                    class="shadow-cell light-cell pl-20 cell-border-bottom"
+                    >
+                    {{ row[column.key]?.stepUF}}
+                    <div class="flex-container space-between">
+                        <div class="stepUFName">{{ row[column.key]?.name}}</div>
+                        <div class="flex-container space-end">
+                            <div title="Possible" [style.color]="getStyle(row[column.key]?.pos)" class="marginR10">{{ row[column.key]?.pos }}/</div>
+                            <div title="Recommended" [style.color]="getStyle(row[column.key]?.rec)">{{ row[column.key]?.rec }}</div>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="(arrayForTableTopRow$| async);" ></tr>
+            <tr mat-header-row *matHeaderRowDef="(displayedColumns$| async);" ></tr>
+            <tr mat-row *matRowDef="let row; columns: (displayedColumns$| async)"></tr>
+        </table>
+    </app-scrollbar>
+</div>

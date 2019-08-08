@@ -1,0 +1,49 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="userfactor-tree">
+    <mat-tree-node *matTreeNodeDef="let node"
+                   matTreeNodeToggle
+                   matTreeNodePadding>
+        <span class="pointer node-step">
+            <mat-radio-group [name]="node?.groupId" color="primary">
+                <mat-radio-button [value]="node?.id"
+                                  color="primary"
+                                  [checked]="node?.selected"
+                                  (change)="changeModel(node)">
+                    {{node?.name}}
+                </mat-radio-button>
+            </mat-radio-group>
+            <span class="info-icon pointer"
+                  *ngIf="node?.info"
+                  (click)="handleClickInfo(node)">
+                <div inlineSVG="../../../../assets/icons/info-steps.svg"></div>
+            </span>
+        </span>
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild"
+                   matTreeNodePadding
+                   [class.first-level]="isFirstLevelNode(node)">
+        <div class="node-category">
+            <div class="node-category-content">
+                <button mat-icon-button matTreeNodeToggle
+                    [attr.aria-label]="'toggle ' + node.name"
+                    class="tree-toggle pointer">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'arrow_drop_up' : 'arrow_drop_down'}}
+                    </mat-icon>
+                </button>
+                <span matTreeNodeToggle class="category-text pointer">{{node.name}}</span>
+                <span matTreeNodeToggle
+                      class="step-text pointer"
+                      *ngIf="node?.selectedChild"
+                      [title]="node?.selectedChild?.name">
+                    {{node?.selectedChild?.name}}
+                </span>
+                <span class="info-icon pointer"
+                      *ngIf="node?.info"
+                      (click)="handleClickInfo(node)">
+                    <div inlineSVG="../../../../assets/icons/info-steps.svg"></div>
+                </span>
+            </div>
+        </div>
+    </mat-tree-node>
+</mat-tree>

@@ -1,0 +1,39 @@
+\:host
+    display: block
+
+.notification__container
+    background: #fff
+    display: flex
+    padding: 9px 15px 9px 10px
+    align-items: center
+    margin-bottom: 20px
+    border-radius: 4px
+    box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.25)
+    pointer-events: auto
+    cursor: pointer
+    .notification__icon
+        margin-right: 10px
+        width: 18px
+        height: 16px
+        font-size: 20px
+        line-height: 16px
+        &.danger
+            color: #EB5757
+        &.warning
+            color: #F2994A
+        &.success
+            color: #219653
+    .notification__text
+        font-size: 12px
+        color: #343434
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+    &-show
+        transform: translate(0, 0)
+        opacity: 1
+    &-remove
+        max-height: 0
+        overflow: hidden
+        transform: translate(0, 50%)
+        opacity: 0

@@ -1,0 +1,244 @@
+<div class="buttons-container">
+    <button mat-raised-button color="primary" (click)="createNew()">New</button>
+    <button mat-raised-button color="primary" [disabled]="!isDeleteAndDownloadEnable" (click)="downloadExcel()">Download as Excel</button>
+    <button mat-raised-button color="primary" [disabled]="!isEditAndVerifyEnable" (click)="edit()">Edit</button>
+    <button mat-raised-button color="primary" [disabled]="!isDeleteAndDownloadEnable" (click)="delete()">Delete</button>
+    <button mat-raised-button color="primary" [disabled]="!isEditAndVerifyEnable" (click)="veryfing()">Veryfing formula values</button>
+</div>
+
+<div class="table-container">
+    <app-scrollbar class="scroll-bar" [trackX]="true">
+        <table class="table"
+               mat-table
+               [dataSource]="dataSource"
+               matSort
+               matSortDisableClear="true"
+               matSortActive="csName"
+               matSortDirection="asc"
+               (matSortChange)="sortData($event)"
+               class="mat-elevation-z8">
+            <ng-container matColumnDef="checkbox">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox color="primary"
+                                    (change)="$event ? masterToggle() : null"
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-checkbox color="primary"
+                                    (click)="$event.stopPropagation()"
+                                    (blur)="saveFormula(row)"
+                                    (change)="$event ? selection.toggle(row) : null"
+                                    [checked]="selection.isSelected(row)"></mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="enabled">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="header-with-checkbox">
+                        <mat-checkbox color="primary"
+                                        (change)="$event ? enableToggle() : null"
+                                        [checked]="checkEnableValues() && isAllEnableSelected()"
+                                        [indeterminate]="checkEnableValues() && !isAllEnableSelected()"></mat-checkbox>
+                        <span>ENABLE </span>
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-checkbox color="primary"
+                                    (change)="row.enabled = $event.checked; saveEnabled(row)"
+                                    [checked]="row.enabled"></mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="csName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    COMPONENT 
+                    <div 
+                        class="filter-icon pointer"
+                        title="COMPONENT"
+                        [ngClass]="setFilterClass('csName')"
+                        inlineSVG="../../../assets/icons/filter.svg">
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <app-dropdown objectFieldParseName="id"
+                                    class="hide-dropdown"
+                                    objectFieldText="name"
+                                    [isObjectMode]="true"
+                                    [list]="dropdownCS | async"
+                                    (blur)="saveFormula(row)"
+                                    (changeItem)="row.csId = $event"
+                                    [defaultItem]="row.csId"></app-dropdown>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="csFormula">
+                <th mat-header-cell *matHeaderCellDef>
+                    COMPONENT FORMULA
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <textarea autosize
+                                [value]="row.csFormula"
+                                class="textarea hide-input"
+                                (blur)="saveFormula(row)"
+                                [(ngModel)]="row.csFormula"></textarea>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="csSpan">
+                <th mat-header-cell *matHeaderCellDef>
+                    COMPONENT SPAN 
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-checkbox color="primary"
+                                    (change)="row.csSpan = $event.checked; saveFormula(row)"
+                                    [checked]="row.csSpan"></mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="operand">
+                <th mat-header-cell *matHeaderCellDef>
+                    OPERAND 
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <app-dropdown class="hide-dropdown"
+                                    [list]="dropdownOperand"
+                                    (blur)="saveFormula(row)"
+                                    (changeItem)="row.operand = $event"
+                                    [defaultItem]="row.operand"></app-dropdown>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ufName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    USER FACTOR 
+                    <div 
+                        class="filter-icon pointer"
+                        title="USER FACTOR"
+                        [ngClass]="setFilterClass('ufName')"
+                        inlineSVG="../../../assets/icons/filter.svg">
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <app-dropdown objectFieldParseName="id"
+                                    class="hide-dropdown"
+                                    objectFieldText="name"
+                                    [isObjectMode]="true"
+                                    (blur)="saveFormula(row)"
+                                    [list]="dropdownUF | async"
+                                    (changeItem)="row.ufId = $event"
+                                    [defaultItem]="row.ufId"></app-dropdown>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ufFormula">
+                <th mat-header-cell *matHeaderCellDef>
+                    USER FACTOR FORMULA 
+                </th>
+                <td mat-cell [ngClass]="isDisabledCell(row)" *matCellDef="let row">
+                    <textarea autosize
+                                [value]="row.ufFormula"
+                                class="textarea hide-input"
+                                (blur)="saveFormula(row)"
+                                [(ngModel)]="row.ufFormula"></textarea>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ufSpan">
+                <th mat-header-cell *matHeaderCellDef>
+                    USER FACTOR SPAN TYPE 
+                </th>
+                <td mat-cell [ngClass]="isDisabledCell(row)" *matCellDef="let row">
+                    <app-dropdown class="hide-dropdown"
+                                    [list]="dropdownUserSpans"
+                                    (blur)="saveFormula(row)"
+                                    (changeItem)="row.ufSpan = $event"
+                                    [defaultItem]="row.ufSpan"></app-dropdown>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="unit">
+                <th mat-header-cell *matHeaderCellDef>
+                    VALUE UNIT 
+                </th>
+                <td mat-cell [ngClass]="isDisabledCell(row)" *matCellDef="let row">
+                    <textarea autosize
+                                [value]="row.unit"
+                                class="textarea hide-input"
+                                (blur)="saveFormula(row)"
+                                [(ngModel)]="row.unit"></textarea>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="generalFormula">
+                <th mat-header-cell *matHeaderCellDef>
+                    GENERALIZED FORMULA 
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <textarea autosize
+                                [value]="row.generalFormula"
+                                class="textarea hide-input"
+                                (blur)="saveFormula(row)"
+                                [(ngModel)]="row.generalFormula"></textarea>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="generalized">
+                <th mat-header-cell *matHeaderCellDef>
+                    USE GENERALIZED FORMULA 
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-checkbox color="primary"
+                                    (change)="setDisabledCell(row);saveFormula(row)"
+                                    [checked]="row.generalized"></mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="visible">
+                <th mat-header-cell *matHeaderCellDef>
+                    VALUE VISIBLE IN SELECTION TAB 
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-checkbox color="primary"
+                                    [checked]="row.visible"></mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="valFormat">
+                <th mat-header-cell *matHeaderCellDef>
+                    VALUE FORMAT 
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <textarea autosize
+                                [value]="row.valFormat"
+                                class="textarea hide-input"
+                                (blur)="saveFormula(row)"
+                                [(ngModel)]="row.valFormat"></textarea>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="order">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    ORDER PRIORITY 
+                    <div 
+                        class="filter-icon pointer"
+                        title="ORDER PRIORITY"
+                        [ngClass]="setFilterClass('order')"
+                        inlineSVG="../../../assets/icons/filter.svg">
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <input autosize
+                                [value]="row.order"
+                                type="number"
+                                class="hide-input"
+                                (blur)="saveFormula(row)"
+                                [(ngModel)]="row.order">
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </app-scrollbar>
+</div>

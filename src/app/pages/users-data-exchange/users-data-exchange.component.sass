@@ -1,0 +1,118 @@
+@import '../../../styles/variable.sass'
+
+\:host
+    display: flex
+    flex-direction: column
+    padding-bottom: 30px
+.confirm
+    background-color: $primary-blue-color
+    color: $main-color
+    width: 140px
+
+.exporting-cards
+    margin-right: 10px
+    flex-grow: 1
+    ::ng-deep .mat-toolbar.mat-primary
+        background-color: $white
+        color: $main-font-color
+        min-height: 40px
+        height: 40px
+        border-top-left-radius: 5px
+        border-top-right-radius: 5px
+    ::ng-deep .toolbar-header
+        font-size: 12px
+        color: $main-font-color
+        font-weight: 500
+
+.importing-cards
+    margin-right: 0 !important
+
+.discard
+    border: 1px solid $discard-border-color
+    color: $primary-color
+    width: 140px
+    margin-right: 10px
+
+.export-container
+    display: flex
+    padding: 0 110px
+.action-container
+    padding: 20px 0
+    display: flex
+    justify-content: center
+.table-container
+    padding: 0 110px
+    margin-top: 20px
+.table-header
+    font-size: 16px
+    font-weight: 500
+    color: $main-font-color
+    margin-bottom: 15px
+.table-user
+    min-width: 190px
+    flex-grow: 2
+.table-row
+    display: flex
+    padding: 5px 0 5px 15px
+    border-bottom: 1px solid $white
+    color: $main-font-color
+    font-size: 12px
+    height: 50px
+    box-sizing: border-box
+    justify-content: center
+    align-items: center
+.table-actions
+    flex-grow: 1
+    display: flex
+    width: 300px
+    .discard,
+    .confirm,
+    app-exchange-badge
+        width: 75px
+        border-radius: 4px
+        box-sizing: border-box
+        height: 30px
+        justify-content: center
+        display: inline-flex
+        align-items: center
+        ::ng-deep .mat-button-wrapper
+            line-height: 25px
+    ::ng-deep .mat-button-focus-overlay
+        background-color: transparent !important
+app-exchange-badge
+    background-color: green
+    color: #fff
+    margin-right: 10px
+    font-size: 14px
+    line-height: 25px
+
+.table-actions-header
+    width: 300px
+    flex-grow: 1
+
+.table-row-header
+    display: flex
+    background-color: $white
+    border-top-left-radius: 5px
+    border-top-right-radius: 5px
+    padding: 5px 0 5px 15px
+    height: 50px
+    box-sizing: border-box
+    justify-content: center
+    align-items: center
+    color: $main-font-color
+    font-size: 12px
+    font-weight: 500
+    text-transform: uppercase
+
+.table-content
+    border-bottom: 1px solid $white
+    border-left: 1px solid $white
+    border-right: 1px solid $white
+    border-radius: 5px
+    margin-bottom: 20px
+
+.confirm.mat-button[disabled]
+    background-color: #BCBCBC !important
+    color: #fff !important
+    cursor: not-allowed !important

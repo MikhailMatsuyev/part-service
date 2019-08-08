@@ -1,0 +1,282 @@
+@import '../../../styles/variable.sass'
+
+$resize-color: #BCBCBC
+
+.groups-container
+    border-radius: 5px
+    padding: 11px 0 42px 11px
+    min-height: 105px
+    display: flex
+    flex-wrap: wrap
+    box-sizing: border-box
+    overflow: auto
+    justify-content: flex-start
+    position: relative
+
+.analyze-buttons
+    display: flex
+    margin: 20px 0
+    background-color: $white
+    border-radius: 5px
+    font-size: 12px
+    color: $dark-font-color
+    padding: 5px 0 5px 20px
+    height: 50px
+    box-sizing: border-box
+    align-items: center
+    .buttons-header
+        font-weight: 500
+        text-transform: uppercase
+    .dropdown-container
+        margin: 0 10px
+        width: 380px
+        height: 40px
+
+.section-checkboxes
+    display: flex
+    padding-bottom: 15px
+    align-items: center
+
+.wrapper
+    display: flex
+    flex-direction: column
+
+.name-checkboxes-group
+	color: $main-font-color
+	font-size: 16px
+	font-weight: 500
+	margin-bottom: 11px
+
+mat-checkbox
+	color: $main-font-color
+	font-size: 13px
+	padding: 13px 15px 11px 11px
+	border: 1px solid $border-color
+	border-radius: 4px
+	margin-right: 10px
+	margin-bottom: 15px
+	display: inline-block
+
+::ng-deep .dark-theme .mat-checkbox-checked.mat-accent .mat-checkbox-background
+    background-color: white !important
+    color: $white !important
+    border: 1px solid $border-color
+
+::ng-deep .dark-theme .mat-header-cell
+	color: black !important
+
+.resize-handle
+    position: absolute
+    left: 50%
+    margin-left: -10px
+    bottom: 0px
+    cursor: s-resize
+    font-weight: 600
+    font-size: 24px
+    color: $resize-color
+
+/deep/ mwlResizable
+    box-sizing: border-box
+
+::ng-deep .dark-theme .mat-table
+    background-color: #fff
+.table-containers
+    width: 95vw
+    overflow: auto
+    height: 510px
+    &-switch-mode
+        position: absolute
+        top: 0
+        left: 0
+        width: 100% !important
+        height: 500px !important
+        background-color: #fff
+        overflow-y: hidden !important
+        ::ng-deep
+            .ng-scrollbar-view
+                height: calc(100% - 17px) !important
+        .header-cells
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+            width: 48px
+        .table-cells
+            min-width: 48px !important
+            padding: 10px 15px !important
+        .second-header-cells
+            div
+                white-space: nowrap
+                overflow: hidden
+                text-overflow: ellipsis
+                width: 48px
+    ::ng-deep
+        .mat-table
+            margin: 0 5px 5px 0
+            border-collapse: collapse
+            tr
+                 td:first-child 
+                     left: 0px !important
+                     position: sticky
+                     z-index: 1 !important
+                     background-color: #FFFFFF !important
+                     box-shadow: 11px 0px 12px 0px rgba(0, 0, 0, 0.04) !important
+            tr
+                 th:first-child 
+                     left: 0px !important
+                     z-index: 12 !important
+                     border-right: 1px solid #FFFFFF
+                     box-shadow: 11px 0px 12px 0px rgba(0, 0, 0, 0.04) !important
+        .mat-header-row
+            background-color: #EFEFEF !important
+        .mat-header-cell, .mat-cell
+            color: #343434 !important
+            font-size: 12px !important
+            font-weight: 500 !important
+            font-family: Roboto !important
+        .mat-row
+            border-bottom-width: none !important
+    .sticky-column
+        background-color: #EFEFEF !important
+        top: 56px !important
+        position: sticky !important
+        min-width: 230px
+        width: 230px
+        max-width: 230px
+        border-right: 1px solid #FFFFFF
+        box-sizing: border-box
+        padding: 15px 0 13px 20px
+        height: 60px
+        &.mat-cell
+            border-bottom: 1px solid #EFEFEF
+    .light-cell
+        background-color: #FCFCFC !important
+        font-weight: 500 !important
+        &.table-cells-active
+            background-color: #D8F6D2 !important
+    .table-cells
+        min-width: 140px
+        padding: 10px 20px
+        box-sizing: border-box
+        background-color: #FCFCFC
+        height: 35px
+        border-collapse: collapse
+        position: relative
+        .header-step
+            color: #9A9A9A
+            text-transform: uppercase
+            font-size: 11px
+            font-weight: 500
+            margin-right: 5px
+        .header-content
+            color: #343434
+            font-size: 12px
+            text-transform: capitalize
+        &.mat-cell
+            border-bottom: 1px solid #EFEFEF !important
+            border-left: 1px solid #EFEFEF !important
+            border-right: 1px solid #EFEFEF !important
+        &.mat-header-cell
+            background-color: #EFEFEF !important
+    .recommended
+        color: #27AE60 !important
+    .possible
+        color: #343434;
+    .not-possible
+        color: #EB5757 !important
+    .first-header
+        th
+            text-transform: uppercase
+            border-bottom: 1px solid #FFFFFF
+    .sticky-column-top
+        background-color: #EFEFEF !important
+        top: 0px !important
+        position: sticky !important
+        min-width: 230px
+        width: 230px
+        max-width: 230px
+        border-right: 1px solid #FFFFFF
+        box-sizing: border-box
+        padding: 15px 0 13px 20px
+        height: 60px
+    .cell-border-bottom
+        border-bottom: 1px solid #EFEFEF !important
+    .transform-arrows
+        transform: rotate(90deg)
+        width: 10px
+        height: 20px
+        display: inline-flex
+        justify-content: center
+        align-items: center
+        margin-left: 8px
+
+.pl-20
+    padding-left: 20px
+
+.bottom-row-header
+    background-color: #EFEFEF !important;
+    border-top: 2px solid #FFFFFF;
+
+.header-transform
+    position: relative
+    .transform-arrows
+        position: absolute
+        right: 10px
+        top: -3px
+
+.icon-status
+    width: 9px
+    height: 9px
+    border-radius: 50%
+    margin-right: 5px
+    display: inline-block
+    background-color: red
+
+.sticky-row
+    z-index: 101 !important
+    left: 252px !important
+    position: sticky !important
+    display: inline-block !important
+    top: 0px !important
+
+.step-circle-1
+	background-color: #A9C1E1
+	margin-left: 15px
+
+.step-circle-2
+	background-color: #6B9FE7
+	margin-left: 20px
+
+.step-circle-3
+	background-color: #2E6CC0
+	margin-left: 20px
+
+.step-circle-4
+	background-color: #14386A
+	margin-left: 20px
+
+.spinner-container mat-spinner
+	margin: 0 auto
+    width: 100px
+
+.userFactorStep
+	width: 100px;
+
+.flex-container
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	display: flex;
+
+.container
+	display: inline-block
+	float: right
+	padding-right: 10px
+
+.space-between
+    justify-content: space-between 
+
+.flex-end 
+    justify-content: flex-end
+
+.marginR10
+	margin-right: 10px

@@ -1,0 +1,13 @@
+<div class="search">
+    <input type="text"
+           [formControl]="control"
+           [placeholder]="placeHolder"
+           [maxlength]="maxLength"
+           (blur)="isActive = false"
+           (focus)="isActive = true">
+    <mat-icon class="pointer"
+              (click)="clearControl()"
+              [class.close-active]="isActive">
+        highlight_off
+    </mat-icon>
+</div>

@@ -1,0 +1,48 @@
+<div class="steps-container">
+    <div class="steps-text"
+         [class.steps-text-active]="textActive"
+         [ngStyle]="{'padding-right': textActive ? (stepsInfo ? '58px': '35px') : ''}">
+        <span>{{stepName}}</span>
+        <input type="text"
+               #stepInput
+               appResize
+               [widthCalculate]="control.valueChanges | async"
+               [needRecalulateInput]="true"
+               [formControl]="control"
+               (focus)="handleFocus($event)"
+               (blur)="changeControl()"
+               [maxlength]="maxLength">
+    </div>
+    <div class="steps-actions" *ngIf="!textActive">
+        <mat-icon class="pointer info-outline"
+                  (click)="handleInfoClick()"
+                  title="Additional information"
+                  *ngIf="stepsInfo">info_outline</mat-icon>
+        <mat-icon class="pointer"
+                  [matMenuTriggerFor]="menu"
+                  (click)="optionsClick($event)">
+            more_vert
+        </mat-icon>
+    </div>
+</div>
+
+<mat-menu #menu="matMenu" yPosition="above">
+    <button mat-menu-item (click)="handleSwapLeft()" [disabled]="isCanSwapLeft || isBlocked">
+        <span>Swap left</span>
+    </button>
+    <button mat-menu-item (click)="handleSwapRight()" [disabled]="isCanSwapRight || isBlocked">
+        <span>Swap right</span>
+    </button>
+    <button mat-menu-item (click)="handleInsert()" [disabled]="isBlocked">
+        <span>Insert</span>
+    </button>
+    <button mat-menu-item (click)="handleDelete()" [disabled]="isBlocked">
+        <span>Delete</span>
+    </button>
+    <button *ngIf="pageType !== pageTypes.Interfaces" mat-menu-item (click)="handleInfoClick()" [disabled]="isBlocked">
+        <span>Edit information</span>
+    </button>
+    <button mat-menu-item (click)="handleEditStep()" [disabled]="isBlocked">
+        <span>Edit step</span>
+    </button>
+</mat-menu>

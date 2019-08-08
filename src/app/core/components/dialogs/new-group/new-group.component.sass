@@ -1,0 +1,213 @@
+@import '../../../../../styles/variable'
+@import '../../../../../styles/mixins'
+
+/deep/.dark-theme .mat-dialog-container
+    padding: 0
+    background: $main-color
+    color: $main-font-color
+    border-radius: 5px
+    overflow: hidden
+
+/deep/.dark-theme .mat-option.mat-active
+    background: $hover-background
+    @include add-font(normal, 13px, $main-font-color, 15px)
+
+/deep/.dark-theme .mat-option
+    height: 30px
+    color: $main-font-color
+    line-height: 15px
+
+/deep/.dark-theme .mat-autocomplete-panel .mat-option.mat-selected:not(.mat-active):not(:hover):not(.mat-option-disabled)
+    color: $main-font-color
+
+
+/deep/.dark-theme .mat-option:hover:not(.mat-option-disabled), .dark-theme .mat-option:focus:not(.mat-option-disabled)
+    background: $hover-background
+    @include add-font(normal, 13px, $main-font-color, 15px)
+
+
+/deep/ .dark-theme .mat-autocomplete-panel .mat-option.mat-selected:not(.mat-active):not(:hover)
+    background-color: $main-color
+    @include add-font(normal, 13px, $main-font-color, 15px)
+
+
+/deep/.dark-theme .mat-autocomplete-panel.mat-autocomplete-visible
+    box-shadow: 0 0
+    line-height: 15px
+
+
+
+/deep/.dark-theme .mat-autocomplete-panel
+    background-color: $main-color
+    margin-top: 20px
+    @include calc(width, '100% - 20px')
+    @include add-font(normal, 13px, $main-font-color, 15px)
+    left: 9px
+
+
+/deep/.mat-option
+    @include add-font(normal, 13px, $main-font-color, 15px)
+
+form
+    padding-left: 30px
+
+.title
+    padding: 17px 0px 14px 30px
+    align-items: center
+    background: $title-background
+    display: flex
+
+.title-block
+    display: block
+
+.title-name
+    @include add-font(600, 24px, $main-font-color, 28px)
+
+.hint-name
+    @include add-font(normal, 13px, $main-font-color, 15px)
+    display: block
+
+.sub-title
+    padding: 20px 0px 3px 0px
+    @include add-font(600, 16px, $main-font-color, 19px)
+    display: block
+    align: left
+
+.hint-title
+    padding: 15px 0px 11px 0px
+    @include add-font(normal, 13px, $main-font-color, 15px)
+    display: block
+
+.col-lg1
+    padding-bottom: 1px
+    width: 131px
+    height: 40px
+    display: flex
+
+.col-lg1 input
+    width: 100%
+
+.col-lg2
+    padding-bottom: 1px
+    height: 40px
+    width: 261px
+    display: flex
+
+.col-lg2 input
+    width: calc(277px - 40px)
+
+.col-lg3
+    padding: 0
+    display: flex
+
+.col-lg3 .textarea
+    position: relative
+    box-sizing: border-box
+    display: flex
+    margin: auto
+    width: 100%
+    border-radius: 4px
+    border: 1px solid $border-color
+    @include add-font(normal, 13px, $main-font-color, 15px)
+    padding: 11px 14px
+    overflow: auto
+    resize: none
+    word-break: break-all
+
+.row
+    display: flex
+
+.sub-row
+    display: block
+    padding-right: 15px
+    margin-right: 15px
+    width: 100%
+
+input
+    border-radius: 4px
+    border: 1px solid $border-color
+    @include add-font(normal, 13px, $main-font-color, 15px)
+    height: 16px
+    transition: width 0.2s ease-out
+    width: calc(277px - 40px)
+
+
+input:focus, textarea:focus
+    outline: 1px solid $outline-color
+
+input.mat-input-element
+    padding: 11px 20px 11px 14px
+
+.expand_more_icon
+    position: relative
+    top: -28px
+    right: -253px
+    font-size: 16px
+    user-select: none
+
+.close
+    margin-left: auto
+    margin-right: 20px
+    .close-icon
+        font-size: 30px
+
+.dialog-buttons
+    margin-top: 30px
+    margin-left: 30px
+
+.confirm
+    background-color: $buttons-color
+    color: $main-color
+
+.discard
+    border: 1px solid $discard-border-color
+    color: $buttons-color
+
+.wrapper-autocomplete
+    position: relative
+    height: 40px
+    width: 100%
+    padding: 0
+    margin: 0
+    transition: all 0.2s ease-out
+
+.wrapper-autocomplete:focus-within
+    border: 1px solid $border-color
+    border-radius: 4px
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25)
+    background: $main-color
+    position: relative
+    @include calc(min-width, '100% - 6px')
+    height: 141px
+    padding: 10px
+    .expand_more_icon
+        display: none
+    input
+        width: calc(257px - 40px) !important
+
+.wrapper
+    height: 40px
+    width: 100%
+    padding: 0
+    margin: 0
+
+/deep/ .mat-autocomplete-panel
+    max-height: 80px !important
+
+.confirm.mat-button[disabled]
+    background-color: #BCBCBC !important
+    color: #fff !important
+    cursor: not-allowed !important
+
+.hint-grey
+    color: #9A9A9A
+    font-size: 13px
+    margin: 0 10px
+
+.complete-hint
+    margin-bottom: 5px
+    display: block !important
+
+.hint-red
+    font-size: 12px
+    color: red

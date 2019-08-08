@@ -1,0 +1,219 @@
+<div [formGroup]="form">
+    <div class="settings-container">
+        <div class="settings-title">Primary key Settings</div>
+    </div>
+    <div formGroupName="primaryKeyForm" class="settings-form">
+        <div class="settings-container  input-container">
+            <div class="formula-label">Performance</div>
+            <app-dropdown 
+                class="settings-align dropdown"
+                [list]="performances$ | async"
+                [defaultItem]="form.controls.primaryKeyForm.get('perfId').value"
+                objectFieldParseName="value"
+                objectFieldText="text"
+                formControlName="perfId"
+                (changeItem)="handleChangePerformance($event)">
+            </app-dropdown>
+        </div>
+        <div class="settings-container input-container">
+                <div class="formula-label">Delimiter</div>
+                    <input 
+                        class="input-settings settings-align"
+                        formControlName="delimiter">
+        </div>
+        <div class="settings-container input-container">
+                <div class="formula-label">Default value</div>
+                    <input 
+                        class="input-settings settings-align"
+                        formControlName="defaultValue">
+        </div>
+        <div class="settings-container checkbox-container">
+                <mat-checkbox 
+                    color="primary"
+                    class="settings-checkbox"
+                    formControlName="fixed">
+                </mat-checkbox>
+                <div class="formula-label">Fixed</div>
+                <mat-checkbox 
+                    color="primary"
+                    class="settings-checkbox"
+                    formControlName="displayField">
+                </mat-checkbox>
+                <div class="formula-label">Display field</div>
+                <mat-checkbox 
+                    color="primary"
+                    class="settings-checkbox"
+                    formControlName="digitsOnly">
+                </mat-checkbox>
+                <div class="formula-label">Use performance values</div>
+            </div>
+        <button mat-raised-button color="primary" (click)="saveSettings()">Save</button>
+        <button mat-raised-button class="button-settings" (click)="resetSettings()">Reset</button>
+    </div>
+    <div formGroupName="userFactorsForm" class="settings-form">
+        <div class="settings-container">
+            <div class="settings-title">User Factors</div>
+        </div>
+        <div class="settings-container">
+            <app-dropdown
+                class="dropdown"
+                [list]="userFactors$ | async"
+                objectFieldParseName="Value"
+                objectFieldText="Text"
+                isObjectMode="true"
+                formControlName="UserFactorId">
+            </app-dropdown>
+        </div>
+        <button mat-raised-button color="primary" (click)="addUserFactor()">Add</button>
+        <button mat-raised-button class="button-settings" (click)="deleteUserFactor()">Remove</button>
+    </div>
+    <div formGroupName="freeTextsForm" class="settings-form">
+        <div class="settings-container">
+            <div class="settings-title">Free Texts</div>
+        </div>
+        <div class="settings-container input-container">
+                <div class="formula-label">Text</div>
+                    <input 
+                        class="input-settings settings-align"
+                        formControlName="Text">
+        </div>
+        <div class="settings-container input-container">
+                <div class="formula-label">Variant code position</div>
+                    <input 
+                        class="input-settings settings-align"
+                        formControlName="VariantCodePos">
+        </div>
+        <div class="settings-container checkbox-container">
+            <div class="formula-label checkbox-title">Show delimiter</div>
+            <mat-checkbox 
+                color="primary"
+                formControlName="ShowDelimiter">
+            </mat-checkbox>
+        </div>
+        <div class="settings-container">
+            <app-dropdown 
+                class="dropdown"
+                [list]="freeTexts$ | async"
+                objectFieldParseName="Value"
+                objectFieldText="Text"
+                isObjectMode="true"
+                formControlName="FreeTextId">
+            </app-dropdown>
+        </div>
+        <button mat-raised-button color="primary" [disabled]="textControl.invalid" (click)="addFreeText()">Add</button>
+        <button mat-raised-button class="button-settings" (click)="deleteFreeText()">Remove</button>
+    </div>
+    <div class="error-container" *ngIf="textControl.touched && textControl.errors">
+        <pre *ngIf="textControl.hasError('required') || textControl.hasError('whitespaces')">Please, enter the name</pre>
+        <div *ngIf="textControl.hasError('maxlength')">Name's length must be less than 255</div>
+    </div>
+
+    <div class="error-container">
+        <div >{{ errorMessage$ | async }}</div>
+    </div>
+</div>
+
+<div class="settings-table">
+    <div class="settings-container">
+        <div class="settings-title">Components, User Factors and Free Texts included in the Type Key Generation</div>
+    </div>
+    <div class="settings-container table-container">
+        <table mat-table [dataSource]="tableData$ | async" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+                <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header >
+                            NAME 
+                            <div 
+                                class="filter-icon pointer"
+                                title="NAME"
+                                [ngClass]="setFilterClass('name')"
+                                inlineSVG="../../../assets/icons/filter.svg">
+                            </div>
+                        </th>
+                        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-th"> 
+                            VARIANT CODE POSITION 
+                            <div 
+                                class="filter-icon pointer"
+                                title="VARIANT CODE POSITION"
+                                [ngClass]="setFilterClass('position')"
+                                inlineSVG="../../../assets/icons/filter.svg">
+                            </div>
+                        </th>
+                        <td mat-cell *matCellDef="let row" class="header-th">
+                            <app-performance-input
+                                inputType="number"
+                                [data]="row.position"
+                                [maxLength]="7"
+                                (changeValue)="handleChangeValue($event, row, 'position')">
+                            </app-performance-input>
+                        </td>
+                </ng-container>
+                <ng-container matColumnDef="length">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-th"> 
+                            VARIANT CODE LENGTH 
+                            <div 
+                                class="filter-icon pointer"
+                                title="VARIANT CODE POSITION"
+                                [ngClass]="setFilterClass('length')"
+                                inlineSVG="../../../assets/icons/filter.svg">
+                            </div>
+                        </th>
+                        <td mat-cell *matCellDef="let row" class="header-th"> 
+                            <app-performance-input
+                                inputType="number"
+                                [data]="row.length"
+                                [maxLength]="9"
+                                (changeValue)="handleChangeValue($event, row, 'length')">
+                            </app-performance-input>
+                        </td>
+                </ng-container>
+                <ng-container matColumnDef="showDelimiter">
+                        <th mat-header-cell *matHeaderCellDef class="header-th"> 
+                            <div class="header-checkbox"> 
+                                SHOW DELIMITER 
+                            </div> 
+                        </th>
+                        <td mat-cell *matCellDef="let row" class="header-th"> 
+                                <mat-checkbox 
+                                    color="primary"
+                                    class="header-checkbox"
+                                    [checked]="row.showDelimiter"
+                                    (change)="handleCheckTable($event, row, 'showDelimiter')">
+                                </mat-checkbox>
+                        </td>
+                </ng-container>
+                <ng-container matColumnDef="showDefaultValue">
+                        <th mat-header-cell *matHeaderCellDef > SHOW DEFAULT VALUE </th>
+                        <td mat-cell *matCellDef="let row"> 
+                                <mat-checkbox 
+                                    color="primary"
+                                    class="header-checkbox"
+                                    [checked]="row.showDefaultValue"
+                                    (change)="handleCheckTable($event, row, 'showDefaultValue')">
+                                </mat-checkbox>
+                        </td>
+                </ng-container>
+                <ng-container  matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-th"> 
+                            TYPE 
+                            <div 
+                                class="filter-icon pointer"
+                                title="TYPE"
+                                [ngClass]="setFilterClass('type')"
+                                inlineSVG="../../../assets/icons/filter.svg">
+                            </div>
+                        </th>
+                        <td mat-cell [ngSwitch]="row.type" *matCellDef="let row"> 
+                            <div *ngSwitchCase="0">Component</div>
+                            <div *ngSwitchCase="1">User Factor</div>
+                            <div *ngSwitchCase="2">Free Text</div>
+                        </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </div>
+</div>

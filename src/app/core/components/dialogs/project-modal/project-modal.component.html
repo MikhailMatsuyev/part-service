@@ -1,0 +1,26 @@
+<div class="header-modal">
+    <div class="title">Project name</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+
+<div class="container-modal" [formGroup]="forms">
+    <div class="input-container">
+        <div class="label-input">Set project name</div>
+        <input type="text" formControlName="projectName">
+    </div>
+    <div class="input-container">
+        <div class="label-input">Set title</div>
+        <input type="text" formControlName="titlePage">
+    </div>
+</div>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            [disabled]="forms.invalid"
+            (click)="confirm()">
+        Save
+    </button>
+    <button mat-button class="discard" [mat-dialog-close]="true" (click)="onNoClick(false)">Cancel</button>
+</mat-dialog-actions>

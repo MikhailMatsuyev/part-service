@@ -1,0 +1,141 @@
+<mat-toolbar color="primary" class="calculation-toolbar">
+    <mat-toolbar-row>
+        <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center">
+            <ng-container *ngIf="textChanges">
+                <div *ngIf="textChanges?.changes">Last changes at {{textChanges.changes?.date}} by {{textChanges.changes?.author}}</div>
+                <ng-container *ngIf="textChanges?.updates">
+                    <div class="mr-15" *ngIf="textChanges.updates?.date">Updated at {{textChanges.updates?.date}}</div>
+                    <div class="mr-15">{{textChanges.updates?.done ? 'Executed succesfully in' : 'Executing time'}} : {{textChanges.updates?.duration}}</div>
+                    <div class="mr-15" *ngIf="textChanges.updates?.postFixMessage && !textChanges.updates?.done">{{textChanges.updates?.postFixMessage}}</div>
+                    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="textChanges.updates?.error">
+                        <div class="hint-updates-error pointer"
+                            title="error"
+                            (click)="handleError(textChanges.updates?.errorMessage)">
+                           <mat-icon>error</mat-icon>
+                       </div>
+                        <div>Completed with errors! </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+        <span class="toolbar-spacer"></span>
+        <div class="icon-calculation pointer user-select-none" (click)="syncCalculations()">
+            <mat-icon>sync</mat-icon>
+        </div>
+        <ng-content select="[icon-recommendations]"></ng-content>
+        <div class="icon-calculation pointer user-select-none"
+             inlineSVG="../../../assets/icons/blank-x.svg"
+             [class.disabled-icons]="isBlankXDisabled"
+             (click)="handleBlankX()">
+        </div>
+        <ng-content select="[icon-headers]"></ng-content>
+        <div class="icon-calculation pointer user-select-none" (click)="collapseHandle('isCollapsed')">
+            <mat-icon>{{isCollapsed ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</mat-icon>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div>
+    <div class="calculation-container" [hidden]="isCollapsed">
+        <div class="calculation-buttons">
+            <ng-content select="[calculate-button]"></ng-content>
+            <button mat-raised-button
+                    color="primary"
+                    [disabled]="isDisabledUpdateButton"
+                    (click)="updateManual()">
+                {{updateBtnText}}
+            </button>
+            <button mat-raised-button
+                    color="primary"
+                    [disabled]="!isDisabledUpdateButton"
+                    (click)="cancelUpdating()">
+                Cancel updating
+            </button>
+            <button mat-raised-button color="primary" (click)="handleHelp()">Help</button>
+        </div>
+    </div>
+    <mat-toolbar color="primary" class="calculation-component-toolbar" *ngIf="!isCollapsed">
+        <mat-toolbar-row>
+            <div class="swap-container" [class.swap-container-reverse]="componentPosition">
+                <div fxLayout="row">
+                    <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center" class="header-title-toolbar user-select-none">
+                        Component
+                    </div>
+                    <div class="component-dropdown">
+                        <app-dropdown [list]="componentSeries"
+                                      [isObjectMode]="true"
+                                      [defaultItem]="defaulItemSeries"
+                                      objectFieldParseName="id"
+                                      objectFieldText="name"
+                                      [withFormulasIcon]="withFormulasIcon && !componentPosition"
+                                      (changeItem)="handleChangeComponent($event)">
+                        </app-dropdown>
+                    </div>
+                </div>
+                <div class="swap-headers pointer" inlineSVG="../../../assets/icons/arrows.svg" (click)="swapHeader()"></div>
+                <div fxLayout="row">
+                    <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center" class="header-title-toolbar user-select-none">
+                        User Factor
+                    </div>
+                    <div class="component-dropdown">
+                        <app-dropdown [list]="userFactor"
+                                      [isObjectMode]="true"
+                                      [defaultItem]="defaultItemUserFactor"
+                                      objectFieldParseName="id"
+                                      objectFieldText="name"
+                                      [withCustomSelect]="withCustomSelect && !componentPosition"
+                                      [isSelectedAll]="isAllUserFactor"
+                                      (selectedAll)="selectedAll($event)"
+                                      (selectedItem)="selectedItem($event)"
+                                      (changeItem)="handleChangeUserFactor($event)">
+                        </app-dropdown>
+                    </div>
+                </div>
+            </div>
+            <span class="toolbar-spacer"></span>
+            <div class="icon-calculation pointer user-select-none" (click)="collapseHandle('isCollapsedComponent')">
+                <mat-icon>{{isCollapsedComponent ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</mat-icon>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <div fxLayout="row" [class.swap-container-reverse]="componentPosition" *ngIf="!isCollapsedComponent && !isCollapsed">
+        <div fxLayout="column" class="steps-container">
+            <div fxLayout="row" class="steps-content" *ngFor="let cs of valuesWithStatusCS">
+                <div class="steps-title user-select-none"
+                     [title]="cs?.serie">
+                    <div>{{cs?.serie}}</div>
+                </div>
+                <div class="component-dropdown">
+                    <app-dropdown [list]="cs?.steps"
+                                  [isObjectMode]="true"
+                                  [defaultItem]="-1"
+                                  [withCustomTemplate]="withCustomTemplateSeries"
+                                  objectFieldParseName="stepId"
+                                  objectFieldText="step"
+                                  (changeItem)="handleChangeComponentStep($event, cs)">
+                    </app-dropdown>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="column" class="steps-container">
+            <div fxLayout="row" class="steps-content" *ngFor="let uf of valuesWithStatusUF">
+                <div class="steps-title user-select-none"
+                     [title]="uf?.serie">
+                    <div>{{uf?.serie}}</div>
+                </div>
+                <div class="component-dropdown">
+                    <app-dropdown [list]="uf?.steps"
+                                  [isObjectMode]="true"
+                                  [defaultItem]="-1"
+                                  [withCustomTemplate]="withCustomTemplateSeries"
+                                  objectFieldParseName="stepId"
+                                  objectFieldText="step"
+                                  (changeItem)="handleChangeUserFactorStep($event, uf)">
+                    </app-dropdown>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="tableSync">
+        <ng-content select="[table-recommendation]"></ng-content>
+    </ng-container>
+</div>

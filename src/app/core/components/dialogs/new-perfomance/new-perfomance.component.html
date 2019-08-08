@@ -1,0 +1,65 @@
+<div class="title-header">
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+    <div class="title">
+        Create new Perfomance
+    </div>
+</div>
+<div class="container-form">
+    <form [formGroup]="forms">
+        <div class="input-container input-error">
+            <div class="input-performance">
+                <div class="label-input">Performance</div>
+                <input type="text" formControlName="name">
+            </div>
+            <div class="hint-error" [hidden]="!isActiveError">Performance name should be unique</div>
+        </div>
+        <div class="input-container">
+            <div class="label-input">Unit</div>
+            <input type="text" formControlName="unit" maxlength="255">
+        </div>
+        <div class="input-container">
+            <div class="label-input">Description</div>
+            <textarea formControlName="description"></textarea>
+        </div>
+        <div class="input-container">
+            <div class="label-input">Calculate</div>
+            <mat-checkbox color="primary"
+                          formControlName="calculate">
+            </mat-checkbox>
+        </div>
+        <div class="input-container">
+            <div class="label-input">Display value</div>
+            <mat-checkbox color="primary"
+                          formControlName="display">
+            </mat-checkbox>
+        </div>
+        <div class="input-container">
+            <div class="label-input">Display text</div>
+            <mat-checkbox color="primary"
+                          formControlName="displayText">
+            </mat-checkbox>
+        </div>
+        <div class="input-container">
+            <div class="label-input">Highlight</div>
+            <mat-checkbox color="primary"
+                          formControlName="highlight">
+            </mat-checkbox>
+        </div>
+        <div class="input-container">
+            <div class="label-input">Priority</div>
+            <input type="number" formControlName="order">
+        </div>
+    </form>
+</div>
+
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            [disabled]="forms.invalid"
+            (click)="createPerfomance()">
+        Create
+    </button>
+    <button mat-button class="discard" (click)="onNoClick(false)">Cancel</button>
+</mat-dialog-actions>

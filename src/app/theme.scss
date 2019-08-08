@@ -1,0 +1,170 @@
+@import '~@angular/material/theming';
+@import './core/components/toolbar/toolbar.component.theme';
+@import '../styles/variable.sass';
+
+@include mat-core();
+
+@mixin backdrop($theme) {
+  .mat-drawer-backdrop.mat-drawer-shown {
+    background: transparent !important;
+  }
+}
+
+@mixin raised-button($theme) {
+  .mat-raised-button.mat-primary {
+    background-color: $primary-blue-color !important;
+    color: $main-color !important;
+    font-size: 13px !important;
+    margin-right: 10px !important;
+    font-weight: normal;
+    border-radius: 4px;
+  }
+
+  .mat-raised-button[disabled][disabled] {
+    background-color: $grey-color !important;
+    color: $main-color !important;
+    cursor: not-allowed;
+  }
+}
+
+@mixin custom-checkbox($theme) {
+  .mat-checkbox-frame {
+    border-width: 1px;
+    border-radius: 3px;
+    border-color: $grey-color;
+  }
+
+  .mat-checkbox-checked.mat-primary .mat-checkbox-background,
+  .mat-checkbox-checked.mat-warn .mat-checkbox-background {
+    background-color: transparent;
+  }
+
+  .mat-checkbox-checked .mat-checkbox-checkmark-path {
+    stroke: $primary-blue-color !important;
+  }
+
+  .mat-checkbox-checked.mat-warn .mat-checkbox-checkmark-path {
+    stroke: $warn-color !important;
+  }
+}
+
+@mixin custom-radio($theme) {
+  .mat-radio-outer-circle,
+  .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+    border-color: $border-color;
+    border-width: 1px;
+  }
+
+  .mat-radio-button.mat-primary .mat-radio-inner-circle {
+    background-color: $primary-blue-color !important
+  }
+
+  .mat-radio-checked .mat-radio-inner-circle {
+    transform: scale(.35) !important
+  }
+
+  .mat-radio-button .mat-radio-ripple .mat-ripple-element {
+    background-color: $primary-blue-color
+  }
+}
+
+@mixin custom-slider-toggle($theme) {
+  .mat-slide-toggle.mat-primary.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: $primary-blue-color !important;
+  }
+}
+
+
+@mixin custom-components-theme($theme) {
+  @include app-toolbar-theme($theme);
+  @include raised-button($theme);
+  @include custom-checkbox($theme);
+  @include custom-radio($theme);
+  @include custom-slider-toggle($theme);
+}
+
+// investigate
+$mat-custom: (
+    50: #2d3b46,
+    100: #bbdefb,
+    200: #90caf9,
+    300: #64b5f6,
+    400: #42a5f5,
+    500: #2196f3,
+    600: #1e88e5,
+    700: #1976d2,
+    800: #1565c0,
+    900: #0d47a1,
+    A100: #82b1ff,
+    A200: #448aff,
+    A400: #2979ff,
+    A700: $primary-color,
+    contrast: (
+      50: $black-87-opacity,
+      100: $black-87-opacity,
+      200: $black-87-opacity,
+      300: $black-87-opacity,
+      400: $black-87-opacity,
+      500: white,
+      600: white,
+      700: white,
+      800: $white-87-opacity,
+      900: $white-87-opacity,
+      A100: $black-87-opacity,
+      A200: white,
+      A400: white,
+      A700: white,
+    )
+);
+$mat-custom-warn: (
+    50: #2d3b46,
+    100: #bbdefb,
+    200: #90caf9,
+    300: #64b5f6,
+    400: #42a5f5,
+    500: #2196f3,
+    600: #1e88e5,
+    700: #1976d2,
+    800: #1565c0,
+    900: #0d47a1,
+    A100: #82b1ff,
+    A200: #448aff,
+    A400: #2979ff,
+    A700: #F2994A,
+    contrast: (
+      50: $black-87-opacity,
+      100: $black-87-opacity,
+      200: $black-87-opacity,
+      300: $black-87-opacity,
+      400: $black-87-opacity,
+      500: white,
+      600: white,
+      700: white,
+      800: $white-87-opacity,
+      900: $white-87-opacity,
+      A100: $black-87-opacity,
+      A200: white,
+      A400: white,
+      A700: white,
+    )
+);
+$anms-black-primary: mat-palette($mat-custom, A700);
+$anms-black-accent: mat-palette($mat-green, A200);
+$anms-black-warn: mat-palette($mat-custom-warn, A700);
+$dark-theme: mat-dark-theme($anms-black-primary, $anms-black-accent, $anms-black-warn);
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+  @include custom-components-theme($dark-theme);
+  @include backdrop($dark-theme);
+  .mat-slide-toggle.mat-primary.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #2F4A6B;
+  }
+
+  .mat-slide-toggle-content {
+    color: #343434;
+  }
+
+  .mat-slide-toggle-bar {
+    background-color: #EFEFEF !important;
+  }
+}

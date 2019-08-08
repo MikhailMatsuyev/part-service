@@ -1,0 +1,33 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="userfactor-tree">
+    <mat-tree-node *matTreeNodeDef="let node"
+                    matTreeNodeToggle
+                    matTreeNodePadding>
+        <mat-checkbox color="primary"
+                    [checked]="selection.isSelected(node)"
+                    [disabled]="node?.immutable"
+                    (change)="handleSelectChange($event, node)">
+            {{node?.name}}
+        </mat-checkbox>
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild"
+                    matTreeNodePadding>
+        <div class="node-category">
+            <div class="node-category-content">
+                <button mat-icon-button matTreeNodeToggle
+                    [attr.aria-label]="'toggle ' + node.name"
+                    class="tree-toggle pointer">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'arrow_drop_up' : 'arrow_drop_down'}}
+                    </mat-icon>
+                </button>
+                <mat-checkbox color="primary"
+                                [checked]="descendantsAllSelected(node)"
+                                [disabled]="node?.immutable"
+                                (change)="handleSelectChange($event, node)">
+                    {{node?.name}}
+                </mat-checkbox>
+            </div>
+        </div>
+    </mat-tree-node>
+</mat-tree>

@@ -1,0 +1,67 @@
+@import '../../../styles/variable.sass'
+
+::ng-deep .dark-theme .mat-raised-button.mat-primary
+    margin-right: 10px
+
+.user-container-button
+    display: flex
+    justify-content: space-between
+    ::ng-deep .search
+        padding-right: 10px
+        input
+            min-width: 423px
+            padding-right: 37px !important
+            box-sizing: border-box
+        .mat-icon
+            right: 20px !important
+.collapse-button
+    color: #1E395D
+    font-size: 13px
+.action-container
+    display: flex
+    justify-content: center
+    align-items: center
+
+.undo-container
+    display: flex
+    margin-right: 20px
+    margin-left: 30px
+    .undo-button
+        margin-right: 10px
+
+::ng-deep .dark-theme .mat-raised-button[disabled][disabled]
+    background-color: $grey-color !important
+    color: #fff !important
+
+app-cards
+    display: block
+    margin-bottom: 20px
+    padding-right: 9px
+
+.not-found
+    background-color: #efefef
+    height: 90px
+    display: flex
+    justify-content: center
+    align-items: center
+    color: #343434
+    font-weight: bold
+    margin-top: 20px
+    margin-right: 29px
+
+.download-button-text
+    margin-right: 10px
+
+/deep/ .dark-theme .mat-menu-panel
+    background-color: #fff
+
+/deep/ .dark-theme .mat-menu-item
+    color: #343434
+
+.user-container
+    height: calc(100vh - 150px)
+    overflow-y: auto
+    margin-top: 20px
+
+/deep/ .mat-drawer-content
+    overflow: hidden !important

@@ -1,0 +1,68 @@
+@import '../../../../../styles/variable.sass'
+
+::ng-deep .connections-cards
+    display: flex
+    flex-direction: column
+    ::ng-deep .mat-toolbar
+        padding: 0
+        height: 40px
+        min-height: 40px
+        border-top-left-radius: 5px
+        border-top-right-radius: 5px
+        background-color: $white !important
+    ::ng-deep .mat-toolbar-row
+        padding: 14px 5px 11px 20px
+        color: $main-font-color
+        box-sizing: border-box
+        height: 100%
+    ::ng-deep .toolbar-header
+        font-size: 12px
+        font-family: 'Roboto'
+        text-transform: uppercase
+        font-weight: 500
+        line-height: 14px
+.network-canvas
+    width: 100%
+    height: 100%
+    background-color: $main-color
+    z-index: 100
+    position: relative
+
+.action-container
+    display: flex
+    justify-content: center
+    align-items: center
+    .icon-fullscreen
+        margin-right: 15px
+::ng-deep div.vis-navigation ::ng-deep div.vis-button
+    width: 24px;
+    height: 24px;
+    border-radius: 4px
+    position: absolute
+    display: inline-block
+    background-repeat: no-repeat
+    cursor: pointer
+    -webkit-touch-callout: none
+    -khtml-user-select: none
+    user-select: none
+    border: 1px solid #E2E2E2
+
+::ng-deep .vis-zoomIn
+    background-image: url('../../../../../assets/icons/zoom-in.svg')
+    background-position: center center
+    left: 16px
+    bottom: 52px
+
+::ng-deep .vis-zoomOut
+    background-image: url('../../../../../assets/icons/zoom-out.svg')
+    background-position: center center
+    bottom: 17px
+    left: 16px
+
+.disabled-icons
+    cursor: not-allowed
+    pointer-events: none
+    ::ng-deep .svg-connect-element
+        stroke: $grey-color
+    ::ng-deep .svg-rect-line
+        fill: $grey-color

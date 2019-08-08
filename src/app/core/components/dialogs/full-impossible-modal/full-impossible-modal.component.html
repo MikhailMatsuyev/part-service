@@ -1,0 +1,29 @@
+<div class="header-modal">
+    <div class="title">Fully not possible Components for "Display"</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+
+<div class="container-components">
+    <div class="impossible-warning">
+        <app-warning>
+            <div class="warning-container">
+                In the tree are shown Components steps which have not possible status for all User Factors steps. "Admin" can change the Recommendations for needed Component and User Factor pair in order to make Components steps possible status.
+            </div>
+        </app-warning>
+    </div>
+    <div class="impossible-tree">
+        <app-scrollbar>
+            <app-tree-impossible [data]="data?.impossible"></app-tree-impossible>
+        </app-scrollbar>
+    </div>
+</div>
+
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            (click)="onNoClick(false)">
+        Ok
+    </button>
+</mat-dialog-actions>

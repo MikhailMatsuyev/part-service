@@ -1,0 +1,192 @@
+@import '../../../styles/variable.sass'
+
+\:host
+    width: 100%
+    display: flex
+    min-width: 100%
+
+.table-container
+    position: relative
+    overflow: auto
+    max-height: 520px
+    flex-grow: 1
+::ng-deep .mat-header-cell .mat-sort-header-arrow
+    display: none
+
+.settings-table
+    width: 100%
+    margin-left: 30px
+    margin-right: 30px
+
+.table-title-container
+    display: flex
+    align-items: baseline
+    margin-left: 30px
+    
+.settings-form
+    margin-bottom: 20px
+
+.mat-form-field
+    float: right
+    width: 220px
+    height: 35px
+    color: black
+
+.settings-align
+    margin-left: auto
+
+.input-settings
+    padding-left: 10px
+    background-color: #fff
+    border-radius: 4px
+    border: 1px solid #ccc
+    width: 208px
+    height: 35px
+
+.button-settings
+    color:#1E395D
+    background-color: transparent
+
+.error-container
+    color: black
+
+.settings-container
+    margin-bottom: 10px
+
+.input-container
+    height: 35px
+    
+.checkbox-container
+    margin-bottom: 20px
+    margin-top: 20px
+
+.dropdown
+    min-width: 220px !important
+
+.settings-container
+    display: flex
+    min-width: 380px
+    align-items: baseline
+
+.table-title
+    color: #343434
+    font-size: 16px
+    font-weight: 500
+    font-family: Roboto
+    line-height: 19px
+
+.settings-title
+    color: #343434
+    font-size: 16px
+    font-weight: 500
+    font-family: Roboto
+    line-height: 19px
+    margin-right: 10px
+    margin-top: 10px
+
+.formula-label
+    font-weight: normal
+    margin-right: 20px
+
+.settings-checkbox
+    margin-right: 10px
+
+.formula-label
+    color: #343434
+    font-family: Roboto
+    font-size: 12px
+    line-height: 14px
+
+.pricing-functions
+    line-height: 14px
+    font-size: 12px
+    color: #343434
+    text-transform: uppercase
+    margin-top: 11px
+    mat-checkbox
+        margin-right: 15px
+
+::ng-deep .dark-theme .mat-form-field-appearance-legacy .mat-form-field-label
+    color: rgba(0,0,0,.54)
+
+::ng-deep .dark-theme .mat-form-field-appearance-legacy .mat-form-field-underline
+    background-color: rgba(0,0,0,.42)
+
+::ng-deep .mat-button-focus-overlay
+    background-color: transparent !important;
+
+::ng-deep .dark-theme .mat-table
+    width: 100%
+    background-color: #fff
+
+::ng-deep .dark-theme .mat-header-row
+    background-color: #EFEFEF
+
+::ng-deep .dark-theme .mat-header-cell
+    color: #343434
+    font-size: 12px
+    font-weight: 500
+    font-family: Roboto
+    text-transform: uppercase
+    ::ng-deep .mat-sort-header-button
+        text-transform: uppercase
+
+::ng-deep .dark-theme .mat-cell
+    color: #343434
+    font-size: 12px
+    font-weight: normal
+    font-family: Roboto
+
+::ng-deep .dark-theme td.mat-cell
+    border-bottom-color: #EFEFEF
+
+.filter-icon
+    margin-left: 10px
+
+.filter-icon-left
+    /deep/.left-filter
+        fill: #343434
+    /deep/.right-filter
+        fill: #ADADAD
+.filter-icon-right
+    /deep/.left-filter
+        fill: #ADADAD
+    /deep/.right-filter
+        fill: #343434
+
+.mat-header-row
+    height: 40px
+
+.header-th,
+    padding: 0 10px
+
+.header-checkbox
+    padding-right: 30px
+
+.checkbox-title
+    margin-right: 80px
+
+.pr-20
+    padding-right: 20px
+
+.page-table-container
+    display: flex
+    height: 82vh
+
+.header-th,
+app-performance-input
+    padding: 0 10px
+
+.header-order
+    width: 80px
+
+@media only screen and (max-height: 850px)
+    .settings-form
+        margin-bottom: 10px
+    .input-container
+        height: 30px
+    .input-settings
+        height: 30px
+    .checkbox-container
+        margin-bottom: 15px
+        margin-top: 15px

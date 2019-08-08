@@ -1,0 +1,71 @@
+@import '../../../../../styles/variable.sass'
+
+\:host
+    color: $dark-font-color
+    display: flex
+    justify-content: space-between
+    padding: 15px 11px 20px 16px
+    box-sizing: border-box
+    border-bottom: 1px solid #EFEFEF
+
+.header-container
+    width: 300px
+
+.interface-acts
+    margin-left: 20px 
+    font-family: Roboto
+    font-style: normal
+    font-size: 13px
+    line-height: 15px
+    fill: solid
+    color: #9A9A9A
+    width: 600px
+
+.interface-act
+    margin-left: 5px 
+    height: 15px
+    cursor: pointer
+    border-bottom: 1px solid
+    border-bottom-style: dashed
+    font-family: Roboto
+    font-style: normal
+    font-size: 13px
+    line-height: 15px
+    fill: solid
+    color: #343434
+
+.toolbar-header
+    font-weight: bold
+    width: 300px
+
+.actions-container
+    display: flex
+
+.description-container
+    margin-left: 8px
+    margin-right: 20px
+.info-button
+    margin: 0 15px
+.order-container
+    margin-left: 25px
+    width: 130px
+input
+    border: none
+    width: 100%
+    padding: 0 10px
+    &:focus,
+    &:active
+        outline: none
+
+.toolbar-header
+    input
+        font-weight: bold
+
+.combine-container
+    width: 63px
+    display: flex
+    justify-content: flex-end
+
+/deep/ .vision-icon
+    svg
+        height: 18px

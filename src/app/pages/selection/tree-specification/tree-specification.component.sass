@@ -1,0 +1,65 @@
+.tree-toggle
+    border: 1px solid #E2E2E2
+    border-radius: 3px
+    width: 20px
+    height: 20px
+    margin-right: 10px
+    ::ng-deep
+        &.mat-button-focus-overlay
+            background-color: transparent !important
+    .mat-icon-rtl-mirror
+        width: 18px
+        height: 20px
+        font-size: 20px
+        display: flex
+        justify-content: center
+        align-items: center
+.node-icon.file-icon
+    margin-right: 10px
+    ::ng-deep
+        .chunk-icon
+            stroke: #E2E2E2
+.category-text
+    font-size: 13px
+    color: #343434
+
+.default-text
+    color: #9A9A9A
+    font-size: 13px
+    margin-left: 5px
+
+.active-node.node-icon.file-icon
+    ::ng-deep
+        .chunk-icon
+            stroke: #343434
+
+.node-spec,
+.node-category
+    display: flex
+    justify-content: space-between
+    align-items: center
+    width: 100%
+    padding-right: 10px
+.node-spec
+    .icon-menu
+        opacity: 0
+        pointer-events: none
+    &:hover
+        .icon-menu-active
+            opacity: 1
+            pointer-events: auto
+.node-category
+    .node-category-content
+        display: flex
+        justify-content: center
+        align-items: center
+    .icon-category
+        opacity: 0
+        pointer-events: none
+    &:hover
+        .icon-category-active
+            opacity: 1
+            pointer-events: auto
+
+.mr-10
+    margin-right: 10px

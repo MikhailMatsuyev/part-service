@@ -1,0 +1,234 @@
+@import '../../../styles/variable.sass'
+
+\:host
+    ::ng-deep .mat-button-focus-overlay
+        background-color: transparent !important
+
+.icon-calculation
+    width: 40px
+    box-sizing: border-box
+    display: flex
+    justify-content: center
+    align-items: center
+    border-left: 1px solid rgba(255, 255, 255, 0.15)
+    height: 100%
+
+.active-icons
+    cursor: pointer
+    pointer-events: auto !important
+    ::ng-deep .chunk-icon-group
+        opacity: 1
+
+.disabled-icons
+    cursor: not-allowed
+    pointer-events: none
+    ::ng-deep .chunk-icon-fill
+        fill: $grey-color
+    ::ng-deep .chunk-icon-path
+        stroke: $grey-color
+
+::ng-deep .dark-theme .mat-table
+    background-color: #fff
+.table-containers
+    width: 95vw
+    overflow: auto
+    height: 77vh
+    &-switch-mode
+        position: absolute
+        top: 0
+        left: 0
+        width: 100% !important
+        height: 76vh !important
+        background-color: #fff
+        overflow-y: hidden !important
+        ::ng-deep
+            .ng-scrollbar-view
+                height: calc(100% - 17px) !important
+        .header-cells
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+            width: 48px
+        .table-cells
+            min-width: 48px !important
+            padding: 10px 15px !important
+        .second-header-cells
+            div
+                white-space: nowrap
+                overflow: hidden
+                text-overflow: ellipsis
+                width: 48px
+    ::ng-deep
+        .mat-table
+            margin: 0 5px 5px 0
+            border-collapse: collapse
+        .mat-header-row
+            background-color: #EFEFEF !important
+        .mat-header-cell
+            color: #343434 !important
+            font-size: 12px !important
+            font-weight: 500 !important
+            font-family: Roboto !important
+        .mat-cell
+            color: #343434 !important
+            font-size: 12px !important
+            font-weight: normal !important
+            font-family: Roboto !important
+        .mat-row
+            border-bottom-width: none !important
+    .sticky-column
+        min-width: 230px
+        width: 230px
+        max-width: 230px
+        border-right: 1px solid #FFFFFF
+        box-sizing: border-box
+        padding: 15px 0 13px 20px
+        height: 60px
+        &.mat-cell
+            border-bottom: 1px solid #EFEFEF
+    .light-cell
+        background-color: #FFFFFF !important
+        &.table-cells-active
+            background-color: #D8F6D2 !important
+    .table-cells
+        min-width: 140px
+        padding: 10px 20px
+        box-sizing: border-box
+        background-color: #FCFCFC
+        height: 35px
+        border-collapse: collapse
+        position: relative
+        .header-step
+            color: #9A9A9A
+            text-transform: uppercase
+            font-size: 11px
+            font-weight: 500
+            margin-right: 5px
+        .header-content
+            color: #343434
+            font-size: 12px
+            text-transform: capitalize
+        &.mat-cell
+            border-bottom: 1px solid #EFEFEF !important
+            border-left: 1px solid #EFEFEF !important
+            border-right: 1px solid #EFEFEF !important
+        &.mat-header-cell
+            background-color: #EFEFEF !important
+    .recommended
+        color: #27AE60 !important
+    .possible
+        color: #343434;
+    .not-possible
+        color: #EB5757 !important
+    .first-header
+        th
+            text-transform: uppercase
+            border-bottom: 1px solid #FFFFFF
+    .shadow-cell
+        box-shadow: 11px 0px 12px 0px rgba(0, 0, 0, 0.04)
+    .text-center
+        text-align: center
+    .transform-arrows
+        transform: rotate(90deg)
+        padding-left: 8px
+        width: 10px
+        height: 20px
+        display: inline-flex
+        justify-content: center
+        align-items: center
+        margin-left: 8px
+
+.table-cells
+    &-active
+        background-color: #D8F6D2 !important
+    .icon-comment
+        position: absolute
+        top: 1px
+        right: 5px
+        color: #343434
+        font-size: 14px
+.tooltip-container
+    min-width: 300px
+    max-width: 400px
+    background-color: #ffffff
+    color: #343434
+    font-size: 12px
+    min-height: 50px
+    margin: -10px 0px
+    padding: 10px 20px 10px 13px
+    line-height: 24px
+    textarea
+        resize: none
+        width: 270px
+        height: 90px
+        border-radius: 4px
+        border: 1px solid #E2E2E2
+        margin: 15px 0
+.tooltip-title-header
+    display: flex
+    justify-content: space-between
+    .title-comment
+        color: #343434
+        font-size: 13px
+        font-weight: 500
+    .close-icon
+        color: #1E395D
+.toltip-status
+    display: flex
+    flex-direction: column
+.toltip-header-status
+    display: flex
+    mat-icon
+        margin: 0 10px
+.mr5
+    margin-right: 5px
+.menu-container
+    color: #343434
+    min-width: 160px
+    font-size: 13px
+    background-color: white
+    padding: 10px 0
+    ::ng-deep
+        .mat-list-item
+            height: 18px !important
+            margin-bottom: 5px
+        .mat-list-item-content
+            color: #343434
+
+.pl-20
+    padding-left: 20px
+
+.toolbar-hint
+    display: flex
+    color: #343434
+    justify-content: space-between
+    font-size: 12px
+    align-items: center
+    margin-bottom: 15px
+    .container-hint
+        display: flex
+        align-items: center
+        .hint-text
+            margin-left: 20px
+        .hint-status
+            font-weight: bold
+        .hint-icon-close
+            width: 24px
+            height: 24px
+            color: #1E395D
+            margin-left: 15px
+
+.header-transform
+    position: relative
+    div
+        &:first-of-type
+            margin-bottom: 10px
+    .transform-arrows
+        position: absolute
+        right: 10px
+        top: 5px
+
+.icon-recomendation
+    ::ng-deep
+        svg
+            transform: rotate(45deg)

@@ -1,0 +1,47 @@
+<mat-grid-list cols="3">
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile class="login-element" rowspan="2">
+        <form novalidate class="login-container" (ngSubmit)="onSubmit(form)" [formGroup]="form">
+            <div class="login-box-body">
+                <mat-grid-list cols="9" rowHeight="75px">
+                    <mat-grid-tile [rowspan]="1" class="login-icon">
+                        <mat-icon>lock</mat-icon>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="7">
+                        <mat-form-field class="justifier">
+                            <input matInput placeholder="Username" formControlName="userName" type="text">
+                        </mat-form-field>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+                <mat-grid-list cols="9" rowHeight="100px">
+                    <mat-grid-tile [rowspan]="1"  class="login-icon">
+                        <mat-icon>remove_red_eye</mat-icon>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="7">
+                        <mat-form-field class="justifier">
+                            <input matInput placeholder="Password" formControlName="password" type="password">
+                        </mat-form-field>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+                <div fxLayoutGap="10px" fxLayout="column">
+                    <button mat-raised-button color="primary" [disabled]="form.invalid" class="login-button">
+                        <mat-icon>input</mat-icon> Login In
+                    </button>
+
+                    <button mat-raised-button
+                            type="button"
+                            color="primary"
+                            class="login-button"
+                            (click)="login(true)"
+                            *ngIf="isActiveGuestMode$ | async">
+                        <mat-icon>input</mat-icon> Login as guest
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </mat-grid-tile>
+    <mat-grid-tile></mat-grid-tile>
+</mat-grid-list>

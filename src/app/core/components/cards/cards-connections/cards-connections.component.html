@@ -1,0 +1,26 @@
+<app-cards-tree [headerName]="headerName" class="connections-cards">
+    <div action-header class="action-container">
+        <div class="pointer icon-fullscreen"
+             [class.disabled-icons]="disabledFullscreen"
+             (click)="handleFullScreen()"
+             title="Toggle view mode"
+             inlineSVG="../../../../../assets/icons/fullscreen.svg">
+        </div>
+        <div *ngIf="withDepth" title="Depth for network">
+            <app-dropdown [list]="depth"
+                          [defaultItem]="defaultItemDepth"
+                          [isDisabled]="disabledFullscreen"
+                          (changeItem)="handleChangeDepth($event)">
+            </app-dropdown>
+        </div>
+    </div>
+    <ng-container>
+        <div class="network-canvas"
+             #visDiagram
+             [visNetwork]="visNetwork"
+             [visNetworkData]="visNetworkData"
+             [visNetworkOptions]="visNetworkOptions"
+             (initialized)="networkInitialized(visDiagram)">
+        </div>
+    </ng-container>
+</app-cards-tree>

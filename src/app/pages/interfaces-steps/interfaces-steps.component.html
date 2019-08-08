@@ -1,0 +1,93 @@
+<div class="wrapper">
+    <div class="user-container">
+        <app-cards-tree headerName="INTERFACE" class="app-cards-tree-custom width24p">
+            <div action-header
+                 class="collapse pointer user-select-none"
+                 [ngClass]="sortingClass$ | async"
+                 inlineSVG="../../../../../assets/icons/filter.svg"
+                 (click)="colapseTree()"
+                 title="A-Z">
+            </div>
+            <ng-container>
+                <mat-radio-group class="container-group" (change)="handleClickInterface($event)">
+                    <app-scrollbar class="scrollbar-view-height-custom">
+                        <mat-radio-button color="primary"
+                                        class="tree-radio-button"
+                                        *ngFor="let values of interfaceValues$ | async; trackBy: trackByFn"
+                                        [value]="values?.id"
+                                        [title] ="values?.name"
+                                        [checked]="values?.id === (interfaceValueChoosed$ | async)">
+                            {{values?.name}}
+                        </mat-radio-button>
+                    </app-scrollbar>
+                </mat-radio-group>
+            </ng-container>
+        </app-cards-tree>
+
+        <app-cards-tree headerName="COMPONENT" class="app-cards-tree-custom width24p">
+            <div action-header *ngIf="(componentValues$ | async).length > 0"
+                 class="collapse pointer user-select-none"
+                 [ngClass]="sortingComponentClass$ | async"
+                 inlineSVG="../../../../../assets/icons/filter.svg"
+                 (click)="colapseTreeComponent()"
+                 title="A-Z"
+                 >
+            </div>
+            <ng-container *ngIf="(componentValues$ | async).length > 0; else elseBlock">
+                <mat-radio-group class="container-group" (change)="handleClickComponent($event)">
+                    <app-scrollbar class="scrollbar-view-height-custom">
+                        <mat-radio-button color="primary"
+                                        class="tree-radio-button"
+                                        *ngFor="let values of componentValues$ | async; trackBy: trackByFn"
+                                        [value]="values?.id"
+                                        [title] ="values?.name"
+                                        [checked]="values?.id === (componentValuesChoosed$ | async)">
+                            {{values?.name}}
+                        </mat-radio-button>
+                    </app-scrollbar>
+                </mat-radio-group>
+            </ng-container>
+        </app-cards-tree>
+
+        <app-cards-tree headerName="COMPONENT STEP" class="app-cards-tree-custom width24p">
+            <ng-container *ngIf="(componentStepValues$ | async).length > 0; else elseBlock">
+                <section class="container-group">
+                    <app-scrollbar class="scrollbar-view-height-custom">
+                        <mat-checkbox color="primary"
+                                    class="tree-radio-button"
+                                    *ngFor="let values of componentStepValues$ | async; trackBy: trackByFn"
+                                    [value]="values?.id"
+                                    [title]="values?.name"
+                                    (change)="handleClickComponentStepChB( $event, values?.id)">
+                            {{values?.name}}
+                        </mat-checkbox>
+                    </app-scrollbar>
+                </section>
+            </ng-container>
+        </app-cards-tree>
+
+        <app-cards-tree headerName="INTERFACE STEP" class="app-cards-tree-custom width24p">
+
+            <div action-header
+                 class="action-connect pointer"
+                 inlineSVG="../../../assets/icons/connect.svg"
+                 title="CONNECT COMPONENT STEP TO INTERFACE STEP"
+                 (click)="handleClickInterfaceStepIcon()"
+                 [class.disabled]="!(componentStepValuesChoosed$ | async)?.length">
+            </div>
+
+            <ng-container *ngIf="(interfaceStepValues$ | async).length > 0; else elseBlock">
+                <section class="scrollbar-view-height-custom interface-step-padding">
+                    <app-scrollbar>
+                        <div class="combined-text" [class.last-combined]="last" *ngFor="let values of interfaceStepValues$ | async; let last = last ">
+                            {{values?.name }}
+                        </div>
+                    </app-scrollbar>
+               </section>
+            </ng-container>
+        </app-cards-tree>
+    </div>
+</div>
+<ng-template #elseBlock>
+    <div class="not-found scrollbar-view-height-custom">No matching records found</div>
+</ng-template >

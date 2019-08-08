@@ -1,0 +1,28 @@
+<mat-toolbar color="primary" class="card-toolbar">
+    <mat-toolbar-row>
+        <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center">
+            <mat-checkbox [formControl]="checked" color="warn" *ngIf="!canEdit"></mat-checkbox>
+            <div class="toolbar-header">
+                <input type="text" [formControl]="headerControl" (blur)="handleFocusOut()">
+            </div>
+        </div>
+        <span class="toolbar-spacer"></span>
+        <div class="toolbar-priority-container" *ngIf="pageType !== pageTypes.Interfaces">
+            <div class="header-priority" [hidden]="canEdit">
+                <input type="text" [formControl]="priorityControl" maxlength="10" appPatternControl (blur)="handleFocusOut()">
+            </div>
+            <div class="filter-icon pointer"
+                 title="Priority"
+                 [ngClass]="setFilterClass()"
+                 inlineSVG="../../../../assets/icons/filter.svg"
+                 (click)="filterChange()">
+            </div>
+        </div>
+        <div class="arrow-icon pointer user-select-none" (click)="collapseHandle()">
+            <mat-icon>{{isCollapsed ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</mat-icon>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div class="card-container" [hidden]="isCollapsed">
+    <ng-content></ng-content>
+</div>

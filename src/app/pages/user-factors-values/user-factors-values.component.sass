@@ -1,0 +1,68 @@
+\:host
+    display: flex
+
+.container-group
+    display: flex
+    flex-direction: column
+    color: black
+    padding: 10px 0 0 20px
+.userfactor-values
+    ::ng-deep
+        width: 350px
+        display: flex
+        flex-direction: column
+        ::ng-deep
+            .mat-toolbar
+                padding: 0
+                height: 40px
+                min-height: 40px
+                border-top-left-radius: 5px
+                border-top-right-radius: 5px
+                background-color: #1E395D !important
+            .mat-toolbar-row
+                padding: 14px 20px 11px 20px
+                color: #fff
+                box-sizing: border-box
+                height: 100%
+            .toolbar-header
+                font-size: 13px
+                font-family: 'Roboto'
+                text-transform: uppercase
+            .left-filter,
+            .right-filter
+                fill: #fff
+    .tree-radio-button
+        margin-bottom: 10px
+        text-overflow: ellipsis
+        font-size: 12px
+        line-height: 14px
+        padding-top: 10px
+        ::ng-deep .mat-radio-label
+            width: 100%
+            ::ng-deep .mat-radio-label-content
+                white-space: nowrap
+                overflow: hidden
+                text-overflow: ellipsis
+
+.filter-icon-left
+    /deep/.left-filter
+        fill: white
+    /deep/.right-filter
+        fill: #ADADAD
+.filter-icon-right
+    /deep/.left-filter
+        fill: #ADADAD
+    /deep/.right-filter
+        fill: white
+.resize-block
+    align-self: center
+    padding: 0 5px
+
+.containter-group
+    height: 77vh
+    max-height: 760px
+app-two-headers-table
+    overflow: auto
+    height: 82vh
+    max-height: 800px
+    flex-grow: 1

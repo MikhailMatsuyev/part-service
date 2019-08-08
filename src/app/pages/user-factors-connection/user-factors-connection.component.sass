@@ -1,0 +1,174 @@
+@import '../../../styles/variable.sass'
+
+.container-button
+    margin-bottom: 20px
+    display: flex
+
+.dropdown
+    width: 210px
+    font-family: Roboto
+    font-size: 12px
+    line-height: 14px
+    font-weight: normal
+    color: $main-font-color
+    margin-left: 20px
+    display: flex
+    justify-content: center
+    align-items: center
+    app-dropdown
+        width: 180px
+        margin-left: 10px
+
+.cards-connections.cards-fullscreen
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    height: 100% !important
+    app-cards-tree
+        width: 100% !important
+.user-factors-containers
+    .cards-connections
+        display: block
+        min-height: 350px
+        height: 350px
+        flex-grow: 1
+        ::ng-deep app-cards-tree
+            height: 100%
+            width: 100% !important
+        ::ng-deep app-cards-tree ::ng-deep .mat-toolbar
+            background-color: $white !important
+        ::ng-deep app-cards-tree ::ng-deep .mat-toolbar-row
+            color: $main-font-color
+
+.user-factors-containers
+    display: flex
+    margin-bottom: 10px
+    app-cards-tree
+        &:first-of-type
+            margin-left: 0
+        &:last-of-type
+            margin-right: 0
+    ::ng-deep .ng-scrollbar-view
+        overflow-x: hidden
+        height: 100% !important
+    ::ng-deep .card-container
+        height: calc(100% - 40px)
+    ::ng-deep .combine-cards
+        min-width: 420px
+        margin: 0 10px 10px 10px
+        min-height: 280px
+        height: 100%
+        max-height: 440px
+        flex-grow: 1
+        box-sizing: border-box
+        border: 1px solid $white
+        border-top: transparent
+        border-bottom-left-radius: 5px
+        border-bottom-right-radius: 5px
+        ::ng-deep .mat-toolbar
+            background-color: $white !important
+        ::ng-deep .mat-toolbar-row
+            color: $main-font-color
+    .combined-text
+        color: $dark-font-color
+        font-size: 12px
+        font-weight: normal
+        padding: 10px 0 10px 20px
+        border-bottom: 1px solid $white
+    .not-found-text
+        display: flex
+        justify-content: center
+        padding-top: 10px
+        color: #343434
+        font-size: 12px
+    ::ng-deep .component-cards,
+    ::ng-deep .combine-cards
+        display: flex
+        flex-direction: column
+        box-sizing: border-box
+        ::ng-deep .mat-toolbar
+            padding: 0
+            height: 40px
+            min-height: 40px
+            border-top-left-radius: 5px
+            border-top-right-radius: 5px
+        ::ng-deep .toolbar-header
+            font-size: 12px
+            font-family: 'Roboto'
+            font-weight: normal
+            text-transform: uppercase
+        ::ng-deep .mat-toolbar-row
+            padding: 14px 17px 11px 20px
+            box-sizing: border-box
+            height: 100%
+    .action-connect.disabled
+        cursor: not-allowed
+        pointer-events: none
+        ::ng-deep .svg-connect-element
+            fill: $grey-color
+    .last-combined
+        margin-bottom: 20px
+    app-performance-input
+        display: block
+        width: 100px
+    .header-th
+        padding: 0 10px
+
+.table-container
+    width: 870px
+    min-width: 870px
+    height: 350px
+    position: relative
+    max-height: 350px
+    overflow: auto
+    margin-right: 18px
+    border-radius: 5px
+    border-left: 1px solid #EFEFEF
+    border-bottom: 1px solid #EFEFEF
+    ::ng-deep .ng-scrollbar.-vertical
+        background-color: #EFEFEF
+        top: 0px !important
+    .mat-table
+        padding-right: 8px
+        border-right: 1px solid #EFEFEF
+::ng-deep .dark-theme .mat-checkbox-disabled:not(.mat-checkbox-checked) .mat-checkbox-frame
+    border-color: #EFEFEF !important
+    background-color: #EFEFEF !important
+
+::ng-deep .dark-theme .mat-table
+    width: 100%
+    background-color: #fff
+
+::ng-deep .dark-theme .mat-header-row
+    background-color: $primary-color
+
+::ng-deep .dark-theme .mat-header-cell
+    color: white
+    font-size: 12px
+    font-weight: 500
+    font-family: Roboto
+    text-transform: uppercase
+    font-weight: 500
+
+::ng-deep .dark-theme .mat-cell
+    color: #343434
+    font-size: 12px
+    font-weight: normal
+    font-family: Roboto
+
+::ng-deep .dark-theme td.mat-cell
+    border-bottom-color: #EFEFEF
+
+.user-factors-containers
+    display: flex
+
+.pr-10
+    padding-right: 10px
+
+.pr-20
+    padding-right: 20px
+
+.combine-containers
+    height: calc(100% - 440px)

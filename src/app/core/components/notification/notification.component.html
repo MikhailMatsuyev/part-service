@@ -1,0 +1,15 @@
+<div class="notification-container" [class.notification-readed]="!notification?.readed">
+    <div class="notification-header" fxFlexAlign="center" fxLayoutAlign="space-between">
+        <div class="notification-extension">{{notification?.extension || 'INFO'}}</div>
+        <div>
+            <mat-icon class="notification-icon pointer" (click)="handleStatus()">notifications</mat-icon>
+            <mat-icon class="notification-icon pointer" (click)="handleClose()">close</mat-icon>
+        </div>
+    </div>
+    <div class="notification-title">
+        {{notification?.text}}
+    </div>
+    <div class="notification-content">
+        <ng-content></ng-content>
+    </div>
+</div>

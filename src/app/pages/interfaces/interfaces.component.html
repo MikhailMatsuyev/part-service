@@ -1,0 +1,86 @@
+<div class="user-container-button">
+    <div class="action-container">
+        <button mat-raised-button color="primary" (click)="createNew()">New</button>
+        <button mat-raised-button
+                color="primary"
+                [matMenuTriggerFor]="downloadMenu">
+            <span class="download-button-text">Download as Excel</span>
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!isEditActive" (click)="edit()">Edit</button>
+        <button mat-raised-button color="primary" [disabled]="!(seriesSelection.length !== 0 || groupSelection.length !== 0)" (click)="deleteGroups($event)">Delete</button>
+        <div class="undo-container">
+            <div class="undo-button pointer"
+                 title="Back"
+                 inlineSVG="../../../assets/icons/undo.svg">
+            </div>
+            <div class="pointer"
+                 title="Forward"
+                 inlineSVG="../../../assets/icons/redo.svg">
+            </div>
+        </div>
+        <div class="collapse-button pointer" (click)="collapse()">{{collapse$ | async}}</div>
+    </div>
+    <div>
+        <app-search [formControl]="searchControl"></app-search>
+    </div>
+</div>
+
+<div class="user-container">
+    <app-scrollbar>
+        <app-cards
+            *ngFor="let data of (groups | filterByRecursive: (searchControlValue$ | async)); trackBy: trackByFn"
+            [headerName]="data?.group"
+            [pageType]="pageType"
+            [headerPriority]="data?.order"
+            [canEdit]="data.groupId === -1"
+            [headerSorts]="directions$ | async"
+            [headerCollapse]="!data?.isCollapsed"
+            [saveAfterOut]="true"
+            [validateDepend]="validateDepend(groups | filterByRecursive: (searchControlValue$ | async))"
+            (changeStatusValidate)="handleChangeValidateStatus()"
+            (headerChecked)="handleCardHeader(data)"
+            (headerChange)="handleHeaderGroup($event, data)"
+            (headerPriorityChange)="handlePriorityChange($event, data)"
+            (changeSort)="handleSortGroup()"
+            (changeCollapse)="handleChangeCollapseGroup($event, data)">
+            <app-table-tree
+                [pageType]="pageType"
+                [groupId]="data?.groupId"
+                [tableData]="data?.series"
+                [serieHeaderName]="'INTERFACES'"
+                [headerSorts]="data?.factorDirection"
+                [isSelectedStep]="isSelectedStep(data)"
+                [activeKeyCode]="keyCode"
+                [isCheckedGroup]="groupSelection"
+                [validateSeriesDepend]="validateSeriesDepend(groups | filterByRecursive: (searchControlValue$ | async))"
+                (dragGroupStart)="handleDragGroupStart()"
+                (changeStatusHeaders)="handleHeaderCheck($event, data)"
+                (changeHeaderSort)="handleHeaderSort($event, data)"
+                (changeActiveGroup)="handleActiveGroup($event, data)"
+                (changeGroupInfo)="handleGroupInfo($event, data)"
+                (addNewEmptyStep)="handleNewStep($event, data)"
+                (saveStep)="handleSaveStep($event, data)"
+                (removeStep)="handleRemoveStep($event, data)"
+                (swapLeft)="handleSwapLeft($event, data)"
+                (swapRight)="handleSwapRight($event, data)"
+                (selectStep)="handleSelectStep($event, data)"
+                (insertStep)="handleInsertStep($event)"
+                (dropStep)="handleDropStep($event, data)"
+                (dropSerie)="handleDropSerie($event, data)"
+                (infoClick)="handleInfoClick($event)"
+                (changeSubGroupStatus)="handleChangeSubGroupStatus($event)"
+                (removeGroupStep)="handleRemoveGroupStep($event)">
+            </app-table-tree>
+        </app-cards>
+        <div class="not-found" *ngIf="(groups | filterByRecursive: (searchControlValue$ | async)).length === 0 && searchControl.dirty && searchControl.value !== ''">
+            NO MATCHING RECORDS FOUND
+        </div>
+    </app-scrollbar>
+</div>
+
+<mat-menu #downloadMenu="matMenu">
+    <button mat-menu-item (click)="downloadHandle(downloadLevel.InterfaceGroups)">Groups</button>
+    <button mat-menu-item (click)="downloadHandle(downloadLevel.InterfaceSeries)">Series</button>
+    <button mat-menu-item (click)="downloadHandle(downloadLevel.InterfaceStep)">Steps</button>
+</mat-menu>

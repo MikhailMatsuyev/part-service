@@ -1,0 +1,259 @@
+@import '../../../styles/variable.sass'
+
+.collapse
+    font-size: 13px
+    color: #fff
+
+.section-container
+    display: flex
+    max-height: 770px
+    height: 455px
+    margin-bottom: 10px
+.section-resize
+    padding: 0 5px
+    display: flex
+    align-items: center
+
+@media only screen and (min-height: 732px)
+    .section-container
+        height: 770px !important
+
+.section-toolbar
+    display: flex
+    padding-bottom: 25px
+    align-items: center
+    ::ng-deep .mat-slide-toggle
+        margin-left: 10px
+.filter-icon
+    margin-right: 10px
+    width: 15px;
+    height: 15px;
+    color: $primary-button
+    display: inline-block
+    padding-top: 3px
+    ::ng-deep
+        .left-filter,
+        .right-filter
+            fill: #fff
+
+.download-button-text
+    margin-right: 10px
+
+.specification-button
+    color: #343434
+    margin-right: 10px
+    display: flex
+    align-items: center
+    .file-icon
+        margin-right: 15px
+        display: inline-block
+
+::ng-deep .selection-container
+    padding: 0
+    width: 100%
+    box-sizing: border-box
+    background-color: white !important
+    .mat-drawer
+        width: 380px
+        background-color: white
+        color: #343434
+        padding: 30px
+        box-sizing: border-box
+    .close-selection
+        position: absolute
+        top: -15px
+        right: 0
+    .specifications-container
+        position: relative
+        .specifications-header
+            font-size: 16px
+            font-weight: 500
+            text-transform: uppercase
+            margin-bottom: 15px
+    .specifications-content-header
+        font-weight: 500
+        font-size: 16px
+        margin-bottom: 15px
+        display: flex
+        justify-content: space-between
+        align-items: center
+
+.specifications-content
+    height: calc(100vh - 220px)
+.component-tree
+    flex-grow: 1
+    position: relative
+
+.specifications-footer
+    display: flex
+    button
+        width: 100%
+
+::ng-deep
+    .mat-raised-button.mat-primary.revert-primary
+        background-color: #fff !important
+        color: #343434 !important
+        border: 1px solid rgba(47, 74, 107, 0.4)
+        .filter-icon
+            ::ng-deep
+                .left-filter,
+                .right-filter
+                    fill: #436DA4
+.userfactor-tree
+    ::ng-deep
+        .mat-toolbar
+            padding-right: 0 !important
+        .mat-toolbar-row
+            padding: 0 16px !important
+
+
+.userfactor-tree,
+.component-tree
+    ::ng-deep
+        .toolbar-header
+            font-size: 13px
+            font-weight: 500
+        .mat-toolbar
+            height: 40px
+            min-height: 40px
+            border-top-left-radius: 5px
+            border-top-right-radius: 5px
+        .card-container
+            height: calc(100% - 40px)
+        .container-tree
+            height: calc(100% - 40px)
+            overflow: auto
+
+.component-tree
+    ::ng-deep
+        .mat-toolbar
+            padding-right: 15px !important
+        .mat-toolbar-row
+            padding-right: 0 !important
+.selection-item
+    display: flex
+::ng-deep .selection-list
+    width: 550px
+    max-width: 550px
+    overflow: initial !important
+    .mat-menu-item
+        overflow: initial !important
+
+app-performance-selection
+    display: flex
+    min-width: 100%
+.add-menu-item
+    padding-top: 20px
+    box-sizing: border-box
+.add-container
+    display: flex
+    width: 100%
+    height: 100%
+    align-items: center
+    .add-button
+        width: 20px
+        height: 20px
+        border-radius: 4px
+        background-color: #1E395D
+        display: flex
+        margin-right: 10px
+        .mat-icon.material-icons
+            width: 10px
+            height: 10px
+            font-size: 21px
+    .add-content
+        display: flex
+        align-items: center
+        justify-content: center
+
+.menu-disabled
+    cursor: not-allowed !important
+
+.auto-reload-block
+    background-color: rgba(0, 0, 0, 0.5)
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    display: flex
+    align-items: center
+    justify-content: center
+
+::ng-deep .dark-theme .mat-raised-button.mat-primary.discard
+    border: 1px solid $discard-border-color !important
+    color: $buttons-color !important
+    background-color: #fff !important
+
+.specifications-content-header
+    .icon-menu
+        opacity: 0
+        margin-right: 10px
+        pointer-events: none
+    &:hover
+        .icon-menu-active
+            opacity: 1
+            pointer-events: auto
+
+.ordering-keys
+    font-size: 12px
+    display: flex
+    align-items: center
+    box-sizing: border-box
+    .info-icon
+        display: flex
+        justify-content: center
+        align-items: center
+        padding-top: 9px
+        margin-left: 10px
+
+.component-tree-spinner
+    position: absolute
+    left: 30%
+    top: 35%
+    z-index: 100
+
+.tree-loading
+    background-color: #fff
+    ::ng-deep
+        .container-tree,
+        .components-tree.mat-tree,
+        .mat-tree-node.first-level
+            background-color: #fff
+        .mat-tree-node.first-level
+            border-color: #fff
+.tree-content
+    display: flex
+    height: 100%
+
+app-tree-elements
+    width: 100%
+    // width: 350px
+    // display: block
+    // height: 100%
+    // box-shadow: 7px -5px 19px 3px rgba(0,0,0, .1)
+    // ::ng-deep mat-tree
+    //     box-shadow: 7px -5px 19px 3px rgba(0,0,0, .1)
+
+.ordering-key
+    color: #343434
+    font-size: 12px
+    height: 40px
+    padding: 13px 0 12px 20px
+    display: flex
+    align-items: center
+    box-sizing: border-box
+    border-bottom: 1px solid #EFEFEF
+    .info-icon
+        padding-top: 3px
+        margin-left: 10px
+.ordering-key-input
+    display: inline-flex
+    width: 110px
+    margin-left: 5px
+    height: 20px
+    background-color: #fff
+    box-sizing: border-box
+    justify-content: center
+    align-items: center
+    color: #343434

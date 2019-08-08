@@ -1,0 +1,66 @@
+<div class="header-modal">
+    <div class="title">Aprove or decline change</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+<div class="container-components">
+    <app-scrollbar>
+        <div class="node-list">
+            <div *ngIf="data.addedSeries.length > 0">
+                <div >Will be added</div>
+                <app-import-node *ngFor="let series of data.addedSeries" [title]="series.name">
+                    <div class="list-item" *ngFor="let step of series.addedSteps">
+                        <b>{{step.name}}</b> to {{getOrdinalNumber(step.order + 1)}} position
+                    </div>
+                </app-import-node>
+            </div>
+            <div *ngIf="data.mergedSeries.length > 0">
+                <div >Will be merged</div>
+                <app-import-node *ngFor="let series of data.mergedSeries" [title]="series.name">
+                    <app-import-node sub="true" title="Following Steps will be added" *ngIf="series.addedSteps.length > 0">
+                        <div class="list-item" *ngFor="let step of series.addedSteps">
+                            <mat-checkbox color="primary" [checked]="true" (change)="handleSelectChange($event, step.key)">
+                                <b>{{step.name}}</b>
+                            </mat-checkbox>
+                        </div>
+                    </app-import-node>
+                    <app-import-node sub="true" title="Following Steps will be removed" *ngIf="series.removedSteps.length > 0">
+                        <div class="list-item" *ngFor="let step of series.removedSteps">
+                            <mat-checkbox color="primary" [checked]="true" (change)="handleSelectChange($event, step.key)">
+                                <b>{{step.name}}</b>
+                            </mat-checkbox>
+                        </div>
+                    </app-import-node>
+                    <app-import-node sub="true" title="Following Steps will be moved" *ngIf="series.movedSteps.length > 0">
+                        <div class="list-item" *ngFor="let step of series.movedSteps">
+                            <mat-checkbox color="primary" [checked]="true" (change)="handleSelectChange($event, step.key)">
+                                <b>{{step.name}}</b> from {{getOrdinalNumber(step.orderOld + 1)}} to {{getOrdinalNumber(step.order + 1)}} position
+                            </mat-checkbox>
+                        </div>
+                    </app-import-node>
+                    <app-import-node sub="true" title="Following Steps will be renamed" *ngIf="series.renamedSteps.length > 0">
+                        <div class="list-item" *ngFor="let step of series.renamedSteps">
+                            <mat-checkbox color="primary" [checked]="true" (change)="handleSelectChange($event, step.key)">
+                                <b>{{step.name}}</b> from <b>{{step.nameOld}}</b>
+                            </mat-checkbox>
+                        </div>
+                    </app-import-node>
+                </app-import-node>
+            </div>
+            <div *ngIf="data.removedSeries.length > 0">
+                <div >Will be removed</div>
+                <app-import-node *ngFor="let series of data.removedSeries" [title]="series.name">
+                    <div class="list-item">
+                        <b>{{series.name}}</b>
+                    </div>
+                </app-import-node>
+            </div>
+        </div>
+    </app-scrollbar>
+</div>
+<div class="dialog-buttons">
+    <mat-dialog-actions>
+        <button mat-button class="confirm" (click)="onNoClick(true)">Continue</button>
+    </mat-dialog-actions>
+</div>

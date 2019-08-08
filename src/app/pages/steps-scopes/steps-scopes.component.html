@@ -1,0 +1,68 @@
+<div class ="wrapper">
+    <div class="section-toolbar">
+        <button mat-raised-button color="primary" (click)="handleClickCheckAll(true)">Check all</button>
+        <button mat-raised-button color="primary" (click)="handleClickCheckAll(false)">Uncheck all</button>
+    </div>
+
+    <div class="user-container">
+        <app-cards-tree headerName="ROLES" class="app-cards-tree-custom">
+            <ng-container>
+                <div class="containter-group">
+                    <app-scrollbar>
+                        <mat-radio-group class="container-group width330" (change)="handleClickItemRole($event)">
+                            <mat-radio-button color="primary"
+                                              class="tree-radio-button"
+                                              *ngFor="let values of roleValues$ | async"
+                                              [value]="values?.id"
+                                              [checked]="values?.id === (roleValueChoosed$ | async)">
+                                {{values?.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </app-scrollbar>
+                </div>
+            </ng-container>
+        </app-cards-tree>
+
+        <app-cards-tree headerName="COMPONENT SERIES" class="app-cards-tree-custom">
+            <ng-container>
+                <div class="containter-group">
+                    <app-scrollbar>
+                        <mat-radio-group class="container-group width500" (change)="handleClickItemComponentSeries($event)">
+                            <mat-radio-button color="primary"
+                                              class="tree-radio-button"
+                                              *ngFor="let values of componentSeriesValue$ | async"
+                                              [value]="values?.id"
+                                              [checked]="values.id === (componentSeriesValueChoosed$ | async)">
+                                {{values?.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </app-scrollbar>
+                </div>
+            </ng-container>
+        </app-cards-tree>
+
+        <app-cards-tree headerName="COMPONENT STEPS" class="app-cards-tree-custom">
+            <mat-checkbox checkbox-all-steps [checked]="checkBoxesAllSelector$ | async" (change)="changeHeader($event)" color="primary" class="marginright10">
+            </mat-checkbox>
+            <ng-container>
+                <div class="containter-group">
+                    <app-scrollbar>
+                        <section class="container-group width430">
+                            <mat-checkbox color="primary"
+                                          class="tree-radio-button"
+                                          *ngFor="let values of componentStepsValues$ | async"
+                                          [value]="values?.id"
+                                          [checked]="values?.available"
+                                          (change)="handleChangeStepOneItem($event, values?.id)">
+                                {{values?.name}}
+                            </mat-checkbox>
+                            <div class="no-found" *ngIf="(componentStepsValues$ | async).length===0">
+                                No matching records found
+                            </div>
+                        </section>
+                    </app-scrollbar>
+                </div>
+            </ng-container>
+        </app-cards-tree>
+    </div>
+</div>

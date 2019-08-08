@@ -1,0 +1,39 @@
+<div class="title">
+    <div class="title-block">
+        <span class="title-name">Connect Component Step to Interface Step</span>
+    </div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="user-container">
+        <div class="app-cards-tree-custom width100p">
+            <ng-container>
+                <section class="container-group" >
+                    <app-scrollbar>
+                        <mat-checkbox color="primary"
+                                    class="tree-radio-button"
+                                    *ngFor="let values of interfaceStepValuesConnect$ | async; trackBy: trackByFn"
+                                    [value]="values?.id"
+                                    [checked]="values?.checked"
+                                    (change)="handleClickChB( $event, values?.id)"
+                                    >
+                            {{values?.name}}
+                        </mat-checkbox>
+                    </app-scrollbar>
+                </section>
+            </ng-container>
+         </div>
+    </div>
+
+    <mat-dialog-actions class="dialog-buttons">
+        <button mat-button
+                class="confirm"
+                (click)="confirm()">
+            Save
+        </button>
+        <button mat-button class="discard" [mat-dialog-close]="true" (click)="onNoClick(false)">Cancel</button>
+    </mat-dialog-actions>
+</div>

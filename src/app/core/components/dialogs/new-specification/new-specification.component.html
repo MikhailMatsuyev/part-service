@@ -1,0 +1,23 @@
+<div class="header-modal">
+    <div class="title">Enter new {{textField}} name</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+
+<div class="container-modal">
+    <div class="input-container">
+        <input type="text"
+               [formControl]="specName"
+               [placeholder]="placeholder">
+    </div>
+</div>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            [disabled]="specName.invalid"
+            (click)="confirm()">
+        Create
+    </button>
+    <button mat-button class="discard" [mat-dialog-close]="true" (click)="onNoClick(false)">Cancel</button>
+</mat-dialog-actions>

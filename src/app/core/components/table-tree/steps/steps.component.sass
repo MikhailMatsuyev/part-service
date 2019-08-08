@@ -1,0 +1,59 @@
+@import '../../../../../styles/variable.sass'
+
+.steps-container
+    height: 40px
+    background-color: #F6F6F6
+    display: inline-flex
+    box-sizing: border-box
+    border-radius: 5px
+    align-items: center
+    padding: 3px
+    .steps-text
+        display: flex
+        justify-content: center
+        border-radius: 4px
+        text-transform: uppercase
+        padding: 10px
+        box-sizing: border-box
+        align-items: center
+        span
+            color: #9A9A9A
+            font-size: 11px
+            user-select: none
+            line-height: 13px
+            margin-right: 10px
+        input
+            border: none
+            width: 7px
+            font-size: 13px
+            color: $dark-font-color
+            background-color: #F6F6F6
+            &:focus,
+            &:active
+                outline: none
+                background-color: #fff
+        &-active
+            background-color: #fff
+    &:hover
+        .steps-actions
+            opacity: 1
+    .steps-actions
+        color: $dark-font-color
+        opacity: .3
+        transition: .25s ease all
+        display: flex
+        justify-content: center
+        align-items: center
+        min-width: 25px
+::ng-deep
+    .mat-menu-content
+        padding: 0 !important
+    .dark-theme .mat-menu-panel
+        background-color: #fff
+    .dark-theme .mat-menu-item
+        color: #343434
+    .dark-theme .mat-menu-item[disabled],
+    .dark-theme .mat-menu-item[disabled]::after
+        color: #343434
+        background-color: lightgrey
+        cursor: not-allowed

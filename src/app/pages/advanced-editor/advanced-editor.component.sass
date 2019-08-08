@@ -1,0 +1,108 @@
+\:host
+    display: flex
+
+::ng-deep
+    .ace-sqlserver .ace_gutter
+        color: #343434 !important
+        overflow: hidden !important
+        background-color: #FCFCFC !important
+        font-family: Roboto !important
+        font-size: 12px !important
+
+    .card-toolbar,
+    .mat-toolbar-row
+        min-height: 40px
+        height: 40px
+        font-size: 12px
+        font-weight: 500
+    .cards-list
+        margin-left: 10px
+        min-width: 350px
+        color: #343434
+        font-size: 12px
+        ::ng-deep .mat-toolbar.mat-primary
+            background-color: #EFEFEF
+            color: #343434
+
+.editor-container
+    min-width: 920px
+    flex-grow: 1
+    ::ng-deep
+        .card-toolbar
+            padding: 0 !important
+            border-top-left-radius: 5px
+            border-top-right-radius: 5px
+        .mat-toolbar-row
+            padding-right: 0 !important
+    .action-container
+        display: flex
+        height: 40px
+    .icon-sql
+        padding: 10px
+        height: 100%
+        box-sizing: border-box
+        border-left: 1px solid rgba(255, 255, 255, 0.15)
+
+.sql-list
+    display: flex
+    padding: 15px
+    justify-content: space-between
+    border-bottom: 1px solid #EFEFEF
+    .icon-actions,
+    .sql-text
+        display: flex
+    .sql-icon-action
+        border: 1px solid #E2E2E2
+        border-radius: 50%
+        width: 30px
+        height: 30px
+        display: flex
+        justify-content: center
+        align-items: center
+    .icon-done
+        color: #436DA4
+        margin-right: 10px
+    .icon-cancel
+        color: #343434
+    .hint-sql
+        color: #9A9A9A
+        font-size: 12px
+        padding-left: 5px
+        display: flex
+        justify-items: center
+        align-items: center
+        &-error
+            color: #1E395D
+            margin-left: 10px
+            ::ng-deep .mat-icon
+                width: 16px
+                height: 16px
+                font-size: 16px
+    .sql-text
+        flex-direction: column
+    .sql-status
+        display: flex
+        flex-direction: column
+        .hint-status
+            width: 20px
+            height: 20px
+            font-size: 18px
+            display: flex
+            justify-content: center
+            align-items: center
+            color: #F2994A
+            &-close
+                color: #C04040
+    .hint-container
+        display: flex
+        align-items: center
+        margin-top: 5px
+
+.icon-sql.disabled
+    cursor: not-allowed
+    pointer-events: none
+    ::ng-deep
+        .refrest-icon-chunk
+            fill: #BCBCBC
+        .icon-chunk
+            stroke: #BCBCBC

@@ -1,0 +1,10 @@
+<input
+    #tableElem
+    class="table-input"
+    (keydown)="onChangeListener($event)"
+    (blur)="onChange()"    
+    [formControl]="inputValue"
+    [type]="inputType"
+    [max]="inputMaxValue"
+    [min]="inputMinValue"
+    [maxLength]="inputMaxLength">

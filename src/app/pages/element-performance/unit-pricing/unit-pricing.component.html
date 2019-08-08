@@ -1,0 +1,63 @@
+<div [formGroup]="form">
+    <div class="header-pricing">
+        <div class="pricing-container">
+            <div class="pricing-title">Unit pricing</div>
+            <div class="pricing-hint">Choose a performance (k) first:</div>
+        </div>
+        <div class="formula-container">
+            <div class="formula-label">Unit pricing formula:</div>
+            <div class="formula-math">kx + m</div>
+        </div>
+        <div class="formula-container">
+            <div class="formula-label">Activate unit pricing:</div>
+            <div class="formula-math">
+                <mat-checkbox color="primary"
+                              formControlName="activated">
+                </mat-checkbox>
+            </div>
+        </div>
+    </div>
+    <div class="container-pricing" *ngIf="form.get('activated').value">
+        <button mat-button class="choose-button" (click)="chooseComponents()">Choose Components</button>
+        <div class="pricing-title">Component performance</div>
+        <div>
+            <div class="pricing-header">m:</div>
+            <app-dropdown [list]="settings?.terms"
+                          [isObjectMode]="true"
+                          [defaultItem]="form.get('termId').value"
+                          objectFieldParseName="value"
+                          objectFieldText="text"
+                          formControlName="termId">
+            </app-dropdown>
+        </div>
+        <div class="pricing-title">User factor</div>
+        <div>
+            <div class="pricing-header">x:</div>
+            <app-dropdown [list]="settings?.ufs"
+                          [isObjectMode]="true"
+                          [defaultItem]="form.get('factorId').value"
+                          objectFieldParseName="value"
+                          objectFieldText="text"
+                          formControlName="factorId">
+            </app-dropdown>
+        </div>
+        <ng-container *ngIf="settings.calculate">
+            <div class="pricing-title">Functions to evaluate</div>
+            <div class="pricing-functions">
+                <mat-checkbox color="primary"
+                                *ngFor="let functionStep of activeFunctions"
+                                [checked]="functionStep?.selected"
+                                (change)="handleFunctions($event, functionStep)">
+                    {{functionStep?.name}}
+                </mat-checkbox>
+            </div>
+        </ng-container>
+    </div>
+    <div class="footer-pricing">
+        <button mat-raised-button color="primary" (click)="save()">Save</button>
+        <mat-checkbox color="primary"
+                      formControlName="showField">
+            Display the field with evaluated function values:
+        </mat-checkbox>
+    </div>
+</div>

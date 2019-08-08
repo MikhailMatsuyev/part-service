@@ -1,0 +1,94 @@
+<div class="header-modal">
+    <div class="header-title">{{headerTitle}}</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onClose()">close</i>
+    </div>
+</div>
+<app-scrollbar class="content-container" [ngClass]="getCreateState()" [formGroup]="formGroup">
+    <div class="row">
+        <div class="row-item">
+            <div class="title">Component</div>
+            <app-dropdown formControlName="csId"
+                            objectFieldParseName="id"
+                            objectFieldText="name"
+                            [isObjectMode]="true"
+                            [defaultItem]="true"
+                            [list]="dropdownCS | async"></app-dropdown>
+        </div>
+        <div class="row-item">
+            <div class="title">User Factor</div>
+            <app-dropdown formControlName="ufId"
+                            objectFieldParseName="id"
+                            objectFieldText="name"
+                            [isObjectMode]="true"
+                            [defaultItem]="true"
+                            [list]="dropdownUF | async"></app-dropdown>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row-item">
+            <div class="title">Operand</div>
+            <app-dropdown formControlName="operand"
+                            [list]="dropdownOperand"></app-dropdown>
+        </div>
+        <div class="row-item">
+            <div class="title">User Factor Span Type</div>
+            <app-dropdown formControlName="ufSpan"
+                            [list]="dropdownUserSpans"></app-dropdown>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row-item">
+            <div class="title">Value Unit</div>
+            <input class="input" formControlName="unit" type="text">
+        </div>
+        <div class="row-item">
+            <div class="title">Value Format</div>
+            <input class="input" formControlName="valFormat" type="text">
+        </div>
+    </div>
+    <div class="row">
+        <div class="row-item">
+            <div class="title">Order Priority</div>
+            <input class="input" formControlName="order" type="number">
+        </div>
+    </div>
+    <div class="row textarea-block-container column-direction additional-padding">
+        <div class="title">User Factor Formula</div>
+        <app-textarea class="textarea-container" formControlName="ufFormula"></app-textarea>
+    </div>
+    <div class="row textarea-block-container column-direction additional-padding">
+        <div class="title">Component Formula</div>
+        <app-textarea class="textarea-container" formControlName="csFormula"></app-textarea>
+    </div>
+    <div class="row textarea-block-container column-direction additional-padding">
+        <div class="title">Generalized formula</div>
+        <app-textarea class="textarea-container" formControlName="generalFormula"></app-textarea>
+    </div>
+    <div class="row checkbox-container additional-padding">
+        <div class="row-checkbox">
+            <mat-checkbox color="primary" formControlName="enabled" class="row-checkbox-item"></mat-checkbox>
+            <span class="row-checkbox-item row-checkbox-description">Enabled</span>
+        </div>
+        <div class="row-checkbox">
+            <mat-checkbox color="primary" formControlName="csSpan" class="row-checkbox-item"></mat-checkbox>
+            <span class="row-checkbox-item row-checkbox-description">Component Span</span>
+        </div>
+        <div class="row-checkbox">
+            <mat-checkbox color="primary" formControlName="visible" class="row-checkbox-item"></mat-checkbox>
+            <span class="row-checkbox-item row-checkbox-description">Value Visible in Selection Tab</span>
+        </div>
+        <div class="row-checkbox">
+            <mat-checkbox color="primary" formControlName="generalized" class="row-checkbox-item"></mat-checkbox>
+            <span class="row-checkbox-item row-checkbox-description">Use Generalized formula</span>
+        </div>
+    </div>
+</app-scrollbar>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            (click)="confirm()">
+        Save
+    </button>
+    <button mat-button class="discard" [mat-dialog-close]="true" (click)="onClose()">Cancel</button>
+</mat-dialog-actions>

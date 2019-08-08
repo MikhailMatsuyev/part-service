@@ -1,0 +1,160 @@
+@import '../../../styles/variable.sass'
+
+.component-containers
+    display: flex
+    height: 80vh
+    padding-bottom: 10px
+    ::ng-deep .ng-scrollbar-view
+        overflow-x: hidden
+    ::ng-deep .card-container
+        height: calc(100% - 40px)
+.combine-cards-factor
+    ::ng-deep .card-container
+        height: calc(100% - 75px) !important
+        border-bottom: none
+
+::ng-deep .component-cards
+    width: 400px
+    max-width: 400px
+    min-width: 400px
+    height: 100%
+    min-height: 100%
+    ::ng-deep .mat-toolbar
+        background-color: $primary-color !important
+    ::ng-deep .mat-toolbar-row
+        color: $main-color
+
+::ng-deep .component-cards,
+::ng-deep .combine-cards
+    display: flex
+    flex-direction: column
+    box-sizing: border-box
+    ::ng-deep .mat-toolbar
+        padding: 0
+        height: 40px
+        min-height: 40px
+        border-top-left-radius: 5px
+        border-top-right-radius: 5px
+    ::ng-deep .toolbar-header
+        font-size: 12px
+        font-family: 'Roboto'
+        font-weight: normal
+        text-transform: uppercase
+    ::ng-deep .mat-toolbar-row
+        padding: 14px 17px 11px 20px
+        box-sizing: border-box
+        height: 100%
+
+::ng-deep .combine-cards
+    min-width: 420px
+    margin: 0 10px 10px 10px
+    min-height: 250px
+    height: 100%
+    flex-grow: 1
+    box-sizing: border-box
+    border: 1px solid $white
+    border-top: transparent
+    border-bottom-left-radius: 5px
+    border-bottom-right-radius: 5px
+    ::ng-deep .mat-toolbar
+        background-color: $white !important
+    ::ng-deep .mat-toolbar-row
+        color: $main-font-color
+
+.component-container
+    color: $main-font-color
+    font-size: 12px
+    line-height: 14px
+
+.header-container
+    display: flex
+    align-items: center
+    padding-right: 16px
+    padding-left: 20px
+    padding-bottom: 15px
+
+::ng-deep .dark-theme .mat-raised-button.mat-primary
+    margin-right: 10px
+
+.containter-group
+    height: 100%
+    padding-top: 10px
+    box-sizing: border-box
+
+.text-container
+    flex-grow: 1
+
+.combined-text
+    color: $dark-font-color
+    font-size: 12px
+    font-weight: normal
+    padding: 10px 0 10px 20px
+    border-bottom: 1px solid $white
+
+.combined-container
+    display: flex
+    flex-direction: column
+
+.combined-footer
+    border-top: 1px solid $white
+    padding: 5px 0 5px 20px
+    color: $dark-font-color
+
+.container-button
+    margin-bottom: 20px
+    display: flex
+
+.cards-connections
+    display: block
+    min-height: 457px
+    flex-grow: 1
+    ::ng-deep app-cards-tree
+        height: 100%
+        width: 100% !important
+    ::ng-deep app-cards-tree ::ng-deep .mat-toolbar
+        background-color: $white !important
+    ::ng-deep app-cards-tree ::ng-deep .mat-toolbar-row
+        color: $main-font-color
+
+.cards-connections.cards-fullscreen
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    height: 100%
+    app-cards-tree
+        width: 100% !important
+
+.combine-cards-factor
+    margin-bottom: 0
+
+.dropdown
+    width: 180px
+    font-family: Roboto
+    font-size: 12px
+    line-height: 14px
+    font-weight: normal
+    color: $main-font-color
+    margin-left: 20px
+    display: flex
+    justify-content: center
+    align-items: center
+    app-dropdown
+        width: 160px
+        margin-left: 10px
+
+.action-connect.disabled
+    cursor: not-allowed
+    pointer-events: none
+    ::ng-deep .svg-connect-element
+        fill: $grey-color
+
+.not-found-text
+    display: flex
+    justify-content: center
+    padding-top: 10px
+    color: #343434
+    font-size: 12px
+.last-combined
+    margin-bottom: 20px

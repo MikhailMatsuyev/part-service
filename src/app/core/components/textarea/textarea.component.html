@@ -1,0 +1,16 @@
+<div [ngStyle]="style"
+    mwlResizable
+    (resizing)="onResizeEnd($event)">
+    <textarea
+            [formControl]="control"
+            (paste)="onPaste($event)"
+            class="textarea"
+            [ngStyle]="style"
+            mwlResizable>
+    </textarea>
+    <i class="material-icons resize-handle"
+        mwlResizeHandle
+        [resizeEdges]="{bottom: true}">
+        dehaze
+    </i>
+</div>

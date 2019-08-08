@@ -1,0 +1,18 @@
+@import '~@angular/material/theming';
+@import '../../../../styles/variable';
+
+@mixin app-toolbar-theme($theme) {
+    $accent: map-get($theme, accent);
+
+    .mat-menu-item {
+        color: $dark-font-color;
+    }
+
+    .mat-menu-panel {
+        background-color: $main-color;
+    }
+
+    .mat-button {
+        font-weight: normal;
+    }
+}

@@ -1,0 +1,34 @@
+<app-scrollbar>
+  <table class="table-wrap mat-slide-toggle-content font-table">
+    <thead class="mat-slide-toggle-bar">
+      <tr class="first-header">
+        <th class="th upper-text" [attr.colspan]="settings.colspan">{{settings.topHeaderTitles[0]}}</th>
+        <th class="th upper-text" colspan="2">{{settings.topHeaderTitles[1]}}</th>
+        <th class="th upper-text" colspan="2">{{settings.topHeaderTitles[2]}}</th>
+      </tr>
+      <tr>
+        <th class="th upper-text" *ngFor="let bottomHeader of settings.bottomHeaderTitles">
+          <div>{{bottomHeader}}</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <div class="content-item" *ngFor="let object of data; trackBy: trackByFn">
+        <td class="td" *ngFor="let objectProp of object | getArrOfKeys: settings.bottomHeaderTitlesSettings; trackBy: trackByFn">
+          <app-two-headers-table-item
+            (getNewObject)="getNewObject($event)"
+            [objectProp]="objectProp"
+            [object]="object"
+            [disabledItem]="settings.disabled"
+            [textInput]="settings.textInput">
+          </app-two-headers-table-item>
+        </td>
+      </div>
+      <td *ngIf="data.length === 0"
+          class="bottom-table"
+          [attr.colspan]="settings.bottomHeaderTitles.length">
+          {{infoText}}
+      </td>
+    </tbody>
+  </table>
+</app-scrollbar>

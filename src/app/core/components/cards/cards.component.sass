@@ -1,0 +1,64 @@
+@import '../../../../styles/variable.sass'
+
+.toolbar-spacer
+  flex: 1 1 auto
+
+.toolbar-header
+  font-size: 14px
+  padding-top: 5px
+input
+  border: none
+  background-color: transparent
+  color: #fff
+  font-size: 12px
+  padding: 9px 10px 6px
+  &:focus
+    border-radius: 4px
+    background-color: #fff
+    color: #343434
+
+.toolbar-priority-container
+  font-size: 13px
+  text-transform: uppercase
+  display: flex
+  align-items: center
+
+.header-priority
+  width: 114px
+  padding-right: 25px
+  input
+    width: 100%
+
+.filter-icon
+  fill: white
+  margin-right: 20px
+  display: flex
+
+::ng-deep .mat-toolbar-row, ::ng-deep .mat-toolbar
+  padding-right: 0
+
+::ng-deep .card-toolbar.mat-toolbar
+  height: 45px
+  min-height: 45px
+
+.card-container
+  position: relative
+
+.arrow-icon
+  width: 45px
+  height: 45px
+  display: flex
+  justify-content: center
+  align-items: center
+  border-left: 1px solid rgba(255, 255, 255, 0.15)
+
+.filter-icon-left
+    /deep/.left-filter
+        fill: white
+    /deep/.right-filter
+        fill: #ADADAD
+.filter-icon-right
+    /deep/.left-filter
+        fill: #ADADAD
+    /deep/.right-filter
+        fill: white

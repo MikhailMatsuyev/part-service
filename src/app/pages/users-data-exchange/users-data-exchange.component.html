@@ -1,0 +1,80 @@
+<div class="export-container">
+    <app-cards-tree headerName="Exporting" class="exporting-cards">
+        <div class="action-container">
+            <button mat-button
+                    class="confirm"
+                    (click)="export()">
+                Export
+            </button>
+        </div>
+    </app-cards-tree>
+
+    <app-cards-tree [headerName]="importingHeader" class="exporting-cards importing-cards">
+        <div class="action-container">
+            <button mat-button
+                    class="discard"
+                    (click)="fileRef.click()">
+                Upload file
+                <input type="file"
+                        #fileRef
+                        hidden
+                        accept=".dat"
+                        (change)="handleOnFileSelected($event.target.files)"/>
+            </button>
+            <button mat-button
+                    class="confirm"
+                    (click)="import()">
+                Import
+            </button>
+        </div>
+    </app-cards-tree>
+</div>
+<div class="table-container" *ngIf="dataExchange$ | async">
+    <div class="table-header">
+        Apply users changes which has conflicted usernames
+    </div>
+    <div class="table-content">
+        <div class="table-row-header">
+            <div class="table-user">Current username</div>
+            <div class="table-user">Import Username</div>
+            <div class="table-actions-header"></div>
+        </div>
+        <div class="table-row" *ngFor="let data of dataExchange$ | async">
+            <div class="table-user">{{data?.nameOld}}</div>
+            <div class="table-user">{{data?.nameNew}}</div>
+            <div class="table-actions">
+                <ng-container *ngIf="data?.action === -1; else elseBlock">
+                    <button mat-button
+                        class="discard"
+                        (click)="handleTableActions(data, 'merge')">
+                        Merge
+                    </button>
+                    <button mat-button
+                        class="discard"
+                        (click)="handleTableActions(data, 'new')">
+                        New
+                    </button>
+                    <button mat-button
+                        class="discard"
+                        (click)="handleTableActions(data, 'ignore')">
+                        Ignore
+                    </button>
+                </ng-container>
+                <ng-template #elseBlock>
+                    <app-exchange-badge [text]="textBadge(data)"></app-exchange-badge>
+                    <button mat-button
+                        class="confirm"
+                        (click)="handleTableActions(data, 'edit')">
+                        Edit
+                    </button>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    <button mat-button
+        class="confirm"
+        [disabled]="dataExchangeNotTaken$ | async"
+        (click)="submit()">
+        Submit
+    </button>
+</div>

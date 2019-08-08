@@ -1,0 +1,74 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [trackBy]="trackByFn">
+    <mat-tree-node *matTreeNodeDef="let node"
+                   matTreeNodeToggle
+                   matTreeNodePadding>
+        <mat-checkbox color="primary"
+                      *ngIf="downloadMode"
+                      class="mr-10"
+                      [checked]="isSelected(node)"
+                      (change)="handleSelectDownload(node)">
+        </mat-checkbox>
+        <span [class.active-node]="isActiveSpecification?.specId === node?.specId"
+              class="file-icon node-icon"
+              inlineSVG="../../../../assets/icons/file.svg">
+        </span>
+        <span class="pointer node-spec"
+              (click)="handleNodeClick(node)">
+            <span>
+                <span *ngIf="(!isActiveRenameSpec || isActiveRenameSpec.specId !== node?.specId); else elseBlock">
+                    {{node.name}}
+                </span>
+                <span *ngIf="node?.isDefault" class="default-text">(default)</span>
+            </span>
+            <mat-icon class="pointer icon-menu"
+                      [class.icon-menu-active]="isActiveNode(node)"
+                      [matMenuTriggerFor]="menu"
+                      (click)="handleNodeMenu($event, node)">
+                more_vert
+            </mat-icon>
+        </span>
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+        <div class="node-category">
+            <div class="node-category-content">
+                <button mat-icon-button matTreeNodeToggle
+                    [attr.aria-label]="'toggle ' + node.name"
+                    class="tree-toggle pointer">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'arrow_drop_up' : 'arrow_drop_down'}}
+                    </mat-icon>
+                </button>
+                <span matTreeNodeToggle class="category-text pointer">{{node.name}}</span>
+            </div>
+            <mat-icon class="pointer icon-category"
+                      [matMenuTriggerFor]="menuFolder"
+                      [class.icon-category-active]="isActiveNodeCategory(node)"
+                      (click)="handleCategoryMenu(node)">
+                more_vert
+            </mat-icon>
+        </div>
+    </mat-tree-node>
+</mat-tree>
+
+<mat-menu #menu="matMenu" (closed)="clearData()" class="menu-specification">
+    <button mat-menu-item (click)="handleRename()" *ngIf="isActiveNodeSpec">Rename</button>
+    <button mat-menu-item (click)="handleDelete()" *ngIf="isActiveNodeSpec">Delete</button>
+    <button mat-menu-item (click)="handleDuplicate()">Duplicate</button>
+    <button mat-menu-item (click)="handleInfo()" *ngIf="isActiveNodeSpec">Background info</button>
+    <button mat-menu-item
+            (click)="handleSetDefault()"
+            *ngIf="userModel && userModel?.role === 'Admin'">
+        Set as default
+    </button>
+</mat-menu>
+
+<mat-menu #menuFolder="matMenu" (closed)="clearCategory()" class="menu-specification">
+    <button mat-menu-item (click)="handleAddSpec()">Add spec</button>
+    <button mat-menu-item (click)="handleAddFolder()">Add folder</button>
+    <button mat-menu-item (click)="handleDeleteFolder()">Delete</button>
+</mat-menu>
+
+<ng-template #elseBlock>
+    <input type="text" #refInput [(ngModel)]="renameInputModel" (blur)="blurHandle()">
+</ng-template>

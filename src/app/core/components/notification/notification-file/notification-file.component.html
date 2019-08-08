@@ -1,0 +1,17 @@
+<div class="notification-time" fxLayout="column">
+    <div class="notification-time-content">
+        <span class="time-label">formed</span>
+        <span>{{notification?.date | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
+    </div>
+    <div class="notification-time-content" *ngIf="!notification?.inProgress">
+        <span class="time-label">expire after</span>
+        <span>{{notification?.expired | date: 'dd-MM-yyyy HH:mm:ss'}}</span>
+    </div>
+</div>
+<a *ngIf="!notification?.inProgress"
+   target="_blank"
+   [href]="getUrl(notification?.link)"
+   mat-raised-button
+   color="primary">
+   Download {{notification?.size}}
+</a>

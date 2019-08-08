@@ -1,0 +1,6 @@
+<div class="node" [class.node-sub]="sub">
+    <div class="node-title pointer" (click)="handleClickTitle()">{{title}}</div>
+    <div class="node-body" *ngIf="!isCollapsed">
+        <ng-content></ng-content>
+    </div>
+</div>

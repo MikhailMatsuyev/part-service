@@ -1,0 +1,26 @@
+<div class="header-modal">
+    <div class="title">New Username for "{{data?.nameOld}}"</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+<div class="container-modal">
+    <input type="text" [formControl]="nameControl">
+    <div *ngIf="nameControl.status === 'PENDING'" class="hint">
+        Checking...
+    </div>
+    <div *ngIf="nameControl.errors && nameControl.errors.useNameTaken" class="hint hint-error">
+        The name is already taken!
+    </div>
+    <div *ngIf="nameControl.errors && nameControl.errors.useNameTakenError" class="hint hint-error">
+        Something wrong!
+    </div>
+</div>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="discard"
+            (click)="onNoClick(false)">
+        Cancel
+    </button>
+    <button mat-button class="confirm" (click)="confirm()" [disabled]="nameControl.invalid && nameControl.status !== 'PENDING'">Ok</button>
+</mat-dialog-actions>

@@ -1,0 +1,5 @@
+<svg width="24" height="16" viewBox="0 0 24 16" class="svg-connect" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11 0.581543C10.0732 0.206482 9.06055 0 8 0C3.58203 0 0 3.58173 0 8C0 12.4183 3.58203 16 8 16C9.06055 16 10.0732 15.7935 11 15.4185V13.1973C10.1172 13.7078 9.09277 14 8 14C4.68652 14 2 11.3137 2 8C2 4.68628 4.68652 2 8 2C9.09277 2 10.1172 2.29218 11 2.80273V0.581543Z" transform="translate(6)" fill="#343434" class="svg-connect-element"/>
+    <rect width="7" height="2" rx="1" transform="translate(0 7)" fill="#343434" class="svg-connect-element"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M4 8C5.86328 8 7.42969 6.72522 7.87402 5H13C13.5527 5 14 4.55231 14 4C14 3.44769 13.5527 3 13 3H7.87402C7.42969 1.27478 5.86328 0 4 0C1.79102 0 0 1.79083 0 4C0 6.20917 1.79102 8 4 8ZM4 6C5.10449 6 6 5.10455 6 4C6 2.89545 5.10449 2 4 2C2.89551 2 2 2.89545 2 4C2 5.10455 2.89551 6 4 6Z" transform="translate(10 4)" fill="#343434" class="svg-connect-element"/>
+</svg>

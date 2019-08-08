@@ -1,0 +1,88 @@
+<div class="header-modal">
+    <div class="title">Adding backgroung information</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+<div class="container-modal">
+    <form [formGroup]="forms">
+        <div fxLayout="row">
+            <div class="input-container mr-10">
+                <div class="label-input">Customer</div>
+                <input type="text"
+                       maxlength="255"
+                       placeholder="What is the Customer name?"
+                       formControlName="customer">
+            </div>
+            <div class="input-container">
+                <div class="label-input">Segment</div>
+                <input type="text"
+                       maxlength="255"
+                       placeholder="What is the Segment?"
+                       formControlName="segment">
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div class="input-container mr-10">
+                <div class="label-input">Application</div>
+                <input type="text"
+                       maxlength="255"
+                       placeholder="What is the Application?"
+                       formControlName="application">
+            </div>
+            <div class="input-container">
+                <div class="label-input">Current Product</div>
+                <input type="text"
+                       maxlength="255"
+                       placeholder="What is the current solution/product?"
+                       formControlName="product">
+            </div>
+        </div>
+        <div class="input-container">
+            <div class="label-input">Current Price</div>
+            <input type="text"
+                   maxlength="255"
+                   placeholder="Current price levels and quantities."
+                   formControlName="price">
+        </div>
+        <div class="textarea-container">
+            <div class="label-textarea">
+                <span>Description</span>
+                <span class="label-hint">No more than {{maxLength}} characters are allowed.</span>
+                <span>{{getLength('description')}} / {{maxLength}}</span>
+            </div>
+            <textarea type="text"
+                      [maxlength]="maxLength"
+                      placeholder="Describe the application ad where is the system located in the application?"
+                      formControlName="description">
+            </textarea>
+        </div>
+        <div class="textarea-container">
+            <div class="label-textarea">
+                <span>Feedback</span>
+                <span class="label-hint">No more than {{maxLength}} characters are allowed.</span>
+                <span>{{getLength('feedback')}} / {{maxLength}}</span>
+            </div>
+            <textarea type="text"
+                      [maxlength]="maxLength"
+                      placeholder="How well it works today? Is there problems with the solution today? For example: with quality or price"
+                      formControlName="feedback">
+            </textarea>
+        </div>
+    </form>
+</div>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            [disabled]="forms.invalid"
+            (click)="saveInfo()">
+        Save
+    </button>
+    <button mat-button
+            class="discard"
+            *ngIf="!isCreateMode"
+            (click)="deleteInfo()">
+        Delete
+    </button>
+    <button mat-button class="discard" [mat-dialog-close]="true" (click)="onNoClick(false)">Cancel</button>
+</mat-dialog-actions>

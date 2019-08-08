@@ -1,0 +1,32 @@
+@import 'src/styles/variable'
+
+.node-list
+    padding: 10px 30px
+
+.container-components
+    height: 74%
+
+.container-components
+    padding: 0 !important
+
+.list-item
+    padding: 10px
+    border-bottom: 2px solid $title-background
+    &:last-of-type
+        border-bottom: none
+
+::ng-deep .node
+    border: 2px solid $title-background
+    border-radius: 3px
+    margin: 10px 0
+    font-size: 14px
+    &-body
+        font-size: 13px
+    &-title
+        background-color: $title-background
+        padding: 10px
+        font-weight: bold
+    &-sub
+        margin: 10px 20px !important
+
+

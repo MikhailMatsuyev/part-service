@@ -1,0 +1,118 @@
+<app-cards-tree [headerName]="headerName" class="editor-container">
+    <div action-header class="action-container">
+        <div class="icon-sql pointer"
+             inlineSVG="../../../assets/icons/save.svg"
+             title="Save"
+             [class.disabled]="!isChangesText"
+             (click)="handleSave()">
+        </div>
+        <div class="icon-sql pointer"
+             inlineSVG="../../../assets/icons/refresh.svg"
+             title="Undo"
+             [class.disabled]="!isChangesText"
+             (click)="handleRefresh()">
+        </div>
+        <div class="icon-sql pointer"
+             inlineSVG="../../../assets/icons/blank.svg"
+             title="New"
+             (click)="handleBlank()">
+        </div>
+        <div class="icon-sql pointer"
+             inlineSVG="../../../assets/icons/excute.svg"
+             title="Execute Statement"
+             (click)="handleExcute()">
+        </div>
+        <div class="icon-sql pointer"
+             inlineSVG="../../../assets/icons/sql-menu.svg"
+             title="Execute all statements"
+             (click)="handleSqlMenu()">
+        </div>
+        <div class="icon-sql pointer"
+             inlineSVG="../../../assets/icons/database.svg"
+             title="Push into recommendations"
+             (click)="handleDataBase()">
+        </div>
+        <div class="icon-sql pointer"
+             inlineSVG="../../../assets/icons/blank-x.svg"
+             title="Upload excel"
+             (click)="fileRef.click()">
+            <input type="file"
+                   #fileRef
+                   hidden
+                   accept=".xlsx, .xls, .csv"
+                   (change)="handleOnFileSelected($event.target.files)"/>
+        </div>
+    </div>
+    <ace-editor #editor
+            [(text)]="content"
+            mode="sqlserver"
+            theme="sqlserver"
+            [options]="editorOptions"
+            style="min-height: 500px; width:100%; overflow: auto;">
+    </ace-editor>
+</app-cards-tree>
+<app-cards-tree headerName="Statement name" class="cards-list">
+    <div action-header class="action-container">
+        <span *ngIf="!(pushSqlStatements$ | async)?.done; else elseBlock">
+            Execution time {{(pushSqlStatements$ | async)?.duration}}
+        </span>
+    </div>
+    <ng-container>
+        <div class="sql-list" *ngFor="let sqlStatement of sqlStatements$ | async; trackBy: trackByFn">
+            <div class="sql-text">
+                <div class="sql-status">
+                    <mat-radio-group name="sql">
+                        <mat-radio-button color="primary"
+                                          class="tree-radio-button"
+                                          [checked]="isActiveStatement(sqlStatement?.id)"
+                                          [value]="sqlStatement?.id"
+                                          (change)="changeValues($event)">
+                            {{sqlStatement?.name}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                    <div class="hint-container">
+                        <div *ngIf="sqlStatement.activiteStatus !== undefined && !sqlStatement?.inProcess">
+                            <mat-icon class="hint-status"
+                                      [class.hint-status-close]="!sqlStatement?.activiteStatus?.success">
+                                {{sqlStatement?.activiteStatus?.success ? 'done' : 'close'}}
+                            </mat-icon>
+                        </div>
+                        <div *ngIf="sqlStatement.inProcess">
+                            <mat-progress-spinner mode="indeterminate"
+                                class="sql-spinner"
+                                [diameter]="20"
+                                [strokeWidth]="3"
+                                color="primary">
+                            </mat-progress-spinner>
+                        </div>
+                        <div class="hint-sql">
+                            <div>Executed in {{sqlStatement?.Duration}}</div>
+                            <div class="hint-sql-error pointer"
+                                    title="error"
+                                    *ngIf="sqlStatement?.Error"
+                                    (click)="handleError(sqlStatement?.ErrorMessage)">
+                                <mat-icon>error</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="icon-actions">
+                <div class="sql-icon-action icon-done pointer user-select-none"
+                     (click)="handleDone(sqlStatement)"
+                     [title]="sqlStatement?.active ? 'Activate' : 'Deactivate'">
+                    <mat-icon>{{sqlStatement?.active ? 'done' : 'stop'}}</mat-icon>
+                </div>
+                <div class="sql-icon-action icon-cancel pointer user-select-none"
+                     (click)="handleRemove(sqlStatement)"
+                     title="Delete">
+                    <mat-icon>close</mat-icon>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</app-cards-tree>
+
+<ng-template #elseBlock>
+    <span>Active</span>
+</ng-template>

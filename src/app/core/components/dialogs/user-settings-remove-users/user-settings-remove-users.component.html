@@ -1,0 +1,19 @@
+<div class="header-modal">
+    <div class="title">Delete {{data?.count}} user?</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onClose()">close</i>
+    </div>
+</div>
+<div class="container-modal">
+    <div class="text">
+        Do you really want to delete {{ data?.count }} user? This is can`t be will undone
+    </div>
+</div>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="discard"
+            (click)="onClose()">
+        No
+    </button>
+    <button mat-button class="confirm" (click)="onYes()">Yes</button>
+</mat-dialog-actions>

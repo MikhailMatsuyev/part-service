@@ -1,0 +1,37 @@
+<app-cards-tree headerName="User Factors" [ngStyle]="styleLeftSide" class="userfactor-values">
+    <div action-header
+         class="collapse pointer"
+         [ngClass]="sortingClass$ | async"
+         inlineSVG="../../../../../assets/icons/filter.svg"
+         (click)="colapseTree()">
+    </div>
+    <ng-container>
+        <div class="containter-group">
+            <app-scrollbar>
+                <mat-radio-group class="container-group" (change)="changeValues($event)">
+                    <mat-radio-button color="primary"
+                                    class="tree-radio-button"
+                                    *ngFor="let values of userValues$ | async; trackBy: trackByFn"
+                                    [checked]="values?.id === (isActiveUserValue$ | async)?.id"
+                                    [value]="values?.id">
+                        {{values?.name}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </app-scrollbar>
+        </div>
+    </ng-container>
+</app-cards-tree>
+<div class="resize-block">
+    <div mwlResizable
+         [resizeEdges]="{left: true, right: true}"
+         (resizing)="onResizeEnd($event)">
+         <div inlineSVG="../../../assets/icons/resize.svg"></div>
+    </div>
+</div>
+<app-two-headers-table
+    [settings]="tableSettings"
+    [ngStyle]="styleTable"
+    [data]="userValuesTable$ | async"
+    [infoText]="infoText"
+    (changeElement)="handleChangeElement($event)">
+</app-two-headers-table>

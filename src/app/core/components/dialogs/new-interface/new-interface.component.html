@@ -1,0 +1,121 @@
+<div class="title">
+  <div class="title-block">
+    <div>
+      <span class="title-name">{{data.name}}</span>
+    </div>
+    <div>
+      <span class="hint-name">{{data.description}}</span>
+    </div>
+  </div>
+  <div class="close">
+    <i class="material-icons close-icon pointer" (click)="onNoClick()">close</i>
+  </div>
+</div>
+<div class="hint"></div>
+<form [formGroup]="dialogForms">
+    <div class="sub-title">
+      <span>Group</span>
+    </div>
+    <div class="row">
+      <div class="sub-row">
+        <div class="hint-title">
+          <span>Group name</span>
+        </div>
+        <div class="col-lg2 complete-hint">
+          <div class="wrapper-autocomplete">
+              <input type="text"
+                     #inputComplete
+                     class="autocomplete"
+                     matInput
+                     maxlength="50"
+                     formControlName="Group"
+                     (focus)="isActiveGroup = true"
+                     (blur)="isActiveGroup = false"
+                     [matAutocomplete]="auto">
+              <i class="material-icons expand_more_icon pointer" (click)="handleExpand(inputComplete)">
+                  expand_more
+              </i>
+              <mat-autocomplete autoActiveFirstOption
+                                #auto="matAutocomplete"
+                                (optionSelected)="handleSelected($event, inputComplete)"
+                                [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{ option?.group }}
+                  </mat-option>
+              </mat-autocomplete>
+          </div>
+        </div>
+        <div class="hint-red"
+             *ngIf="isActiveMessage">
+          Enter the Interface for the selected Group
+        </div>
+      </div>
+    </div>
+    <div class="sub-title">
+      <span>Interface</span>
+    </div>
+    <div class="row">
+      <div class="sub-row">
+        <div class="hint-title">
+          <span>Interface name</span>
+        </div>
+        <div class="col-lg2">
+          <div class="wrapper">
+            <input type="text"
+                   matInput
+                   maxlength="50"
+                   autocomplete="off"
+                   formControlName="Serie">
+          </div>
+        </div>
+        <div class="hint-red"
+             *ngIf="isActiveUserFactorMessage">
+          The Interface with the same name already exists
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="sub-row">
+          <div class="hint-title">
+            <span>Action with not available component's steps</span>
+          </div>
+          <div>
+          <app-dropdown [list]="data.actions"
+            formControlName="InterfaceAct"
+            [defaultItem]="this.dialogForms.get('InterfaceAct').value"
+            isObjectMode="true"
+            objectFieldParseName="hide"
+            objectFieldText="name">
+          </app-dropdown>
+          </div>
+        </div>
+      </div>
+    <div class="row">
+      <div class="sub-row">
+        <div class="hint-title">
+          <span>Description</span>
+          <span class="hint-grey">No more than {{maxLength}} characters are allowed.</span>
+          <span>{{ dialogForms.get('Description')?.value?.length || 0 }} / {{maxLength}}</span>
+        </div>
+        <div class="col-lg3">
+            <textarea class="textarea"
+                      matInput
+                      rows="2"
+                      cols="45"
+                      placeholder="text"
+                      [maxlength]="maxLength"
+                      formControlName="Description">
+            </textarea>
+        </div>
+      </div>
+    </div>
+</form>
+<mat-dialog-actions class="dialog-buttons">
+  <button mat-button
+          class="confirm"
+          [disabled]="isDisableConfirmButton"
+          (click)="handleConfirm()">
+    Confirm
+  </button>
+  <button mat-button class="discard" [mat-dialog-close]="true" (click)="onNoClick()">Cancel</button>
+</mat-dialog-actions>

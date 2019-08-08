@@ -1,0 +1,68 @@
+<div class="header-modal">
+    <div class="title">Save user factors in XLSX</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+
+<div class="container-modal" [formGroup]="form">
+    <div fxLayout="row">
+        <div class="dropdown">
+            <div class="dropdown-label">Performance</div>
+            <app-dropdown
+                [list]="performanceList$ | async"
+                [isObjectMode]="true"
+                objectFieldParseName="id"
+                objectFieldText="name"
+                formControlName="perfId">
+            </app-dropdown>
+        </div>
+        <div class="dropdown dropdown-colculate">
+            <div class="dropdown-label">Value for colculate</div>
+            <app-dropdown
+                [list]="perfFormulas"
+                formControlName="perfFormula">
+            </app-dropdown>
+        </div>
+    </div>
+    <div class="container-content">
+        <div class="header-user-factor">Select user factors for row or column</div>
+        <div class="main-user-factor">
+            <app-scrollbar>
+                <div *ngFor="let userFactor of userFactorSelected$ | async; trackBy: trackByFn"
+                     class="container-user-factor mr-10">
+                    <div>{{userFactor?.name}}</div>
+                    <mat-radio-group [name]="userFactor?.name" class="container-group">
+                        <mat-radio-button color="primary"
+                                            class="tree-radio-button mr-10"
+                                            [value]="userFactor?.id"
+                                            [checked]="isChecked(userFactor?.id, 'ufRows')"
+                                            (change)="changeTypeFactor($event, 'ufRows', 'ufCols')">
+                            As row
+                        </mat-radio-button>
+                        <mat-radio-button color="primary"
+                                            class="tree-radio-button"
+                                            [value]="userFactor?.id"
+                                            [checked]="isChecked(userFactor?.id, 'ufCols')"
+                                            (change)="changeTypeFactor($event, 'ufCols', 'ufRows')">
+                            As colums
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </app-scrollbar>
+        </div>
+        <div class="footer-user-factor">
+            <mat-checkbox formControlName="calcPos" color="primary">
+                Calculate with possible components steps
+            </mat-checkbox>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            (click)="confirm()">
+        Download
+    </button>
+    <button mat-button class="discard" [mat-dialog-close]="true" (click)="onNoClick(false)">Cancel</button>
+</mat-dialog-actions>

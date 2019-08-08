@@ -1,0 +1,65 @@
+<div class="container-button">
+    <button mat-raised-button color="primary" (click)="handleDownload()">
+        Download as Excel
+    </button>
+</div>
+
+<div class="component-containers">
+    <app-cards-tree class="component-cards" headerName="Interface">
+        <ng-container>
+            <div class="containter-group">
+                <app-scrollbar>
+                    <div class="component-container pointer"
+                        *ngFor="let values of interfaces; trackBy: trackByFn">
+                       <div class="header-container">
+                           <div>
+                                <mat-radio-group name="interfaces"
+                                                [(ngModel)]="componentGroup"
+                                                (change)="changeInterface($event)">
+                                   <mat-radio-button color="primary"
+                                                     [value]="values?.id">
+                                   </mat-radio-button>
+                               </mat-radio-group>
+                           </div>
+                           <div class="text-container" [title]="values.name">{{values.name}}</div>
+                       </div>
+                   </div>
+                    <div class="not-found-text" *ngIf="!interfaces">No Interface is created</div>
+                </app-scrollbar>
+            </div>
+        </ng-container>
+    </app-cards-tree>
+    <div class="combined-container">
+        <app-cards-tree class="combine-cards" headerName="Connect components to interface">
+            <ng-container action-header>
+                <div class="action-connect pointer"
+                        inlineSVG="../../../assets/icons/connect.svg"
+                        title="Connect"
+                        [class.disabled]="!componentGroup"
+                        (click)="handleCombine()">
+                </div>
+            </ng-container>
+            <ng-container>
+                <app-scrollbar>
+                    <div class="combined-text" [class.last-combined]="last" *ngFor="let connectedComponent of connectedComponents$ | async; let last = last">
+                        {{connectedComponent?.name}}
+                    </div>
+                    <div class="not-found-text" *ngIf="(connectedComponents$ | async)?.length === 0">
+                        {{componentGroup ? 'No matching records found' : 'No interface is selected'}}
+                    </div>
+                </app-scrollbar>
+            </ng-container>
+        </app-cards-tree>
+    </div>
+    <app-cards-connections
+        class="cards-connections"
+        [class.cards-fullscreen]="isFullscreenMode"
+        [disabledFullscreen]="!visNetworkData"
+        headerName="Interface connections"
+        [visNetworkData]="visNetworkData"
+        [visNetworkOptions]="networkOptions"
+        (changeFullScreen)="handleFullScreen($event)"
+        (netWorkClick)="handleNetWorkClick($event)"
+        (netWorkDoubleClick)="handleDoubleClick($event)">
+    </app-cards-connections>
+</div>

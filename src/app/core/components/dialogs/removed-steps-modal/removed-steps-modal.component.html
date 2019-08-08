@@ -1,0 +1,30 @@
+<div class="header-modal">
+    <div class="title">Pay attention to the next changes</div>
+    <div class="close">
+        <i class="material-icons close-icon pointer" (click)="onNoClick(false)">close</i>
+    </div>
+</div>
+
+<div class="container-components">
+    <app-scrollbar>
+        <div class="header-content">These steps have been removed: </div>
+        <div *ngFor="let elements of dataElements">
+            <div class="header-steps">
+                <span>{{elements?.name}}</span>
+                <span> (total elements: {{elements?.totalItems}}</span>
+                <span>, undefined elements: {{elements?.notFoundItems}})</span>
+            </div>
+            <div *ngFor="let step of elements?.data">
+                <div class="step">{{step?.serie + ': ' + step?.step}}</div>
+            </div>
+        </div>
+    </app-scrollbar>
+</div>
+
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-button
+            class="confirm"
+            (click)="onNoClick(false)">
+        Ok
+    </button>
+</mat-dialog-actions>

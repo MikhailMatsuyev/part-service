@@ -1,0 +1,25 @@
+import { createSelector } from 'reselect';
+import { UniterState } from '../reducers';
+
+export const getSelection = (state: UniterState) => state.selection;
+export const getSpecifications = createSelector(getSelection, ({ specifications }) => specifications);
+export const getActiveSpecifications = createSelector(getSelection, ({ activeSpecification }) => activeSpecification);
+export const getSpecficationsNames = createSelector(getSelection, ({ specficationsName }) => specficationsName);
+export const getCategoryName = createSelector(getSelection, ({ categoryNames }) => categoryNames);
+export const getPerformances = createSelector(getSelection, ({ performances }) => performances);
+export const getUserFactorTree = createSelector(getSelection, ({ userFactorTree }) => userFactorTree);
+export const getShowAll = createSelector(getSelection, ({ showAll }) => showAll);
+export const getPerformanceFiltres = createSelector(getSelection, ({ performanceFilters }) => performanceFilters);
+export const getPerformanceFiltresLength = createSelector(getPerformanceFiltres, data => data && data.length);
+export const getAutoReload = createSelector(getSelection, ({ autoReload }) => autoReload);
+export const getActiveReloadedBlock = createSelector(getSelection, ({ isActiveReloadedBlock }) => isActiveReloadedBlock);
+export const getOrderingKey = createSelector(getSelection, ({ orderingKey }) => orderingKey);
+export const getActiveNodeInfo = createSelector(getSelection, ({ activeInfo }) => activeInfo);
+export const getComponentTree = createSelector(getSelection, ({ componentTree }) => componentTree);
+export const getActiveFormula = createSelector(getSelection, ({ activeFormula }) => activeFormula);
+export const getCSSpinner = createSelector(getSelection, ({ csSpinner }) => csSpinner);
+export const getUFSpinner = createSelector(getSelection, ({ ufSpinner }) => ufSpinner);
+export const getOrderKeyModel = createSelector(getSelection, ({ orderingKeyModel }) => orderingKeyModel);
+export const getCSActiveSteps = createSelector(getSelection, ({ activeSteps }) => activeSteps);
+export const getImposibleComponent = createSelector(getSelection, ({ impossibleComponents }) => impossibleComponents);
+export const getAvailableUF = createSelector(getSelection, ({ availableUserFactor }) => availableUserFactor);

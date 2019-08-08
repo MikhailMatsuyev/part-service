@@ -1,0 +1,172 @@
+<div class="container-button">
+    <button mat-raised-button color="primary" (click)="handleDownload()">
+        Download as Excel
+    </button>
+    <button mat-raised-button color="primary" (click)="connectPerformances()" [disabled]="!(countFormulas$ | async)">
+        <span>Connected Formulas&nbsp;</span>
+        <span>({{countFormulas$ | async}})</span>
+    </button>
+    <div class="dropdown">
+        <div>Display:</div>
+        <app-dropdown [list]="displayComponents"
+                      [defaultItem]="defaultItem"
+                      (changeItem)="handleChangeDisplay($event)">
+        </app-dropdown>
+    </div>
+</div>
+
+<div class="user-factors-containers">
+    <div class="table-container">
+        <app-scrollbar>
+            <table mat-table [dataSource]="userFactorsImpl$ | async" class="mat-elevation-z8">
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef class="pr-20"></th>
+                    <td mat-cell *matCellDef="let element" class="pr-20">
+                        <mat-radio-group name="group"
+                                            class="container-group"
+                                            [(ngModel)]="componentGroup"
+                                            (ngModelChange)="changeValues($event, element)">
+                            <mat-radio-button color="primary"
+                                              class="tree-radio-button"
+                                              [value]="element?.id">
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="isChecked">
+                    <th mat-header-cell *matHeaderCellDef class="pr-10">
+                        <mat-checkbox color="primary"
+                                        [checked]="allCheckbox$ | async"
+                                        (change)="handleSelectAllChange($event)">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="pr-10">
+                        <mat-checkbox color="primary"
+                                        [checked]="element?.isChecked"
+                                        (change)="handleCheck($event, element)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>
+                        User Factor
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element?.name}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="dimEnabled">
+                    <th mat-header-cell *matHeaderCellDef class="header-th">Dimensioning</th>
+                    <td mat-cell *matCellDef="let element" class="header-th">
+                        <mat-checkbox color="primary"
+                            class="header-checkbox"
+                            [disabled]="element?.maxDim <= 0"
+                            [checked]="element?.dimEnabled"
+                            (change)="handleCheckTable($event, element)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="maxDim">
+                    <th mat-header-cell *matHeaderCellDef>Max Dimensions</th>
+                    <td mat-cell *matCellDef="let element">
+                        <app-performance-input
+                            [data]="element?.maxDim"
+                            inputType="number"
+                            [maxLength]="6"
+                            [maxValue]="999999"
+                            [minValue]="0"
+                            (changeValue)="handleChangeValue($event, element, 'maxDim')">
+                        </app-performance-input>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="formula">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Dimensioning Formula
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <app-performance-input
+                            [data]="element?.formula"
+                            [maxLength]="20"
+                            (changeValue)="handleChangeValue($event, element, 'formula')">
+                        </app-performance-input>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <div class="not-found-text" *ngIf="!(userFactorsImpl$ | async)">No User Factor is created</div>
+        </app-scrollbar>
+    </div>
+    <app-cards-connections
+        class="cards-connections"
+        [class.cards-fullscreen]="isFullscreenMode"
+        [disabledFullscreen]="!componentGroup"
+        headerName="User Factor connections"
+        [visNetworkData]="visNetworkData"
+        (changeDepth)="handleChangeDepth($event)"
+        (changeFullScreen)="handleFullScreen($event)"
+        (netWorkClick)="handleNetWorkClick($event)"
+        (netWorkDoubleClick)="handleDoubleClick($event)">
+    </app-cards-connections>
+</div>
+
+<div class="user-factors-containers combine-containers">
+    <app-cards-tree class="combine-cards" headerName="Combine User Factors">
+        <ng-container action-header>
+            <div class="action-connect pointer"
+                 inlineSVG="../../../assets/icons/connect.svg"
+                 title="Connect"
+                 [class.disabled]="!componentGroup"
+                 (click)="handleCombineUserFactor()">
+            </div>
+        </ng-container>
+        <ng-container>
+            <app-scrollbar>
+                <div class="combined-text" [class.last-combined]="last" *ngFor="let combinedComponent of connectedUserFactor$ | async; let last = last">
+                    {{combinedComponent?.name}}
+                </div>
+                <div class="not-found-text" *ngIf="(connectedUserFactor$ | async)?.length === 0">
+                    {{componentGroup ? 'No matching records found' : 'No User Factor is selected'}}
+                </div>
+            </app-scrollbar>
+        </ng-container>
+    </app-cards-tree>
+    <app-cards-tree class="combine-cards" headerName="Add Component for dimensioning">
+        <ng-container action-header>
+            <div class="action-connect pointer"
+                 inlineSVG="../../../assets/icons/connect.svg"
+                 title="Connect"
+                 [class.disabled]="!componentGroup"
+                 (click)="handleCombineComponent()">
+            </div>
+        </ng-container>
+        <ng-container>
+            <app-scrollbar>
+                <div class="combined-text" [class.last-combined]="last" *ngFor="let combinedComponent of componentSerisDimImpl$ | async; let last = last">
+                    {{combinedComponent?.name}}
+                </div>
+                <div class="not-found-text" *ngIf="(componentSerisDimImpl$ | async)?.length === 0">
+                    {{componentGroup ? 'No matching records found' : 'No User Factor is selected'}}
+                </div>
+            </app-scrollbar>
+        </ng-container>
+    </app-cards-tree>
+    <app-cards-tree class="combine-cards" headerName="Connected Components">
+        <ng-container>
+            <app-scrollbar>
+                <div class="combined-text" [class.last-combined]="last" *ngFor="let combinedComponent of connectedComponent$ | async; let last = last">
+                    {{combinedComponent?.name}}
+                </div>
+                <div class="not-found-text" *ngIf="(connectedComponent$ | async)?.length === 0">
+                    {{componentGroup ? 'No matching records found' : 'No User Factor is selected'}}
+                </div>
+            </app-scrollbar>
+        </ng-container>
+    </app-cards-tree>
+</div>

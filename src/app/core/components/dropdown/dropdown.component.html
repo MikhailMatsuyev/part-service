@@ -1,0 +1,35 @@
+<ng-select [searchable]="searchable"
+           [clearable]="clearable"
+           [formControl]="dropDownControl"
+           [bindValue]="objectFieldParseName"
+           [bindLabel]="objectFieldText"
+           [items]="list"
+           (focus)="emitFocus($event)"
+           (blur)="emitBlur($event)"
+           class="dropdown">
+    <ng-template ng-option-tmp let-item="item" let-index="index" *ngIf="withCustomTemplate">
+        <div class="icon-status" [ngClass]="setClassStatus(item)"></div>
+        {{item[objectFieldText]}}
+    </ng-template>
+    <ng-template ng-option-tmp let-item="item" let-index="index" *ngIf="withFormulasIcon">
+        <div class="template-container">
+            <div>{{item[objectFieldText]}}</div>
+            <div class="icon-formula" *ngIf="item?.inFormula">F</div>
+        </div>
+    </ng-template>
+    <ng-template ng-header-tmp *ngIf="withCustomSelect">
+        <mat-checkbox color="primary"
+                      [checked]="isSelectedAll"
+                      (change)="handleSelectAll($event)">
+            {{isSelectedAll ? 'Unselect all' : 'Select all'}}
+        </mat-checkbox>
+    </ng-template>
+    <ng-template ng-option-tmp let-item="item" let-index="index" *ngIf="withCustomSelect">
+        <mat-checkbox color="primary"
+                      [checked]="item?.isSelected"
+                      (click)="handleClick($event)"
+                      (change)="handleSelectItem($event, item)">
+        </mat-checkbox>
+        {{item[objectFieldText]}}
+    </ng-template>
+</ng-select>

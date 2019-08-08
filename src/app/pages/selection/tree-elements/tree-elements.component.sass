@@ -1,0 +1,103 @@
+.tree-toggle
+    border: 1px solid #E2E2E2
+    border-radius: 3px
+    width: 20px
+    height: 20px
+    margin-right: 10px
+    ::ng-deep
+        &.mat-button-focus-overlay
+            background-color: transparent !important
+    .mat-icon-rtl-mirror
+        width: 18px
+        height: 20px
+        font-size: 20px
+        display: flex
+        justify-content: center
+        align-items: center
+
+.node-step
+    width: 240px
+    min-width: 240px
+    display: flex
+    align-items: center
+    .blocked-container
+        width: 88%
+
+.category-table
+    width: 280px
+    min-width: 280px
+
+.node-step-top-level
+    width: 260px !important
+    min-width: 260px !important
+
+.node-step,
+.category-table,
+.node-table-cell,
+.short-text
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+
+.components-tree
+    ::ng-deep .mat-tree-node.first-level
+        padding: 0 0 0 20px
+        border-bottom: 1px solid #EFEFEF
+.node-category,
+.node-step
+    .info-icon
+        padding-top: 3px
+        margin-left: 10px
+.node-category-content
+    display: flex
+    align-items: center
+
+.analyze-icon,
+.analyze-tree-spinner
+    padding-top: 3px
+    margin-right: 10px
+
+.analyze-tree-spinner
+    box-sizing: border-box
+    width: 18px
+    height: 22px
+
+.node-step-bold
+    font-weight: bold
+.blocked-container
+    display: flex
+    margin-top: 10px
+    margin-bottom: 3px
+    .blocked-icon
+        margin-right: 9px
+        padding-left: 2px
+
+\:host
+    position: relative
+    display: block
+
+.context-menu-trigger
+    position: absolute
+    display: block
+
+.node-container,
+.node-category,
+.node-table
+    display: flex
+    align-items: center
+
+.node-table-cell
+    min-width: 150px
+    width: 150px
+    height: 28px
+    display: flex
+    justify-content: center
+    align-items: center
+    font-size: 12px
+    color: #343434
+.node-table-cell-title
+    font-size: 13px
+    color: #343434
+    font-weight: 500
+.mr-20
+    margin-right: 20px
